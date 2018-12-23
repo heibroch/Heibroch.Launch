@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch", "Heibroch.Launch\Heibroch.Launch.csproj", "{530C1FCE-29AE-4C01-880B-030C2DD55A08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{530C1FCE-29AE-4C01-880B-030C2DD55A08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{530C1FCE-29AE-4C01-880B-030C2DD55A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{530C1FCE-29AE-4C01-880B-030C2DD55A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{530C1FCE-29AE-4C01-880B-030C2DD55A08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4326DB27-AD4D-4D13-8EF4-A279AE273D98}
+	EndGlobalSection
+EndGlobal
