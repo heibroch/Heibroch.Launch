@@ -24,6 +24,7 @@ namespace Heibroch.Launch
             
             _hookID = SetHook(_proc);
 
+
             Closing += MainWindow_Closing;
         }
 
