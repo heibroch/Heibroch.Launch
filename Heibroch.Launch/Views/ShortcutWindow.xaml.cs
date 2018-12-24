@@ -15,14 +15,6 @@ namespace Heibroch.Launch
             InitializeComponent();
 
             Loaded += OnMainWindowLoaded;
-            PreviewKeyDown += OnMainWindowPreviewKeyDown;
-        }
-        
-        //Necessary in order for a space not to be in the textbox from the beginning
-        private void OnMainWindowPreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (Keyboard.Modifiers != ModifierKeys.Control || e.Key != Key.Space) return;
-            e.Handled = true;
         }
 
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e) => QueryTextBox.Focus();
