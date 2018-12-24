@@ -13,6 +13,7 @@ namespace Heibroch.Launch
             this.eventBus = eventBus;
 
             InitializeComponent();
+
             Loaded += OnMainWindowLoaded;
             PreviewKeyDown += OnMainWindowPreviewKeyDown;
         }

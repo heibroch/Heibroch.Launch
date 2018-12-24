@@ -95,6 +95,7 @@ namespace Heibroch.Launch
                 if (command.StartsWith(Defaults.CommandLineCommand))
                 {
                     var commandLineArg = command.Remove(0, Defaults.CommandLineCommand.Length);
+
                     Process.Start("CMD.exe", commandLineArg);
                 }
                 //else if(command.StartsWith(Defaults.CommandLineCommand))
