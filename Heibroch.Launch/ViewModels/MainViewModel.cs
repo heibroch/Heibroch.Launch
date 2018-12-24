@@ -56,6 +56,8 @@ namespace Heibroch.Launch
                 currentShortcutWindow.Show();
                 currentShortcutWindow.Activate();
 
+                obj.ProcessKey = false;
+
                 shortcutViewModel.LaunchText = "";
             }
         }
