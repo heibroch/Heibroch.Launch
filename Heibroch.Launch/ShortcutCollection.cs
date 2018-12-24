@@ -71,7 +71,7 @@ namespace Heibroch.Launch
             if (!Shortcuts.ContainsKey(shortcutName)) return;
             Shortcuts.Remove(shortcutName);
         }
-
+        
         public void Filter(string searchString)
         {
             var originalSearchString = searchString;

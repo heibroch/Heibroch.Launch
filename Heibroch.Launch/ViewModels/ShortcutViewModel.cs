@@ -23,10 +23,7 @@ namespace Heibroch.Launch
             Initialize();
         }
 
-        private void Initialize()
-        {
-            shortcutCollection.Load();
-        }
+        private void Initialize() => shortcutCollection.Load();
 
         public string LaunchText
         {
@@ -95,15 +92,9 @@ namespace Heibroch.Launch
                 if (command.StartsWith(Defaults.CommandLineCommand))
                 {
                     var commandLineArg = command.Remove(0, Defaults.CommandLineCommand.Length);
-
                     Process.Start("CMD.exe", commandLineArg);
+                    
                 }
-                //else if(command.StartsWith(Defaults.CommandLineCommand))
-                //{
-                //    var commandLineArg = command.Remove(0, Defaults.CommandLineCommand.Length);
-                //    Process.Start(commandLineArg);
-                //}
-
                 else
                 {
                     Process.Start(command);
@@ -114,8 +105,6 @@ namespace Heibroch.Launch
                 Console.WriteLine(e);
                 MessageBox.Show($"Failed to execute: {command}");
             }
-            
-            //Application.Current?.Shutdown();
         }
         
         public Visibility QueryResultsVisibility => QueryResults.Count > 0 ? Visibility.Visible : Visibility.Hidden;
