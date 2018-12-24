@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" Focusable="False"
-        ShowInTaskbar="True"
+        ShowInTaskbar="False"
         Topmost="True"
         Background="Transparent">
     <Grid Focusable="False" Background="Transparent">

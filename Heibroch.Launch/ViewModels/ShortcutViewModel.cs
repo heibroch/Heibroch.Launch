@@ -1,39 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using Heibroch.Launch.Annotations;
+using Heibroch.Common;
+using Heibroch.Common.Wpf;
 
 namespace Heibroch.Launch
 {
-    public class ShortcutViewModel : INotifyPropertyChanged
+    public class ShortcutViewModel : ViewModelBase
     {
-        private readonly IShortcutCollection _shortcutCollection;
+        private readonly IShortcutCollection shortcutCollection;
+        private readonly IEventBus eventBus;
         private KeyValuePair<string, string> _selectedItem;
 
-        public ShortcutViewModel(IShortcutCollection shortcutCollection)
+        public ShortcutViewModel(IShortcutCollection shortcutCollection,
+                                 IEventBus eventBus)
         {
-            _shortcutCollection = shortcutCollection;
-            _shortcutCollection.Load();
+            this.eventBus = eventBus;
+            this.shortcutCollection = shortcutCollection;
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            shortcutCollection.Load();
         }
 
         public string LaunchText
         {
-            get => _shortcutCollection.CurrentQuery;
+            get => shortcutCollection.CurrentQuery;
             set
             {
-                _shortcutCollection.Filter(value);
-                OnPropertyChanged(nameof(LaunchText));
-                OnPropertyChanged(nameof(QueryResults));
-                OnPropertyChanged(nameof(QueryResultsVisibility));
+                shortcutCollection.Filter(value);                
+                RaisePropertyChanged(nameof(LaunchText));
+                RaisePropertyChanged(nameof(QueryResults));
+                RaisePropertyChanged(nameof(QueryResultsVisibility));
             }
         }
 
-        public SortedList<string, string> QueryResults => _shortcutCollection.QueryResults;
+        public SortedList<string, string> QueryResults => shortcutCollection.QueryResults;
 
         public KeyValuePair<string, string> SelectedItem
         {
@@ -41,7 +48,7 @@ namespace Heibroch.Launch
             set
             {
                 _selectedItem = value;
-                OnPropertyChanged(nameof(SelectedItem));
+                RaisePropertyChanged(nameof(SelectedItem));
             }
         }
 
@@ -110,11 +117,6 @@ namespace Heibroch.Launch
             //Application.Current?.Shutdown();
         }
         
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         public Visibility QueryResultsVisibility => QueryResults.Count > 0 ? Visibility.Visible : Visibility.Hidden;
     }
 }

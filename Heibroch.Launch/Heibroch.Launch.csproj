@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Heibroch.Common">
+      <HintPath>..\..\Heibroch\Heibroch.Common\bin\Release\Heibroch.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Heibroch.Common.Wpf">
+      <HintPath>..\..\Heibroch\Heibroch.Common.Wpf\bin\Release\Heibroch.Common.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,13 +61,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Defaults.cs" />
-    <Compile Include="Events\KeyCombinationPressed.cs" />
+    <Compile Include="Events\GlobalKeyPressed.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ShortcutCollection.cs" />
-    <Compile Include="ShortcutWindow.xaml.cs">
+    <Compile Include="Views\ShortcutWindow.xaml.cs">
       <DependentUpon>ShortcutWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -69,17 +76,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ShortcutWindow.xaml">
+    <Page Include="Views\ShortcutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ShortcutViewModel.cs" />
+    <Compile Include="ViewModels\ShortcutViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,5 +123,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

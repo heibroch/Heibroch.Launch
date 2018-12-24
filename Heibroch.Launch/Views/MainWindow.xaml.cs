@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
+using Heibroch.Common;
+using Heibroch.Launch.Events;
 
 namespace Heibroch.Launch
 {
@@ -10,27 +12,24 @@ namespace Heibroch.Launch
     {
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
-        private static LowLevelKeyboardProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
-        private static Window _currentWindow = null;
-        private static ShortcutViewModel _shortcutViewModel;
+        private static LowLevelKeyboardProc proc = HookCallback;
+        private static IntPtr hookID = IntPtr.Zero;
+        private static IEventBus eventBus;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            var shortcutCollection = new ShortcutCollection();
-            _shortcutViewModel = new ShortcutViewModel(shortcutCollection);
             
-            _hookID = SetHook(_proc);
-
-
-            Closing += MainWindow_Closing;
+            eventBus = new EventBus();   
+            DataContext = new MainViewModel(eventBus);
+            
+            hookID = SetHook(proc);            
+            Closing += OnMainWindowClosing;
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OnMainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            try { UnhookWindowsHookEx(_hookID); }
+            try { UnhookWindowsHookEx(hookID); }
             catch { }
         }
 
@@ -49,21 +48,10 @@ namespace Heibroch.Launch
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode < 0 || wParam != (IntPtr)WM_KEYDOWN)
-                return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+                eventBus.Publish(new GlobalKeyPressed() { Key = Marshal.ReadInt32(lParam) });
 
-            int vkCode = Marshal.ReadInt32(lParam);
-
-            if (Keyboard.Modifiers == ModifierKeys.Control && vkCode == 32) //Space
-            {
-                _currentWindow?.Close();
-                _currentWindow = new ShortcutWindow();
-                _currentWindow.DataContext = _shortcutViewModel;
-                _currentWindow.Activate();
-                _currentWindow.Show();
-            }
-
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            return CallNextHookEx(hookID, nCode, wParam, lParam);
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
