@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Input;
 using Heibroch.Common;
 using Heibroch.Launch.Events;
 
@@ -13,7 +12,7 @@ namespace Heibroch.Launch
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private static LowLevelKeyboardProc proc = HookCallback;
-        private static IntPtr hookID = IntPtr.Zero;
+        private static IntPtr hookId = IntPtr.Zero;
         private static IEventBus eventBus;
 
         public MainWindow()
@@ -23,13 +22,13 @@ namespace Heibroch.Launch
             eventBus = new EventBus();   
             DataContext = new MainViewModel(eventBus);
             
-            hookID = SetHook(proc);            
+            hookId = SetHook(proc);            
             Closing += OnMainWindowClosing;
         }
 
         private void OnMainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            try { UnhookWindowsHookEx(hookID); }
+            try { UnhookWindowsHookEx(hookId); }
             catch { }
         }
 
@@ -49,9 +48,13 @@ namespace Heibroch.Launch
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
-                eventBus.Publish(new GlobalKeyPressed() { Key = Marshal.ReadInt32(lParam) });
+            {
+                var globalKeyPressed = new GlobalKeyPressed() { Key = Marshal.ReadInt32(lParam) };
+                eventBus.Publish(globalKeyPressed);
+                if (!globalKeyPressed.ProcessKey) return new IntPtr(1);
+            }
 
-            return CallNextHookEx(hookID, nCode, wParam, lParam);
+            return CallNextHookEx(hookId, nCode, wParam, lParam);
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]

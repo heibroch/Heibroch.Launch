@@ -31,6 +31,7 @@ namespace Heibroch.Launch
                 switch (obj.Key)
                 {
                     case 0x0000001B: //Escape
+                        obj.ProcessKey = false;
                         currentShortcutWindow.Close();
                         break;
                     case 0x00000028: //Down
@@ -40,6 +41,7 @@ namespace Heibroch.Launch
                         shortcutViewModel.IncrementSelection(-1);
                         break;
                     case 0x0000000D: //Enter
+                        obj.ProcessKey = false;
                         shortcutViewModel.ExecuteSelection();
                         currentShortcutWindow.Close();
                         break;
