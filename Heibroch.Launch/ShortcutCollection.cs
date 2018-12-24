@@ -74,31 +74,23 @@ namespace Heibroch.Launch
 
         public void Filter(string searchString)
         {
-            CurrentQuery = searchString;
+            var originalSearchString = searchString;
+            searchString = searchString.ToLower();
 
             //It should be an empty list if no query string
             if (string.IsNullOrWhiteSpace(searchString))
             {
                 QueryResults = new SortedList<string, string>();
             }
-            //Just remove from the list
-            else if (searchString.Length > CurrentQuery.Length && searchString.ToLower().StartsWith(CurrentQuery.ToLower()))
-            {
-                foreach (var queryResult in QueryResults)
-                {
-                    if (queryResult.Key.ToLower().StartsWith(searchString.ToLower()) || queryResult.Key.ToLower().Contains(searchString.ToLower()))
-                        continue;
-                    
-                    QueryResults.Remove(queryResult.Key);
-                }
-            }
-            //Redo the lsit
+            //Redo the list
             else
             {
                 QueryResults = new SortedList<string, string>(Shortcuts
-                    .Where(x => x.Key.StartsWith(searchString) || x.Key.Contains(searchString))
+                    .Where(x => x.Key.ToLower().StartsWith(searchString) || x.Key.ToLower().Contains(searchString))
                     .ToDictionary(z => z.Key, y => y.Value));
             }
+
+            CurrentQuery = originalSearchString;
         }
 
         public string CurrentQuery { get; private set; }
