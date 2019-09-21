@@ -10,9 +10,8 @@ and the shortcut path with a ';'...
 Like opening a folder...\r\n
 
 MyTotallyNotPornFolder;"C:\source\Porn\"
-.
-.
-.
+
+
 Or opening a file...
 
 MyTotallyNotPornFolder;"C:\source\Porn\SomePornVid.mov"
