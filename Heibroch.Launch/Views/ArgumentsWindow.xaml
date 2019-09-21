@@ -1,4 +1,4 @@
-﻿<Window x:Class="Heibroch.Launch.Views.ShortcutWindow"
+﻿<Window x:Class="Heibroch.Launch.Views.ArgumentsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -59,36 +59,13 @@
                      FontWeight="Bold"
                      Focusable="True"
                      IsHitTestVisible="True"/>
-            <TextBlock Text="Type search text..." 
+            <TextBlock Text="Type argument text..." 
                Padding="8,0,0,0"
                Canvas.ZIndex = "100"
                VerticalAlignment="Center"
                Visibility="{Binding WaterMarkVisibility, Mode=OneWay}"
                FontWeight="Bold"
                Opacity="0.7"/>
-            <ListView x:Name="QueryResultList" 
-                      Grid.Row="1" Visibility="{Binding QueryResultsVisibility}"
-                      ItemsSource="{Binding DisplayedQueryResults, Mode=OneWay}" 
-                      SelectedValue="{Binding SelectedItem}"
-                      Focusable="False"
-                      IsHitTestVisible="False"
-                      Height="Auto"
-                      BorderThickness="0"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="{TemplateBinding ListView.Background}" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Key}" FontWeight="Bold" Padding="2,0,0,0"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Value}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
         </Grid>
     </Grid>
 </Window>

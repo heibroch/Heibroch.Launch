@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Heibroch.Launch")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SAXO")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Heibroch.Launch")]
-[assembly: AssemblyCopyright("Copyright © SAXO 2018")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

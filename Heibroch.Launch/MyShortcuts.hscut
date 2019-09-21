@@ -1,0 +1,10 @@
+Messenger;https://www.messenger.com
+Facebook;https://www.facebook.com/
+Hotmail;https://outlook.live.com/mail/inbox
+Reddit;https://www.reddit.com/
+Sheets;https://docs.google.com/spreadsheets/u/0/
+Google Drive;https://drive.google.com/drive/my-drive
+
+Shutdown;[CMD]shutdown /s /f
+Reboot;[CMD]shutdown /r /f
+OneNote;shell:AppsFolder\Microsoft.Office.OneNote_8wekyb3d8bbwe!microsoft.onenoteim

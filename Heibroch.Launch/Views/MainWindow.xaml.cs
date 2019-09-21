@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Input;
 using Heibroch.Common;
 using Heibroch.Launch.Events;
+using Heibroch.Launch.ViewModels;
 
-namespace Heibroch.Launch
+namespace Heibroch.Launch.Views
 {
     public partial class MainWindow : Window
     {
@@ -15,15 +19,37 @@ namespace Heibroch.Launch
         private static IntPtr hookId = IntPtr.Zero;
         private static IEventBus eventBus;
 
+        
         public MainWindow()
         {
             InitializeComponent();
             
-            eventBus = new EventBus();   
-            DataContext = new MainViewModel(eventBus);
+            eventBus = new EventBus();
+            Container.Current.Register<IEventBus>(eventBus);
+
+            var shortcutCollection = new ShortcutCollection();
+            Container.Current.Register<IShortcutCollection>(shortcutCollection);
+
+            var shortcutExecutor = new ShortcutExecutor(shortcutCollection);
+            Container.Current.Register<IShortcutExecutor>(shortcutExecutor);
+
+            var settingCollection = new SettingCollection();
+            Container.Current.Register<ISettingCollection>(settingCollection);
+
+            DataContext = new MainViewModel();
             
             hookId = SetHook(proc);            
             Closing += OnMainWindowClosing;
+        }
+
+        private void OnTrayIconDoubleClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnTrayIconClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnMainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)

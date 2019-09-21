@@ -1,22 +1,29 @@
-﻿using Heibroch.Common;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
-namespace Heibroch.Launch
+namespace Heibroch.Launch.Views
 {
     public partial class ShortcutWindow : Window
     {
-        private IEventBus eventBus;
-
-        public ShortcutWindow(IEventBus eventBus)
+        public ShortcutWindow()
         {
-            this.eventBus = eventBus;
-
             InitializeComponent();
-
             Loaded += OnMainWindowLoaded;
+            QueryTextBox.Loaded += QueryTextBox_Loaded;
         }
 
-        private void OnMainWindowLoaded(object sender, RoutedEventArgs e) => QueryTextBox.Focus();
+        private void QueryTextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            //QueryTextBox.Focus();
+            //QueryTextBox.Select(0, 0);
+            //FocusManager.SetFocusedElement(this, QueryTextBox);
+            Keyboard.Focus(QueryTextBox);
+        }
+
+        private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            
+
+        }
     }
 }
