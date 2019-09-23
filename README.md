@@ -37,4 +37,4 @@ all the shortcut files available, so you can split them up as you see fit and ev
 will then allow for users to have same shortcut sets based on the AD-group they're in. Note that you can still have shortcuts locally
 in your app data folder (Pssst! It's there the MyShortcuts.hscut-file is) :) ..........
 
-[Shared];\\MyNetworkServer\MyShare\
+[SearchPath];\\myserver.dk\myshare\HeibrochLaunchShortcutFolder\
