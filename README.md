@@ -38,3 +38,8 @@ will then allow for users to have same shortcut sets based on the AD-group they'
 in your app data folder (Pssst! It's there the MyShortcuts.hscut-file is) :) ..........
 
 [SearchPath];\\myserver.dk\myshare\HeibrochLaunchShortcutFolder\
+
+
+NEXT...
+1. If you type in capital letters, it won't find anything. This is due to the search string not making a ToLower(). This will be fixed.
+2. A [SwitchIfExists] optional tag will be possible to add to shortcuts. This means that if it's started a previous process, then it will switch to that existing process rather than starting a new one. This can help if you e.g. use some web-links often.
