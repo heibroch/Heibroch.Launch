@@ -49,3 +49,5 @@ NEXT...
 6. Exporting/importing settings.
 7. Option for using settings located in GDrive or OneDrive.
 8. Encrypting the files to avoid exploitation.
+9. Adding option for cached file search.
+10. Context menus for fast adding of shortcuts.
