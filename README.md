@@ -44,3 +44,8 @@ NEXT...
 1. If you type in capital letters, it won't find anything. This is due to the search string not making a ToLower(). This will be fixed.
 2. A [SwitchIfExists] optional tag will be possible to add to shortcuts. This means that if it's started a previous process, then it will switch to that existing process rather than starting a new one. This can help if you e.g. use some web-links often.
 3. On opening the shortcut window, it will display the last 5 things you selected, in an order of what you've used the most over the last week.
+4. In setting, being able to open the folder location or file for the given shortcuts.
+5. Management of shortcuts through entirely through settings.
+6. Exporting/importing settings.
+7. Option for using settings located in GDrive or OneDrive.
+8. Encrypting the files to avoid exploitation.
