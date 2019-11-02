@@ -12,6 +12,8 @@ namespace Heibroch.Launch
     {
         public SortedList<string, string> Search(string searchString, Dictionary<string, string> _shortcuts)
         {
+            searchString = searchString.ToLower();
+
             SortedList<string, string> searchResults;
             //It should be an empty list if no query string
             if (string.IsNullOrWhiteSpace(searchString))
