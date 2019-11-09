@@ -30,7 +30,13 @@ namespace Heibroch.Launch.ViewModels
             get => shortcutCollection.CurrentQuery ?? string.Empty;
             set
             {
-                shortcutCollection.Filter(value);  
+                var oldValue = shortcutCollection?.CurrentQuery ?? string.Empty;
+
+                shortcutCollection.Filter(value);
+
+                if (value.Length < oldValue.Length && oldValue.StartsWith(value))
+                    selectionCycler.Reset();
+
                 RaisePropertyChanged(nameof(LaunchText));
                 RaisePropertyChanged(nameof(QueryResults));
                 RaisePropertyChanged(nameof(DisplayedQueryResults));
@@ -39,7 +45,7 @@ namespace Heibroch.Launch.ViewModels
 
                 if (!QueryResults.ContainsKey(selectedItem.Key ?? string.Empty))
                     SelectedItem = QueryResults.FirstOrDefault();
-                
+
                 RaisePropertyChanged(nameof(SelectedItem));
             }
         }
