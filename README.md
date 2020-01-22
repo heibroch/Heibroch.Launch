@@ -9,15 +9,15 @@ and the shortcut path with a ';'...
 
 Like opening a folder..........
 
-MyTotallyNotPornFolder;"C:\source\Porn\"
+MyAwesomeFolder;"C:\source\MyFolder\"
 
 Or opening a file..........
 
-MyTotallyNotPornFolder;"C:\source\Porn\SomePornVid.mov"
+MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
 
 Or launching a website..........
 
-My Fav NOT porn site;"www.youporn.com"
+My Favourite site;"www.github.com"
 
 Or running a cmd command..........
 
@@ -25,11 +25,11 @@ Shutdown;[CMD]shutdown /s /f
 
 Or sending an E-mail..........
 
-ComplainToPornSite;mailto:support@youporn.com
+ComplainToPornSite;mailto:support@github.com
 
 Or remoting to a server or pc. Note that "[remote]" must be before the server name..........
 
-Open Dat Porn Server;[remote]mydomain.pornserver
+Open Dat Porn Server;[remote]mydomain.myserver
 
 Or EVEN BETTER! You can share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
 avoids pesky navigation when your coworker asks you where those documentation files are. Note that it will scan the folder for 
