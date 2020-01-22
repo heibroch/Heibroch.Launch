@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using Heibroch.Common;
 using Heibroch.Launch.Events;
+using Heibroch.Launch.Plugin;
 using Heibroch.Launch.ViewModels;
 
 namespace Heibroch.Launch.Views
@@ -18,8 +19,8 @@ namespace Heibroch.Launch.Views
         private static LowLevelKeyboardProc proc = HookCallback;
         private static IntPtr hookId = IntPtr.Zero;
         private static IEventBus eventBus;
-
-        
+        private IPluginLoader pluginLoader;
+                
         public MainWindow()
         {
             InitializeComponent();
@@ -27,14 +28,31 @@ namespace Heibroch.Launch.Views
             eventBus = new EventBus();
             Container.Current.Register<IEventBus>(eventBus);
 
-            var shortcutCollection = new ShortcutCollection();
-            Container.Current.Register<IShortcutCollection>(shortcutCollection);
+            pluginLoader = new PluginLoader();
+            Container.Current.Register<IPluginLoader>(pluginLoader);
+            
+            var shortcutCollection = new ShortcutCollection(pluginLoader);
+            Container.Current.Register<IShortcutCollection<string, ILaunchShortcut>>(shortcutCollection);
 
-            var shortcutExecutor = new ShortcutExecutor(shortcutCollection);
+            var shortcutExecutor = new ShortcutExecutor(shortcutCollection, pluginLoader);
             Container.Current.Register<IShortcutExecutor>(shortcutExecutor);
 
             var settingCollection = new SettingCollection();
             Container.Current.Register<ISettingCollection>(settingCollection);
+
+            pluginLoader.Load();
+
+            foreach (var plugin in pluginLoader.Plugins)
+            {
+                try
+                {
+                    plugin.OnProgramLoaded();
+                }
+                catch (Exception exception)
+                {
+                    System.Windows.MessageBox.Show($"{exception.ToString()}\r\n{exception.StackTrace}");
+                }                
+            }
 
             DataContext = new MainViewModel();
             

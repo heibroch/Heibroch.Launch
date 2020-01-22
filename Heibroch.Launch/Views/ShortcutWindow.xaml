@@ -84,7 +84,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding Key}" FontWeight="Bold" Padding="2,0,0,0"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Value}" />
+                            <TextBlock Grid.Column="2" Text="{Binding Value.Description}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

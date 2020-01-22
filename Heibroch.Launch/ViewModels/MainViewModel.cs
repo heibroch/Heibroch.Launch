@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Heibroch.Common;
 using Heibroch.Common.Wpf;
 using Heibroch.Launch.Events;
+using Heibroch.Launch.Plugin;
 using Heibroch.Launch.Views;
 
 namespace Heibroch.Launch.ViewModels
@@ -13,10 +15,10 @@ namespace Heibroch.Launch.ViewModels
     {
         private readonly IEventBus eventBus;
 
-        private readonly IShortcutCollection shortcutCollection;
+        private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly IShortcutExecutor shortcutExecutor;
         private readonly ISettingCollection settingCollection;
-
+        private readonly IPluginLoader pluginLoader;
         private static ShortcutWindow currentShortcutWindow = null;
         private static ShortcutViewModel shortcutViewModel;
         private static SettingsWindow currentSettingsWindow = null;
@@ -29,28 +31,31 @@ namespace Heibroch.Launch.ViewModels
         private TrayIcon trayIcon;
 
         public MainViewModel() : this(Container.Current.Resolve<IEventBus>(),
-                                      Container.Current.Resolve<IShortcutCollection>(),
+                                      Container.Current.Resolve<IShortcutCollection<string, ILaunchShortcut>>(),
                                       Container.Current.Resolve<IShortcutExecutor>(),
-                                      Container.Current.Resolve<ISettingCollection>())
+                                      Container.Current.Resolve<ISettingCollection>(),
+                                      Container.Current.Resolve<IPluginLoader>())
         {
 
         }
 
         public MainViewModel(IEventBus eventBus,
-                             IShortcutCollection shortcutCollection,
+                             IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                              IShortcutExecutor shortcutExecutor,
-                             ISettingCollection settingCollection)
+                             ISettingCollection settingCollection,
+                             IPluginLoader pluginLoader)
         {
             this.eventBus = eventBus;
             this.shortcutCollection = shortcutCollection;
             this.shortcutExecutor = shortcutExecutor;
             this.settingCollection = settingCollection;
+            this.pluginLoader = pluginLoader;
             Initialize();
         }
         
         private void Initialize()
         {
-            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor);
+            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, pluginLoader);
             settingsViewModel = new SettingsViewModel(settingCollection);
             argumentsViewModel = new ArgumentsViewModel(shortcutExecutor);
 
@@ -111,33 +116,73 @@ namespace Heibroch.Launch.ViewModels
                         break;
                     case 0x0000000D: //Enter
                         obj.ProcessKey = false;
-
-                        //If the current argument window is open, then execute it
-                        if (currentArgumentsWindow != null)
-                        {
-                            argumentsViewModel.Execute();
-                            CloseArgumentWindow();
-                        }
-                        
-                        //If the selected shortcut is an argument command, then display the argument window
-                        if (currentShortcutWindow != null && (shortcutViewModel.SelectedItem.Value?.Contains("[Arg]") ?? false))
-                        {
-                            argumentsViewModel.Command = shortcutViewModel.SelectedItem.Value;
-                            CloseShortcutWindow();
-                            
-                            currentArgumentsWindow = new ArgumentsWindow();
-                            currentArgumentsWindow.DataContext = argumentsViewModel;
-                            currentArgumentsWindow.Show();
-                            currentArgumentsWindow.Activate();
-                        }
-
-                        //If the current shortcut window is open, then execute it
-                        if (currentShortcutWindow != null)
+                                            
+                        //If the current shortcut window is open and doesn't have args, then execute it
+                        if (currentShortcutWindow != null && !IsArgumentShortcut())
                         {
                             shortcutViewModel.ExecuteSelection();
                             CloseShortcutWindow();
+                            break;
                         }
 
+                        //If the arg window is open and it's not filled out then open the arg window
+                        if (currentArgumentsWindow != null && IsArgumentShortcut() && !IsArgumentShortcutFilled())
+                        {
+                            argumentsViewModel.ExecuteArgument();
+
+                            var command = argumentsViewModel.Command;
+                            var arguments = GetArgs();
+                            
+                            CloseArgumentWindow();
+
+                            if (arguments.Count() <= shortcutExecutor.Arguments.Count)
+                            {
+                                shortcutExecutor.Execute(command.Title, command);
+                                break;
+                            }
+                            
+                            var argumentKey = arguments.ElementAt(shortcutExecutor.Arguments.Count);
+
+                            argumentsViewModel.Command = command;
+                            argumentsViewModel.ArgumentKey = argumentKey;
+
+                            if (IsArgumentShortcutFilled())
+                                break;
+                            
+                            OpenArgumentWindow();
+                        }
+
+                        //If the shortcut window is open and it has args, then open the arg window
+                        if (currentShortcutWindow != null && IsArgumentShortcut() && !IsArgumentShortcutFilled())
+                        {
+                            var command = shortcutViewModel.SelectedItem.Value;
+                            var argumentKey = GetArgs().ElementAt(shortcutExecutor.Arguments.Count);
+                                                        
+                            CloseShortcutWindow();
+
+                            argumentsViewModel.Command = command;
+                            argumentsViewModel.ArgumentKey = argumentKey;
+                            argumentsViewModel.ExecuteArgument();
+
+                            OpenArgumentWindow();
+                            break;
+                        }
+                        
+                        //if the arg window is open and it's filled out, then execute the shortcut
+                        if (currentArgumentsWindow != null && IsArgumentShortcut() && IsArgumentShortcutFilled())
+                        {
+                            shortcutViewModel.ExecuteSelection();
+                            CloseArgumentWindow();
+                            break;
+                        }
+                        
+                        ////If the current argument window is open and all args are filled out, then execute it
+                        //if (currentArgumentsWindow != null && IsArgumentShortcutFilled())
+                        //{
+                        //    shortcutViewModel.ExecuteSelection();
+                        //    CloseArgumentWindow();
+                        //}
+                        
                         break;
                 }
             }
@@ -154,6 +199,22 @@ namespace Heibroch.Launch.ViewModels
             }
         }
 
+        private bool IsArgumentShortcut()
+        {
+            var description = shortcutViewModel?.SelectedItem.Value?.Description ?? argumentsViewModel?.Command?.Description;
+            if (description == null) return false;
+            return 0 < GetArgs().Count();
+        }
+
+        private bool IsArgumentShortcutFilled() => shortcutExecutor.Arguments.Count >= GetArgs().Count();
+
+        private IEnumerable<string> GetArgs()
+        {
+            var description = shortcutViewModel?.SelectedItem.Value?.Description ?? argumentsViewModel?.Command?.Description;
+            if (description == null) return new List<string>();
+            return shortcutExecutor.GetArgKeys(description);
+        }
+
         private void CloseShortcutWindow()
         {
             shortcutViewModel.Reset();
@@ -161,10 +222,17 @@ namespace Heibroch.Launch.ViewModels
             currentShortcutWindow = null;
         }
 
+        private void OpenArgumentWindow()
+        {
+            currentArgumentsWindow = new ArgumentsWindow();
+            currentArgumentsWindow.DataContext = argumentsViewModel;
+            currentArgumentsWindow.Show();
+            currentArgumentsWindow.Activate();
+        }
+
         private void CloseArgumentWindow()
         {
-            argumentsViewModel.Command = string.Empty;
-            argumentsViewModel.LaunchText = string.Empty;
+            argumentsViewModel.Reset();
             currentArgumentsWindow?.Close();
             currentArgumentsWindow = null;
         }

@@ -59,7 +59,7 @@
                      FontWeight="Bold"
                      Focusable="True"
                      IsHitTestVisible="True"/>
-            <TextBlock Text="Type argument text..." 
+            <TextBlock Text="{Binding WaterMarkText, Mode=OneWay}" 
                Padding="8,0,0,0"
                Canvas.ZIndex = "100"
                VerticalAlignment="Center"

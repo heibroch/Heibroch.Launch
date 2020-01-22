@@ -1,53 +1,33 @@
-﻿using System;
+﻿using Heibroch.Launch.Plugin;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
 
 namespace Heibroch.Launch
 {
-    public interface IShortcutCollection
+    public class ShortcutCollection : IShortcutCollection<string, ILaunchShortcut>
     {
-        void Load(string directoryPath = null, bool clear = true);
+        private IStringSearchEngine<ILaunchShortcut> stringSearchEngine;
+        private IPluginLoader pluginLoader;
 
-        void Save(string filePath = null);
-
-        void Add(string shortcutName, string shortcutPath);
-
-        void Remove(string shortcutName);
-
-        void Filter(string searchString);
-
-        //void Execute(string shortcutKey);
-
-        //void ExecuteDirect(string command);
-
-        SortedList<string, string> QueryResults { get; }
-
-        string CurrentQuery { get; }
-    }
-
-    public class ShortcutCollection : IShortcutCollection
-    {
-        private IStringSearchEngine stringSearchEngine;
-
-        public ShortcutCollection()
+        public ShortcutCollection(IPluginLoader pluginLoader)
         {
-            stringSearchEngine = new StringSearchEngine();
+            this.pluginLoader = pluginLoader;
+            stringSearchEngine = new StringSearchEngine<ILaunchShortcut>();
         }
         
-        private readonly Dictionary<string, string> _shortcuts = new Dictionary<string, string>();
+        public Dictionary<string, ILaunchShortcut> Shortcuts { get; } = new Dictionary<string, ILaunchShortcut>();
 
-        public SortedList<string, string> QueryResults { get; private set; } = new SortedList<string, string>();
+        public SortedList<string, ILaunchShortcut> QueryResults { get; private set; } = new SortedList<string, ILaunchShortcut>();
 
         public string CurrentQuery { get; private set; }
         
         public void Load(string directoryPath = null, bool clear = true)
         {
             if (clear)
-                _shortcuts.Clear();
+                Shortcuts.Clear();
 
             directoryPath = directoryPath ?? $"{Constants.RootPath}";
 
@@ -61,11 +41,15 @@ namespace Heibroch.Launch
                 return;
             }
 
-            //Add special shortcuts
-            if (!_shortcuts.ContainsKey(Constants.ReloadCommand))
-                _shortcuts.Add(Constants.ReloadCommand, "This application command will reload the collection of shortcuts");
+            //foreach(var plugin in pluginLoader.Plugins)
+            //{
+            //    plugin.OnShortcutLoad();
+            //}
+            ////Add special shortcuts
+            //if (!_shortcuts.ContainsKey(Constants.ReloadCommand))
+            //    _shortcuts.Add(Constants.ReloadCommand, "This application command will reload the collection of shortcuts");
             
-            //Add files
+            //Create default file if it doesn't exist
             var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.ShortcutFileExtension)).ToList();
             if (!files.Any())
             {
@@ -88,7 +72,7 @@ namespace Heibroch.Launch
             {
                 //Add shortcuts in case of modification needed
                 var fileInfo = new FileInfo(file);
-                _shortcuts.Add(fileInfo.Name, file);
+                Shortcuts.Add(fileInfo.Name, new LaunchShortcut(fileInfo.Name, file));
 
                 var lines = File.ReadAllLines(file);
                 foreach (var line in lines)
@@ -103,48 +87,43 @@ namespace Heibroch.Launch
                         continue;
                     }
 
+                    var plugin = pluginLoader.Plugins.Where(x => !string.IsNullOrWhiteSpace(x.ShortcutFilter)).FirstOrDefault(x => values[1].ToLower().StartsWith(x.ShortcutFilter.ToLower()));
+                                        
                     //Update or add
-                    if (_shortcuts.ContainsKey(values[0]))
-                        _shortcuts[values[0]] = values[1];
-                    else
-                        _shortcuts.Add(values[0], values[1]);
+                    Shortcuts[values[0]] = plugin?.CreateShortcut(values[0], values[1]) ?? new LaunchShortcut(values[0], values[1]);
                 }
             }
         }
 
-        public void Save(string filePath = null)
-        {
-            filePath = filePath ?? $"{Constants.RootPath}\\{Constants.ShortcutFileName}";
-            
-            var stringBuilder = new StringBuilder();
-            foreach (var shortcut in _shortcuts)
-            {
-                stringBuilder.AppendLine($"{shortcut.Key};{shortcut.Value}");
-            }
+        //public void Save(string filePath = null)
+        //{
+        //    filePath = filePath ?? $"{Constants.RootPath}\\{Constants.ShortcutFileName}";
 
-            File.WriteAllText(filePath, stringBuilder.ToString());
-        }
+        //    var stringBuilder = new StringBuilder();
+        //    foreach (var shortcut in _shortcuts)
+        //    {
+        //        stringBuilder.AppendLine($"{shortcut.Key};{shortcut.Value}");
+        //    }
 
-        public void Add(string shortcutName, string shortcutPath)
-        {
-            if (_shortcuts.ContainsKey(shortcutName))
-                _shortcuts[shortcutName] = shortcutPath;
-            else
-                _shortcuts.Add(shortcutName, shortcutPath);
-        }
+        //    File.WriteAllText(filePath, stringBuilder.ToString());
+        //}
+
+        //public void Add(string shortcutName, string shortcutPath) => shortcuts[shortcutName] = shortcutPath;
 
         public void Remove(string shortcutName)
         {
-            if (!_shortcuts.ContainsKey(shortcutName)) return;
-            _shortcuts.Remove(shortcutName);
+            if (!Shortcuts.ContainsKey(shortcutName)) return;
+            Shortcuts.Remove(shortcutName);
         }
         
         public void Filter(string searchString)
         {
-            QueryResults = stringSearchEngine.Search(searchString, _shortcuts);
+            QueryResults = stringSearchEngine.Search(searchString, Shortcuts);
             CurrentQuery = searchString;
         }
-        
+
+        public void Add(ILaunchShortcut launchShortcut) => Shortcuts.Add(launchShortcut.Title, launchShortcut);
+
         //public void Execute(string shortcutKey)
         //{
         //    if (string.IsNullOrWhiteSpace(shortcutKey)) return;

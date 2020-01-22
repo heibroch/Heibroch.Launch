@@ -3,27 +3,35 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using Heibroch.Common.Wpf;
+using Heibroch.Launch.Plugin;
 
 namespace Heibroch.Launch.ViewModels
 {
     public class ShortcutViewModel : ViewModelBase
     {
-        private readonly IShortcutCollection shortcutCollection;
+        private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly IShortcutExecutor shortcutExecutor;
+        private readonly IPluginLoader pluginLoader;
         private readonly SelectionCycler selectionCycler;
-        private KeyValuePair<string, string> selectedItem;
+        private KeyValuePair<string, ILaunchShortcut> selectedItem;
 
-        public ShortcutViewModel(IShortcutCollection shortcutCollection, 
-                                 IShortcutExecutor shortcutExecutor)
+        public ShortcutViewModel(IShortcutCollection<string, ILaunchShortcut> shortcutCollection, 
+                                 IShortcutExecutor shortcutExecutor,
+                                 IPluginLoader pluginLoader)
         {
             this.shortcutCollection = shortcutCollection;
             this.shortcutExecutor = shortcutExecutor;
+            this.pluginLoader = pluginLoader;
             selectionCycler = new SelectionCycler();
 
             Initialize();
         }
 
-        private void Initialize() => shortcutCollection.Load();
+        private void Initialize()
+        {
+            shortcutCollection.Load();
+            pluginLoader.Plugins.ForEach(x => x.OnShortcutsLoaded());
+        }
         
         public string LaunchText
         {
@@ -50,11 +58,11 @@ namespace Heibroch.Launch.ViewModels
             }
         }
         
-        public SortedList<string, string> DisplayedQueryResults => new SortedList<string, string>(selectionCycler.SubSelect(QueryResults).ToDictionary(x => x.Key, x => x.Value));
+        public SortedList<string, ILaunchShortcut> DisplayedQueryResults => new SortedList<string, ILaunchShortcut>(selectionCycler.SubSelect(QueryResults).ToDictionary(x => x.Key, x => x.Value));
 
-        public SortedList<string, string> QueryResults => shortcutCollection.QueryResults;
+        public SortedList<string, ILaunchShortcut> QueryResults => shortcutCollection.QueryResults;
 
-        public KeyValuePair<string, string> SelectedItem
+        public KeyValuePair<string, ILaunchShortcut> SelectedItem
         {
             get => selectedItem;
             set
