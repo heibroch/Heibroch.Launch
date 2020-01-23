@@ -25,11 +25,11 @@ Shutdown;[CMD]shutdown /s /f
 
 Or sending an E-mail..........
 
-ComplainToPornSite;mailto:support@github.com
+ComplainToSite;mailto:support@github.com
 
 Or remoting to a server or pc. Note that "[remote]" must be before the server name..........
 
-Open Dat Porn Server;[remote]mydomain.myserver
+Open Dat Server;[remote]mydomain.myserver
 
 Or EVEN BETTER! You can share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
 avoids pesky navigation when your coworker asks you where those documentation files are. Note that it will scan the folder for 
