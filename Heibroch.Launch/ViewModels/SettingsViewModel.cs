@@ -25,7 +25,11 @@ namespace Heibroch.Launch.ViewModels
             Enum.TryParse(this.settingCollection.Settings.FirstOrDefault(x => x.Key == "Key").Value, out Keys key);
             Key = key;
 
-            SaveCommand = new ActionCommand(x => this.settingCollection.Save(Modifier1, Modifier2, Key));
+            SaveCommand = new ActionCommand(x =>
+            {
+                this.settingCollection.Save(Modifier1, Modifier2, Key);
+                MessageBox.Show("Settings saved!");
+            });
         }
 
         public ModifierKeys Modifier1 { get; set; }
@@ -39,5 +43,7 @@ namespace Heibroch.Launch.ViewModels
         public List<ModifierKeys> ModifierKeys { get; set; }
 
         public ActionCommand SaveCommand { get; set; }
+
+        public string SettingsTitle => $"{Application.ProductName} v. {Application.ProductVersion}";
     }
 }

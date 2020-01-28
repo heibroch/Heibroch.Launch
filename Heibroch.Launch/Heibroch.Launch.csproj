@@ -28,7 +28,7 @@
     <ProductName>Heibroch Launch</ProductName>
     <PublisherName>Heibroch</PublisherName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>2020.01.28.%2a</ApplicationVersion>
+    <ApplicationVersion>0.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>

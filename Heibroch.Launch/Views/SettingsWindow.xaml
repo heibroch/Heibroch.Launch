@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Heibroch.Launch.Views"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="Auto" Width="800">
+        Title="{Binding SettingsTitle}" Height="250" Width="500">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -24,6 +24,6 @@
         <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier1}"/>
         <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier2}"/>
         <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Keys}" SelectedValue="{Binding Key}"/>
-        <Button Grid.ColumnSpan="2" Grid.Row="4" Content="Save" Command="{Binding SaveCommand}"/>
+        <Button Grid.ColumnSpan="2" Grid.Row="4" Content="Save" Command="{Binding SaveCommand}" IsEnabled="{Binding CanExecuteSaveCommand}"/>
     </Grid>
 </Window>
