@@ -23,7 +23,7 @@
                 <DropShadowEffect ShadowDepth="6"/>
             </Grid.Effect>
             <Grid.Resources>
-                <ResourceDictionary>
+                <!--<ResourceDictionary>
                     <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="#34373a"/>
                     <SolidColorBrush x:Key="DefaultForegroundBrush" Color="#f4f6f7"/>
 
@@ -43,6 +43,11 @@
                         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
                         <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
                     </Style>
+                </ResourceDictionary>-->
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="/Resources/DarkTheme.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </Grid.Resources>
             <Grid.RowDefinitions>
