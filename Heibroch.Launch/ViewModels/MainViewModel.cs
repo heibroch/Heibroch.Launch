@@ -52,7 +52,7 @@ namespace Heibroch.Launch.ViewModels
             this.pluginLoader = pluginLoader;
             Initialize();
         }
-        
+
         private void Initialize()
         {
             shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, pluginLoader);
@@ -66,7 +66,7 @@ namespace Heibroch.Launch.ViewModels
             dispatcherTimer.Tick += OnDispatcherTimerTick;
             dispatcherTimer.Start();
 
-            trayIcon = new TrayIcon(OnTrayIconContextMenuItemClicked, new List<string> {"Settings", "Exit"});
+            trayIcon = new TrayIcon(OnTrayIconContextMenuItemClicked, new List<string> { "Settings", "Exit" });
         }
 
         private void OnTrayIconContextMenuItemClicked(string obj)
@@ -89,7 +89,7 @@ namespace Heibroch.Launch.ViewModels
         private void OnDispatcherTimerTick(object sender, EventArgs e)
         {
             if (currentShortcutWindow == null) return;
-            
+
             if (!currentShortcutWindow.IsActive)
                 currentShortcutWindow.Activate();
 
@@ -116,7 +116,7 @@ namespace Heibroch.Launch.ViewModels
                         break;
                     case 0x0000000D: //Enter
                         obj.ProcessKey = false;
-                                            
+
                         //If the current shortcut window is open and doesn't have args, then execute it
                         if (currentShortcutWindow != null && !IsArgumentShortcut())
                         {
@@ -132,7 +132,7 @@ namespace Heibroch.Launch.ViewModels
 
                             var command = argumentsViewModel.Command;
                             var arguments = GetArgs();
-                            
+
                             CloseArgumentWindow();
 
                             if (arguments.Count() <= shortcutExecutor.Arguments.Count)
@@ -140,7 +140,7 @@ namespace Heibroch.Launch.ViewModels
                                 shortcutExecutor.Execute(command.Title, command);
                                 break;
                             }
-                            
+
                             var argumentKey = arguments.ElementAt(shortcutExecutor.Arguments.Count);
 
                             argumentsViewModel.Command = command;
@@ -148,7 +148,7 @@ namespace Heibroch.Launch.ViewModels
 
                             if (IsArgumentShortcutFilled())
                                 break;
-                            
+
                             OpenArgumentWindow();
                         }
 
@@ -157,39 +157,31 @@ namespace Heibroch.Launch.ViewModels
                         {
                             var command = shortcutViewModel.SelectedItem.Value;
                             var argumentKey = GetArgs().ElementAt(shortcutExecutor.Arguments.Count);
-                                                        
+
                             CloseShortcutWindow();
 
                             argumentsViewModel.Command = command;
                             argumentsViewModel.ArgumentKey = argumentKey;
-                            argumentsViewModel.ExecuteArgument();
-
+                           
                             OpenArgumentWindow();
                             break;
                         }
-                        
+
                         //if the arg window is open and it's filled out, then execute the shortcut
                         if (currentArgumentsWindow != null && IsArgumentShortcut() && IsArgumentShortcutFilled())
                         {
-                            shortcutViewModel.ExecuteSelection();
+                            argumentsViewModel.Execute();
                             CloseArgumentWindow();
                             break;
                         }
-                        
-                        ////If the current argument window is open and all args are filled out, then execute it
-                        //if (currentArgumentsWindow != null && IsArgumentShortcutFilled())
-                        //{
-                        //    shortcutViewModel.ExecuteSelection();
-                        //    CloseArgumentWindow();
-                        //}
-                        
+
                         break;
                 }
             }
             else if (Keyboard.Modifiers == (settingsViewModel.Modifier1 | settingsViewModel.Modifier2) && obj.Key == (int)settingsViewModel.Key) //Space
             {
                 currentShortcutWindow = new ShortcutWindow();
-                currentShortcutWindow.DataContext = shortcutViewModel; 
+                currentShortcutWindow.DataContext = shortcutViewModel;
                 currentShortcutWindow.Show();
                 currentShortcutWindow.Activate();
 
@@ -203,7 +195,7 @@ namespace Heibroch.Launch.ViewModels
         {
             var description = shortcutViewModel?.SelectedItem.Value?.Description ?? argumentsViewModel?.Command?.Description;
             if (description == null) return false;
-            return 0 < GetArgs().Count();
+            return shortcutExecutor.IsArgShortcut(description);
         }
 
         private bool IsArgumentShortcutFilled() => shortcutExecutor.Arguments.Count >= GetArgs().Count();

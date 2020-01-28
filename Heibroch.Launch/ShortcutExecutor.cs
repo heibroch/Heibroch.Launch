@@ -22,7 +22,7 @@ namespace Heibroch.Launch
     {
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly IPluginLoader pluginLoader;
-        
+
         public ShortcutExecutor(IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                                 IPluginLoader pluginLoader)
         {
@@ -46,10 +46,10 @@ namespace Heibroch.Launch
             launchShortcut.Execute(new Dictionary<string, string>(), GetFormattedString(Arguments, launchShortcut.Description));
             Arguments.Clear();
         }
-        
+
         private string GetFormattedString(Dictionary<string, string> arguments, string description)
         {
-            foreach(var argument in arguments)
+            foreach (var argument in arguments)
             {
                 var stringToReplace = $"[Arg={argument.Key}]";
                 description = description.Replace(stringToReplace, argument.Value);
@@ -107,19 +107,17 @@ namespace Heibroch.Launch
             var argumentKey = "[Arg=";
             var shortcutLength = shortcut.Length;
             var argumentValues = new List<string>();
+
+            if (!shortcut.Contains(argumentKey)) return argumentValues;
+
             for (int i = 0; i < shortcutLength; i++)
             {
                 if (shortcut.Length <= i + argumentKey.Length) break;
-                if (!shortcut.StartsWith(argumentKey)) continue;
 
                 var currentFullString = shortcut.Substring(i, shortcutLength - i);
-                if (!currentFullString.Contains('[')) continue;
+                if (!currentFullString.StartsWith(argumentKey) || !currentFullString.Contains(']')) continue;
 
-                var nextIndexOfArgumentKey = currentFullString.IndexOf(argumentKey[0]);
-                currentFullString = currentFullString.Substring(nextIndexOfArgumentKey, currentFullString.Length - nextIndexOfArgumentKey);
-                if (!currentFullString.Contains(']')) continue;
-
-                var fullArgumentKeyAndValue = currentFullString.Substring(0, currentFullString.IndexOf(']') + 1);                                
+                var fullArgumentKeyAndValue = currentFullString.Substring(0, currentFullString.IndexOf(']') + 1);
                 if (!fullArgumentKeyAndValue.StartsWith("[") || !fullArgumentKeyAndValue.EndsWith("]")) continue;
 
                 var argumentKeyAndValue = fullArgumentKeyAndValue.Substring(1, fullArgumentKeyAndValue.Length - 2);
