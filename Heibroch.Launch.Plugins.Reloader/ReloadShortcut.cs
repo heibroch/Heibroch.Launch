@@ -14,6 +14,10 @@ namespace Reload
 
         public string Description => "This application command will reload the collection of shortcuts";
 
-        public Action<IEnumerable<KeyValuePair<string, string>>, string> Execute => (IEnumerable<KeyValuePair<string, string>> args, string formattedDescription) => shortcutCollection.Load();
+        public Action<IEnumerable<KeyValuePair<string, string>>, string> Execute => (IEnumerable<KeyValuePair<string, string>> args, string formattedDescription) =>
+        {
+            shortcutCollection.Load();
+            shortcutCollection.Add(this);
+        };
     }
 }

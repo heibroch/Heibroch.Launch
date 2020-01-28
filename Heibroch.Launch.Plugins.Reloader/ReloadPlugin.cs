@@ -29,6 +29,6 @@ namespace Reload
 
         public void OnShortcutLoad() { }
 
-        public void OnShortcutsLoaded() { shortcutCollection.Add(reloadShortcut); }
+        public void OnShortcutsLoaded() => shortcutCollection.Add(reloadShortcut);
     }
 }
