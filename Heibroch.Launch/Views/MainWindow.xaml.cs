@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Input;
 using Heibroch.Common;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Plugin;
@@ -23,41 +21,64 @@ namespace Heibroch.Launch.Views
                 
         public MainWindow()
         {
-            InitializeComponent();
-            
-            eventBus = new EventBus();
-            Container.Current.Register<IEventBus>(eventBus);
-
-            pluginLoader = new PluginLoader();
-            Container.Current.Register<IPluginLoader>(pluginLoader);
-            
-            var shortcutCollection = new ShortcutCollection(pluginLoader);
-            Container.Current.Register<IShortcutCollection<string, ILaunchShortcut>>(shortcutCollection);
-
-            var shortcutExecutor = new ShortcutExecutor(shortcutCollection, pluginLoader);
-            Container.Current.Register<IShortcutExecutor>(shortcutExecutor);
-
-            var settingCollection = new SettingCollection();
-            Container.Current.Register<ISettingCollection>(settingCollection);
-
-            pluginLoader.Load();
-
-            foreach (var plugin in pluginLoader.Plugins)
+            try
             {
-                try
-                {
-                    plugin.OnProgramLoaded();
-                }
-                catch (Exception exception)
-                {
-                    System.Windows.MessageBox.Show($"{exception.ToString()}\r\n{exception.StackTrace}");
-                }                
-            }
+                //Fixes an issue with current directory being system32 for the plugin loader and not the application path as desired
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Setting base directory...", EventLogEntryType.Information);
+                Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
-            DataContext = new MainViewModel();
-            
-            hookId = SetHook(proc);            
-            Closing += OnMainWindowClosing;
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing components...", EventLogEntryType.Information);
+                InitializeComponent();
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing eventbus...", EventLogEntryType.Information);
+                eventBus = new EventBus();
+                Container.Current.Register<IEventBus>(eventBus);
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing plugin loader...", EventLogEntryType.Information);
+                pluginLoader = new PluginLoader();
+                Container.Current.Register<IPluginLoader>(pluginLoader);
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing shortcut collection...", EventLogEntryType.Information);
+                var shortcutCollection = new ShortcutCollection(pluginLoader);
+                Container.Current.Register<IShortcutCollection<string, ILaunchShortcut>>(shortcutCollection);
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing shortcut executor...", EventLogEntryType.Information);
+                var shortcutExecutor = new ShortcutExecutor(shortcutCollection, pluginLoader);
+                Container.Current.Register<IShortcutExecutor>(shortcutExecutor);
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing setting collection...", EventLogEntryType.Information);
+                var settingCollection = new SettingCollection();
+                Container.Current.Register<ISettingCollection>(settingCollection);
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing plugins...", EventLogEntryType.Information);
+                pluginLoader.Load();
+
+                foreach (var plugin in pluginLoader.Plugins)
+                {
+                    try
+                    {
+                        plugin.OnProgramLoaded();
+                    }
+                    catch (Exception exception)
+                    {
+                        System.Windows.MessageBox.Show($"{exception.ToString()}\r\n{exception.StackTrace}");
+                    }
+                }
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing main view model...", EventLogEntryType.Information);
+                DataContext = new MainViewModel();
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initializing hooks...", EventLogEntryType.Information);
+                hookId = SetHook(proc);
+                Closing += OnMainWindowClosing;
+
+                EventLog.WriteEntry("Heibroch.Launch - Initializing", "Initialization complete", EventLogEntryType.Information);
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry("Heibroch.Launch", ex.StackTrace, EventLogEntryType.Error);
+                throw ex;
+            }            
         }
 
         private void OnTrayIconDoubleClick(object sender, EventArgs e)

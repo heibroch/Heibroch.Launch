@@ -2,6 +2,7 @@
 using Heibroch.Launch.Plugin;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -29,12 +30,17 @@ namespace Heibroch.Launch
 
         public void Load()
         {
-            var pluginDirectories = Directory.GetDirectories("Plugins");
+            var path = Environment.CurrentDirectory + "\\Plugins";
+            EventLog.WriteEntry("Heibroch.Launch - Initializing", $"Listing plugin directories...\r\nPath: {path}", EventLogEntryType.Information);
+            var pluginDirectories = Directory.GetDirectories(Environment.CurrentDirectory + "\\Plugins");
+            var currentPluginDirectory = string.Empty;
 
-            foreach(var pluginDirectory in pluginDirectories)
+            foreach (var pluginDirectory in pluginDirectories)
             {
                 try
                 {
+                    currentPluginDirectory = pluginDirectory;
+
                     //var appDomain = AppDomain.CreateDomain(pluginDirectory, null, appDomainSetup);
                     var assemblyFiles = Directory.GetFiles(pluginDirectory, "*.dll");
 
@@ -78,8 +84,9 @@ namespace Heibroch.Launch
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
+                    EventLog.WriteEntry("Heibroch.Launch - Initializing", $"Initializing plugin failed...\r\n \r\n {ex.StackTrace}", EventLogEntryType.Error);
                     MessageBox.Show($"Could not load plugin from: \"{pluginDirectory}\"\r\n{ex}");
                 }                                
             }
