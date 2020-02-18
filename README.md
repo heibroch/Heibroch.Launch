@@ -39,6 +39,13 @@ in your app data folder (Pssst! It's there the MyShortcuts.hscut-file is) :) ...
 
 [SearchPath];\\myserver.dk\myshare\HeibrochLaunchShortcutFolder\
 
+An important thing to know is that you can add arguments to your shortcuts. It has the following syntax:
+MyMyAwesomeFolder;"[<shortcut>][Arg=<argumentName>][</shortcut>]"
+  
+If you want an example:
+
+Send mail to coworker;[Arg=Coworker Initials]@gmail.com
+
 
 NEXT...
 - A [SwitchIfExists] optional tag will be possible to add to shortcuts. This means that if it's started a previous process, then it will switch to that existing process rather than starting a new one. This can help if you e.g. use some web-links often.
