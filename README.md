@@ -1,3 +1,6 @@
+Dependencies:
+- Heibroch
+---------------------------------------------------------------------------
 # Heibroch.Launch
 This is for the person/team who just can't remember every darn shortcut or is too lazy to navigate to it.
 It's sort of like any other shortcut tool (think Launchy), but instead you specify your own shortcuts. It also has a bit extra :)
