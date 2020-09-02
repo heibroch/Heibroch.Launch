@@ -1,4 +1,5 @@
 ﻿using Heibroch.Common;
+using Heibroch.Launch.Events;
 using Heibroch.Launch.Plugin;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,13 @@ namespace Heibroch.Launch
 
     public class PluginLoader : IPluginLoader
     {
+        private readonly IEventBus eventBus;
         private List<Assembly> loadedAssemblies = new List<Assembly>();
 
-        public PluginLoader()
+        public PluginLoader(IEventBus eventBus)
         {
             Plugins = new List<ILaunchPlugin>();
+            this.eventBus = eventBus;
         }
 
         public List<ILaunchPlugin> Plugins { get; }
@@ -31,7 +34,7 @@ namespace Heibroch.Launch
         public void Load()
         {
             var path = Environment.CurrentDirectory + "\\Plugins";
-            EventLog.WriteEntry("Heibroch.Launch - Initializing", $"Listing plugin directories...\r\nPath: {path}", EventLogEntryType.Information);
+            eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Listing plugin directories...\r\nPath: {path}", EventLogEntryType.Information));
             var pluginDirectories = Directory.GetDirectories(Environment.CurrentDirectory + "\\Plugins");
             var currentPluginDirectory = string.Empty;
 
@@ -86,7 +89,7 @@ namespace Heibroch.Launch
                 }
                 catch (Exception ex)
                 {
-                    EventLog.WriteEntry("Heibroch.Launch - Initializing", $"Initializing plugin failed...\r\n \r\n {ex.StackTrace}", EventLogEntryType.Error);
+                    eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Initializing plugin failed...\r\n \r\n {ex.StackTrace}", EventLogEntryType.Error));
                     MessageBox.Show($"Could not load plugin from: \"{pluginDirectory}\"\r\n{ex}");
                 }                                
             }

@@ -1,4 +1,6 @@
-﻿using Heibroch.Launch.Plugin;
+﻿using Heibroch.Common;
+using Heibroch.Launch.Events;
+using Heibroch.Launch.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,10 +13,14 @@ namespace Heibroch.Launch
     {
         private IStringSearchEngine<ILaunchShortcut> stringSearchEngine;
         private IPluginLoader pluginLoader;
+        private readonly IEventBus eventBus;
 
-        public ShortcutCollection(IPluginLoader pluginLoader)
+        public ShortcutCollection(IPluginLoader pluginLoader,
+                                  IEventBus eventBus)
         {
             this.pluginLoader = pluginLoader;
+            this.eventBus = eventBus;
+
             stringSearchEngine = new StringSearchEngine<ILaunchShortcut>();
         }
         
@@ -33,7 +39,7 @@ namespace Heibroch.Launch
 
             if (!Directory.Exists(directoryPath))
             {
-                EventLog.WriteEntry(Constants.ApplicationName, $"Could not locate directory\r\n{Environment.StackTrace}");
+                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"Could not locate directory\r\n{Environment.StackTrace}", EventLogEntryType.Information));
 
                 if (directoryPath == Constants.RootPath)
                     Directory.CreateDirectory(Constants.RootPath);
@@ -53,7 +59,7 @@ namespace Heibroch.Launch
             var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.ShortcutFileExtension)).ToList();
             if (!files.Any())
             {
-                EventLog.WriteEntry(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error);
+                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error));
                 var defaultShortcutFilePath = directoryPath + "\\MyShortcuts.hscut";
                 
                 var fileStream = File.Create(defaultShortcutFilePath);

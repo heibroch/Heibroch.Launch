@@ -106,6 +106,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionCommand.cs" />
+    <Compile Include="Events\LogEntryPublished.cs" />
     <Compile Include="Implementation\Cache.cs" />
     <Compile Include="Implementation\CacheFilter.cs" />
     <Compile Include="Implementation\CacheIndex.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Interfaces\ICache.cs" />
     <Compile Include="Interfaces\ICacheItem.cs" />
     <Compile Include="LaunchShortcut.cs" />
+    <Compile Include="LogService.cs" />
     <Compile Include="PluginLoader.cs" />
     <Compile Include="SelectionCycler.cs" />
     <Compile Include="SettingCollection.cs" />

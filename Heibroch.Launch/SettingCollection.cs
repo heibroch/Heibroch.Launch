@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Heibroch.Common;
+using Heibroch.Launch.Events;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -21,8 +23,11 @@ namespace Heibroch.Launch
 
     public class SettingCollection : ISettingCollection
     {
-        public SettingCollection()
+        private readonly IEventBus eventBus;
+
+        public SettingCollection(IEventBus eventBus)
         {
+            this.eventBus = eventBus;
         }
 
         public SortedList<string, string> Settings { get; private set; } = new SortedList<string, string>();
@@ -36,7 +41,7 @@ namespace Heibroch.Launch
 
             if (!Directory.Exists(directoryPath))
             {
-                EventLog.WriteEntry(Constants.ApplicationName, $"Could not locate directory\r\n{Environment.StackTrace}");
+                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"Could not locate directory\r\n{Environment.StackTrace}", EventLogEntryType.Information));
 
                 if (directoryPath == Constants.RootPath)
                     Directory.CreateDirectory(Constants.RootPath);
@@ -48,7 +53,7 @@ namespace Heibroch.Launch
             var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.SettingFileExtension)).ToList();
             if (!files.Any())
             {
-                EventLog.WriteEntry(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error);
+                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error));
                 var defaultFilePath = directoryPath + "Settings" + Constants.SettingFileExtension;
 
                 var fileStream = File.Create(defaultFilePath);

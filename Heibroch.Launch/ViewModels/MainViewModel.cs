@@ -66,7 +66,7 @@ namespace Heibroch.Launch.ViewModels
             dispatcherTimer.Tick += OnDispatcherTimerTick;
             dispatcherTimer.Start();
 
-            trayIcon = new TrayIcon(OnTrayIconContextMenuItemClicked, new List<string> { "Settings", "Exit" });
+            trayIcon = new TrayIcon(eventBus, OnTrayIconContextMenuItemClicked, new List<string> { "Settings", "Exit" });
         }
 
         private void OnTrayIconContextMenuItemClicked(string obj)
