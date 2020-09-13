@@ -12,31 +12,31 @@ You can do various actions by adding a line in the shortcut file. All you need t
 and the shortcut path with a ';'...
 
 ---------------------------------------------------------------------------
-========== OPENING A FOLDER ================================================
+-=< OPENING A FOLDER >=-
 MyAwesomeFolder;"C:\source\MyFolder\"
 
 ---------------------------------------------------------------------------
-========== OPENING A FILE ==================================================
+-=< OPENING A FILE >=-
 MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
 
 ---------------------------------------------------------------------------
-========== OPENING A LINK ==================================================
+-=< OPENING A LINK >=-
 My Favourite site;"www.github.com"
 
 ---------------------------------------------------------------------------
-========== RUNNING A CMD COMMAND ===========================================
+-=< RUNNING A CMD COMMAND >=- 
 Shutdown;[CMD]shutdown /s /f
 
 ---------------------------------------------------------------------------
-========== SENDING AN EMAIL ================================================
+-=< SENDING AN EMAIL >=-
 ComplainToSite;mailto:support@github.com
 
 ---------------------------------------------------------------------------
-========== REMOTING TO A MACHINE (NOTE TAG "[Remote]") =====================
+-=< REMOTING TO A MACHINE (NOTE TAG "[Remote]") >=-
 Open Dat Server;[Remote]mydomain.myserver
 
 ---------------------------------------------------------------------------
-========== COPYING PREDEFINED TEXT STRINGS (NOTE TAG "[CopyText]" ==========
+-=< COPYING PREDEFINED TEXT STRINGS (NOTE TAG "[CopyText]" >=-
 My database connection;[CopyText]db.dev.github.com;1433
 
 ---------------------------------------------------------------------------
