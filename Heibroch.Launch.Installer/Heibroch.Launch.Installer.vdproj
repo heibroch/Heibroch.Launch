@@ -15,18 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_01CBC0A47858A7BF0313F2C35E032356"
-        "OwnerKey" = "8:_7E1D9FADCF6E4ED4A42BC46A6FEAF88B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_01CBC0A47858A7BF0313F2C35E032356"
-        "OwnerKey" = "8:_6329DC850BBB4508BC70BA62FE863824"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0B5F931B596D43BBB5581DEA219EC818"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,6 +23,12 @@
         {
         "MsmKey" = "8:_1ACCF1340F2A04904A4A241D6C90B289"
         "OwnerKey" = "8:_0B5F931B596D43BBB5581DEA219EC818"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2656C99BE22E4D36AA7E9D76F0F2406C"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,13 +46,19 @@
         "Entry"
         {
         "MsmKey" = "8:_4F5C1B4812B1E2F8A671FA42169BE727"
-        "OwnerKey" = "8:_6329DC850BBB4508BC70BA62FE863824"
+        "OwnerKey" = "8:_2656C99BE22E4D36AA7E9D76F0F2406C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_4F5C1B4812B1E2F8A671FA42169BE727"
         "OwnerKey" = "8:_7E1D9FADCF6E4ED4A42BC46A6FEAF88B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4F5C1B4812B1E2F8A671FA42169BE727"
+        "OwnerKey" = "8:_6329DC850BBB4508BC70BA62FE863824"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,6 +93,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_EDE9DA46CF1B89E83FB147FAB734B124"
+        "OwnerKey" = "8:_6329DC850BBB4508BC70BA62FE863824"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EDE9DA46CF1B89E83FB147FAB734B124"
+        "OwnerKey" = "8:_7E1D9FADCF6E4ED4A42BC46A6FEAF88B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_0B5F931B596D43BBB5581DEA219EC818"
         "MsmSig" = "8:_UNDEFINED"
@@ -100,7 +112,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6329DC850BBB4508BC70BA62FE863824"
+        "OwnerKey" = "8:_2656C99BE22E4D36AA7E9D76F0F2406C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,13 +124,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_01CBC0A47858A7BF0313F2C35E032356"
+        "OwnerKey" = "8:_6329DC850BBB4508BC70BA62FE863824"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4F5C1B4812B1E2F8A671FA42169BE727"
+        "OwnerKey" = "8:_EDE9DA46CF1B89E83FB147FAB734B124"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -131,6 +143,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_CD081BBF4D447F15E3AB17ECDB978373"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4F5C1B4812B1E2F8A671FA42169BE727"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -228,37 +246,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_01CBC0A47858A7BF0313F2C35E032356"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_01CBC0A47858A7BF0313F2C35E032356"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.Http.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_818697832A734060803CDDB3852B4C55"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1ACCF1340F2A04904A4A241D6C90B289"
             {
             "AssemblyRegister" = "3:1"
@@ -412,6 +399,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EDE9DA46CF1B89E83FB147FAB734B124"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+                "ScatterAssemblies"
+                {
+                    "_EDE9DA46CF1B89E83FB147FAB734B124"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Net.Http.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_818697832A734060803CDDB3852B4C55"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -503,6 +521,17 @@
                                 {
                                 }
                             }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_BBF9D7B9D9EC4BD4B415F0FF7E927C20"
+                            {
+                            "Name" = "8:Heibroch.Launch.Plugins.Copy"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_2A2E106D341843588F9B2BC200F16EC9"
+                                "Folders"
+                                {
+                                }
+                            }
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_CAF63F21A54E471685BD8DD225E915C6"
                             {
                             "Name" = "8:Heibroch.Launch.Plugins.RemoteDesktop"
@@ -546,7 +575,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Launch"
         "ProductCode" = "8:{30AA2424-C49E-4263-B7AE-9190579BB4E5}"
-        "PackageCode" = "8:{E400CFA8-EDC7-4AB4-A0F6-D33080DE4818}"
+        "PackageCode" = "8:{F948649B-862D-4088-AEC3-DE732BD6E5B5}"
         "UpgradeCode" = "8:{F2FABF04-76C2-4529-B378-FA6022FD0EB8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1107,6 +1136,34 @@
                 {
                 }
             }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2656C99BE22E4D36AA7E9D76F0F2406C"
+            {
+            "SourcePath" = "8:..\\Heibroch.Launch.Plugins.Copy\\obj\\Release\\Heibroch.Launch.Plugins.Copy.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_BBF9D7B9D9EC4BD4B415F0FF7E927C20"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{1382D720-52AD-47B1-9E23-ECA508326C18}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_623A24D6C6B840B3863C2C7C1F515602"
             {
             "SourcePath" = "8:"
@@ -1214,6 +1271,34 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{78B62F63-B8C5-4D85-8074-8B5E66608F48}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C9E3B1B9A7F24E6BAE9AC93B3F9A844A"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_BBF9D7B9D9EC4BD4B415F0FF7E927C20"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:ReferenceCopyLocalPaths"
+            "OutputProjectGuid" = "8:{1382D720-52AD-47B1-9E23-ECA508326C18}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

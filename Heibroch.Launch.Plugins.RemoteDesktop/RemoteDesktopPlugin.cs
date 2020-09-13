@@ -31,9 +31,6 @@ namespace Reload
 
         public ILaunchShortcut CreateShortcut(string title, string description) => new RemoteDesktopShortcut(ExecuteShortcut, title, description);
 
-        public void OnLoadShortcut(string shortcut)
-        {
-            throw new NotImplementedException();
-        }
+        public void OnLoadShortcut(string shortcut) => throw new NotImplementedException();
     }
 }
