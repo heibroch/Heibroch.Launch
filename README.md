@@ -2,7 +2,7 @@ Dependencies:
 - Heibroch
 
 
-# Heibroch.Launch
+### Heibroch.Launch
 This is for the person/team who just can't remember every darn shortcut or is too lazy to navigate to it.
 It's sort of like any other shortcut tool (think Launchy), but instead you specify your own shortcuts. It also has a bit extra :)
 Upon installing it default has a shortcut called "MyShortcuts.hscut". Here you can add various shortcuts. You can add multiple
@@ -10,13 +10,15 @@ files, as long as it has the extension ".hscut".
 
 You can do various actions by adding a line in the shortcut file. All you need to remember is to separate the name of the shortcut
 and the shortcut path with a ';'...
+---
+###Shotcut options
 
 ---------------------------------------------------------------------------
--=< OPENING A FOLDER >=-
+# OPENING A FOLDER
 MyAwesomeFolder;"C:\source\MyFolder\"
 
 ---------------------------------------------------------------------------
--=< OPENING A FILE >=-
+## OPENING A FILE
 MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
 
 ---------------------------------------------------------------------------
