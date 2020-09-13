@@ -30,16 +30,14 @@ Shutdown;[CMD]shutdown /s /f
 #### SENDING AN EMAIL
 ComplainToSite;mailto:support@github.com
 
----------------------------------------------------------------------------
--=< REMOTING TO A MACHINE (NOTE TAG "[Remote]") >=-
+#### REMOTING TO A MACHINE (NOTE TAG "[Remote]")
 Open Dat Server;[Remote]mydomain.myserver
 
----------------------------------------------------------------------------
--=< COPYING PREDEFINED TEXT STRINGS (NOTE TAG "[CopyText]" >=-
+#### COPYING PREDEFINED TEXT STRINGS (NOTE TAG "[CopyText]"
 My database connection;[CopyText]db.dev.github.com;1433
 
 ---------------------------------------------------------------------------
-Or EVEN BETTER! You can share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
+You can also share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
 avoids pesky navigation when your coworker asks you where those documentation files are. Note that it will scan the folder for 
 all the shortcut files available, so you can split them up as you see fit and even set read-permissions based on groups, which
 will then allow for users to have same shortcut sets based on the AD-group they're in. Note that you can still have shortcuts locally
