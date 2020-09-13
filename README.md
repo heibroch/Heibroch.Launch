@@ -28,6 +28,7 @@ and the shortcut path with a ';'...
 > Shutdown;[CMD]shutdown /s /f
 
 #### SENDING AN EMAIL
+Note that in order to send e-mails to addresses, you have to specify "mailto:" and then specify the E-mail address.
 > ComplainToSite;mailto:support@github.com
 
 #### REMOTING TO A MACHINE (NOTE TAG "[Remote]")
