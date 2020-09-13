@@ -1,6 +1,7 @@
 Dependencies:
 - Heibroch
----------------------------------------------------------------------------
+
+
 # Heibroch.Launch
 This is for the person/team who just can't remember every darn shortcut or is too lazy to navigate to it.
 It's sort of like any other shortcut tool (think Launchy), but instead you specify your own shortcuts. It also has a bit extra :)
@@ -10,27 +11,35 @@ files, as long as it has the extension ".hscut".
 You can do various actions by adding a line in the shortcut file. All you need to remember is to separate the name of the shortcut
 and the shortcut path with a ';'...
 
+---------------------------------------------------------------------------
 ========== OPENING A FOLDER ================================================
 MyAwesomeFolder;"C:\source\MyFolder\"
 
+---------------------------------------------------------------------------
 ========== OPENING A FILE ==================================================
 MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
 
+---------------------------------------------------------------------------
 ========== OPENING A LINK ==================================================
 My Favourite site;"www.github.com"
 
+---------------------------------------------------------------------------
 ========== RUNNING A CMD COMMAND ===========================================
 Shutdown;[CMD]shutdown /s /f
 
+---------------------------------------------------------------------------
 ========== SENDING AN EMAIL ================================================
 ComplainToSite;mailto:support@github.com
 
+---------------------------------------------------------------------------
 ========== REMOTING TO A MACHINE (NOTE TAG "[Remote]") =====================
 Open Dat Server;[Remote]mydomain.myserver
 
+---------------------------------------------------------------------------
 ========== COPYING PREDEFINED TEXT STRINGS (NOTE TAG "[CopyText]" ==========
 My database connection;[CopyText]db.dev.github.com;1433
 
+---------------------------------------------------------------------------
 Or EVEN BETTER! You can share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
 avoids pesky navigation when your coworker asks you where those documentation files are. Note that it will scan the folder for 
 all the shortcut files available, so you can split them up as you see fit and even set read-permissions based on groups, which
