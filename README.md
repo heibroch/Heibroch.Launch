@@ -10,29 +10,26 @@ files, as long as it has the extension ".hscut".
 You can do various actions by adding a line in the shortcut file. All you need to remember is to separate the name of the shortcut
 and the shortcut path with a ';'...
 
-Like opening a folder..........
-
+========== OPENING A FOLDER ================================================
 MyAwesomeFolder;"C:\source\MyFolder\"
 
-Or opening a file..........
-
+========== OPENING A FILE ==================================================
 MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
 
-Or launching a website..........
-
+========== OPENING A LINK ==================================================
 My Favourite site;"www.github.com"
 
-Or running a cmd command..........
-
+========== RUNNING A CMD COMMAND ===========================================
 Shutdown;[CMD]shutdown /s /f
 
-Or sending an E-mail..........
-
+========== SENDING AN EMAIL ================================================
 ComplainToSite;mailto:support@github.com
 
-Or remoting to a server or pc. Note that "[remote]" must be before the server name..........
+========== REMOTING TO A MACHINE (NOTE TAG "[Remote]") =====================
+Open Dat Server;[Remote]mydomain.myserver
 
-Open Dat Server;[remote]mydomain.myserver
+========== COPYING PREDEFINED TEXT STRINGS (NOTE TAG "[CopyText]" ==========
+My database connection;[CopyText]db.dev.github.com;1433
 
 Or EVEN BETTER! You can share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
 avoids pesky navigation when your coworker asks you where those documentation files are. Note that it will scan the folder for 
