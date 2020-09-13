@@ -31,10 +31,12 @@ Shutdown;[CMD]shutdown /s /f
 ComplainToSite;mailto:support@github.com
 
 #### REMOTING TO A MACHINE (NOTE TAG "[Remote]")
+Note the tag "[Remote]" is required to be prepended to the specified server in order to utilize remoting.
 > Open Dat Server;[Remote]mydomain.myserver
 
-#### COPYING PREDEFINED TEXT STRINGS (NOTE TAG "[CopyText]"
-My database connection;[CopyText]db.dev.github.com;1433
+#### COPYING PREDEFINED TEXT STRINGS
+Note the tag "[CopyText]" is required to be prepended to the specified text to copy.
+> My database connection;[CopyText]db.dev.github.com;1433
 
 #### DISTRIBUTED SHORTCUTS (NOTE TAG "[SearchPath]")
 You can also share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
