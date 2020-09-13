@@ -15,23 +15,19 @@ and the shortcut path with a ';'...
 
 # Shotcut options
 
-
-## OPENING A FOLDER
+#### OPENING A FOLDER
 MyAwesomeFolder;"C:\source\MyFolder\"
 
-
-## OPENING A FILE
+#### OPENING A FILE
 MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
 
-
-### OPENING A LINK 
+#### OPENING A LINK 
 My Favourite site;"www.github.com"
 
 #### RUNNING A CMD COMMAND  
 Shutdown;[CMD]shutdown /s /f
 
----------------------------------------------------------------------------
--=< SENDING AN EMAIL >=-
+#### SENDING AN EMAIL
 ComplainToSite;mailto:support@github.com
 
 ---------------------------------------------------------------------------
