@@ -16,19 +16,19 @@ and the shortcut path with a ';'...
 # Shotcut options
 
 #### OPENING A FOLDER
-MyAwesomeFolder;"C:\source\MyFolder\"
+> MyAwesomeFolder;"C:\source\MyFolder\"
 
 #### OPENING A FILE
-MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
+> MyMyAwesomeFolder;"C:\source\MyFolder\SomeVideoFile.mov"
 
 #### OPENING A LINK 
-My Favourite site;"www.github.com"
+> My Favourite site;"www.github.com"
 
 #### RUNNING A CMD COMMAND  
-Shutdown;[CMD]shutdown /s /f
+> Shutdown;[CMD]shutdown /s /f
 
 #### SENDING AN EMAIL
-ComplainToSite;mailto:support@github.com
+> ComplainToSite;mailto:support@github.com
 
 #### REMOTING TO A MACHINE (NOTE TAG "[Remote]")
 Note the tag "[Remote]" is required to be prepended to the specified server in order to utilize remoting.
@@ -45,14 +45,14 @@ all the shortcut files available, so you can split them up as you see fit and ev
 will then allow for users to have same shortcut sets based on the AD-group they're in. Note that you can still have shortcuts locally
 in your app data folder (Pssst! It's there the MyShortcuts.hscut-file is) :) ..........
 
-[SearchPath];\\myserver.dk\myshare\HeibrochLaunchShortcutFolder\
+> [SearchPath];\\myserver.dk\myshare\HeibrochLaunchShortcutFolder\
 
 An important thing to know is that you can add arguments to your shortcuts. It has the following syntax:
 MyMyAwesomeFolder;"[<shortcut>][Arg=<argumentName>][</shortcut>]"
   
 If you want an example:
 
-Send mail to coworker;[Arg=Coworker Initials]@gmail.com
+> Send mail to coworker;[Arg=Coworker Initials]@gmail.com
 
 
 NEXT...
