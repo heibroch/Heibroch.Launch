@@ -11,7 +11,9 @@ files, as long as it has the extension ".hscut".
 You can do various actions by adding a line in the shortcut file. All you need to remember is to separate the name of the shortcut
 and the shortcut path with a ';'...
 
-#Shotcut options
+------------------------------------------------------------------------------
+
+# Shotcut options
 
 
 ## OPENING A FOLDER
