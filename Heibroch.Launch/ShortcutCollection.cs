@@ -47,14 +47,6 @@ namespace Heibroch.Launch
                 return;
             }
 
-            //foreach(var plugin in pluginLoader.Plugins)
-            //{
-            //    plugin.OnShortcutLoad();
-            //}
-            ////Add special shortcuts
-            //if (!_shortcuts.ContainsKey(Constants.ReloadCommand))
-            //    _shortcuts.Add(Constants.ReloadCommand, "This application command will reload the collection of shortcuts");
-            
             //Create default file if it doesn't exist
             var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.ShortcutFileExtension)).ToList();
             if (!files.Any())
@@ -101,21 +93,6 @@ namespace Heibroch.Launch
             }
         }
 
-        //public void Save(string filePath = null)
-        //{
-        //    filePath = filePath ?? $"{Constants.RootPath}\\{Constants.ShortcutFileName}";
-
-        //    var stringBuilder = new StringBuilder();
-        //    foreach (var shortcut in _shortcuts)
-        //    {
-        //        stringBuilder.AppendLine($"{shortcut.Key};{shortcut.Value}");
-        //    }
-
-        //    File.WriteAllText(filePath, stringBuilder.ToString());
-        //}
-
-        //public void Add(string shortcutName, string shortcutPath) => shortcuts[shortcutName] = shortcutPath;
-
         public void Remove(string shortcutName)
         {
             if (!Shortcuts.ContainsKey(shortcutName)) return;
@@ -129,69 +106,5 @@ namespace Heibroch.Launch
         }
 
         public void Add(ILaunchShortcut launchShortcut) => Shortcuts.Add(launchShortcut.Title, launchShortcut);
-
-        //public void Execute(string shortcutKey)
-        //{
-        //    if (string.IsNullOrWhiteSpace(shortcutKey)) return;
-
-        //    //Just google it
-        //    if (!QueryResults.ContainsKey(shortcutKey))
-        //    {
-        //        ProcessStart("https://www.google.com/search?q=" + shortcutKey.Replace(' ', '+'));
-        //        return;
-        //    }
-
-        //    var command = QueryResults[shortcutKey];
-
-        //    if (shortcutKey.Equals(ReloadCommand))
-        //    {
-        //        Load();
-        //        return;
-        //    }
-
-        //    ProcessStart(command);
-        //}
-
-        //public void ExecuteDirect(string command)
-        //{
-        //    if (string.IsNullOrWhiteSpace(command)) return;
-        //    ProcessStart(command);
-        //}
-
-        //private void ProcessStart(string command)
-        //{
-        //    //// opens the folder in explorer
-        //    //Process.Start(@"c:\temp");
-        //    //// opens the folder in explorer
-        //    //Process.Start("explorer.exe", @"c:\temp");
-        //    //// throws exception
-        //    //Process.Start(@"c:\does_not_exist");
-        //    //// opens explorer, showing some other folder)
-        //    //Process.Start("explorer.exe", @"c:\does_not_exist");
-
-        //    try
-        //    {
-        //        var formattedCommand = command.StartsWith("\"") ? command.Substring(1, command.Length - 2) : command;
-        //        if (formattedCommand.StartsWith(Constants.CommandLineCommand))
-        //        {
-        //            var commandLineArg = command.Remove(1, Constants.CommandLineCommand.Length);
-        //            Process.Start("CMD.exe", commandLineArg);
-        //            return;
-        //        }
-        //        if (formattedCommand.StartsWith(Constants.RemoteCommand))
-        //        {
-        //            var commandLineArg = formattedCommand.Remove(0, Constants.RemoteCommand.Length);
-        //            Process.Start("mstsc.exe", "/v:" + commandLineArg);
-        //            return;
-        //        }
-
-        //        Process.Start(formattedCommand);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //        MessageBox.Show($"Failed to execute: {command}");
-        //    }
-        //}
     }
 }

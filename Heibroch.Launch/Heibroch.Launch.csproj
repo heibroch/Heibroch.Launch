@@ -105,7 +105,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ActionCommand.cs" />
     <Compile Include="Events\LogEntryPublished.cs" />
     <Compile Include="Implementation\Cache.cs" />
     <Compile Include="Implementation\CacheFilter.cs" />

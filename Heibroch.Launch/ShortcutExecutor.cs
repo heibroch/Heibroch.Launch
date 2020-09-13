@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows;
 
 namespace Heibroch.Launch
@@ -12,7 +11,6 @@ namespace Heibroch.Launch
     {
         void AddArgument(string key, string value);
         void Execute(string shortcutKey, ILaunchShortcut launchShortcut = null);
-        //void ExecuteDirect(string shortcutKey);
         IEnumerable<string> GetArgKeys(string shortcut);
         bool IsArgShortcut(string shortcut);
         Dictionary<string, string> Arguments { get; }
@@ -58,14 +56,6 @@ namespace Heibroch.Launch
             return description;
         }
 
-        //public void ExecuteDirect(string command)
-        //{
-        //    if (string.IsNullOrWhiteSpace(command)) return;
-        //    ProcessStart(command);
-
-        //    args.Clear();
-        //}
-
         private void ProcessStart(string command)
         {
             //// opens the folder in explorer
@@ -80,19 +70,6 @@ namespace Heibroch.Launch
             try
             {
                 var formattedCommand = command.StartsWith("\"") ? command.Substring(1, command.Length - 2) : command;
-                //if (formattedCommand.StartsWith(Constants.CommandLineCommand))
-                //{
-                //    var commandLineArg = command.Remove(1, Constants.CommandLineCommand.Length);
-                //    Process.Start("CMD.exe", commandLineArg);
-                //    return;
-                //}
-                //if (formattedCommand.StartsWith(Constants.RemoteCommand))
-                //{
-                //    var commandLineArg = formattedCommand.Remove(0, Constants.RemoteCommand.Length);
-                //    Process.Start("mstsc.exe", "/v:" + commandLineArg);
-                //    return;
-                //}
-
                 Process.Start(formattedCommand);
             }
             catch (Exception e)

@@ -8,22 +8,9 @@ namespace Heibroch.Launch.Views
         public ShortcutWindow()
         {
             InitializeComponent();
-            Loaded += OnMainWindowLoaded;
             QueryTextBox.Loaded += QueryTextBox_Loaded;
         }
 
-        private void QueryTextBox_Loaded(object sender, RoutedEventArgs e)
-        {
-            //QueryTextBox.Focus();
-            //QueryTextBox.Select(0, 0);
-            //FocusManager.SetFocusedElement(this, QueryTextBox);
-            Keyboard.Focus(QueryTextBox);
-        }
-
-        private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            
-
-        }
+        private void QueryTextBox_Loaded(object sender, RoutedEventArgs e) => Keyboard.Focus(QueryTextBox);
     }
 }

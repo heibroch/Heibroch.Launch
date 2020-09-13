@@ -16,7 +16,6 @@ namespace Heibroch.Launch
         public LogService(IEventBus eventBus)
         {
             this.eventBus = eventBus;
-
             this.eventBus.Subscribe<LogEntryPublished>(OnLogEntryPublished);
         }
 

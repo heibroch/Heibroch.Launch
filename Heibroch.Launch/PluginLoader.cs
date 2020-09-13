@@ -94,31 +94,5 @@ namespace Heibroch.Launch
                 }                                
             }
         }
-
-        //public Assembly LoadDependencies(string assemblyPath)
-        //{
-        //    var mainAssembly = Assembly.LoadFile(Path.GetFullPath(assemblyPath));
-        //    loadedAssemblies.Add((mainAssembly.GetName(), mainAssembly));
-            
-
-
-        //    //var assemblyNames = mainAssembly.GetReferencedAssemblies();
-            
-        //    //foreach(var assemblyDependencyName in assemblyNames)
-        //    //{
-        //    //    if (loadedAssemblies.Any(x => x.Item1 == assemblyDependencyName)) continue;
-                
-        //    //    var loadedDependency = Assembly.LoadFile(assemblyDependencyName);
-        //    //    loaded
-
-        //    //    loadedAssemblies.Add(assemblyDependencyName);
-        //    //    //loadedAssembly.nam
-        //    //    //LoadDependencies(assembly);
-        //    //}
-
-        //    //var loadedAssembly = Assembly.Load(assemblyPath);
-        //    //loadedAssemblies.Add(mainAssembly.GetName());
-        //    //return loadedAssembly;
-        //}
     }
 }

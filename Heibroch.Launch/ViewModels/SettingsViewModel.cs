@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Heibroch.Common.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;

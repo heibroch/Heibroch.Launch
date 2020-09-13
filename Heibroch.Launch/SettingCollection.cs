@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -25,10 +24,7 @@ namespace Heibroch.Launch
     {
         private readonly IEventBus eventBus;
 
-        public SettingCollection(IEventBus eventBus)
-        {
-            this.eventBus = eventBus;
-        }
+        public SettingCollection(IEventBus eventBus) => this.eventBus = eventBus;
 
         public SortedList<string, string> Settings { get; private set; } = new SortedList<string, string>();
 

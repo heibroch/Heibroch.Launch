@@ -5,10 +5,7 @@ namespace Heibroch.Launch
 {
     public class SelectionCycler
     {
-        public SelectionCycler()
-        {
-            Delta = Constants.MaxResultCount;
-        }
+        public SelectionCycler() => Delta = Constants.MaxResultCount;
 
         private int delta;
         public int Delta
