@@ -31,7 +31,7 @@ and the shortcut path with a ';'...
 Note that in order to send e-mails to addresses, you have to specify "mailto:" and then specify the E-mail address.
 > ComplainToSite;mailto:support@github.com
 
-#### REMOTING TO A MACHINE (NOTE TAG "[Remote]")
+#### REMOTING TO A MACHINE
 Note the tag "[Remote]" is required to be prepended to the specified server in order to utilize remoting.
 > Open Dat Server;[Remote]mydomain.myserver
 
@@ -39,12 +39,14 @@ Note the tag "[Remote]" is required to be prepended to the specified server in o
 Note the tag "[CopyText]" is required to be prepended to the specified text to copy.
 > My database connection;[CopyText]db.dev.github.com;1433
 
-#### DISTRIBUTED SHORTCUTS (NOTE TAG "[SearchPath]")
+#### DISTRIBUTED SHORTCUTS
 You can also share shortcuts by specifying a hscut-file on a network drive in order to share shortcuts! This
 avoids pesky navigation when your coworker asks you where those documentation files are. Note that it will scan the folder for 
 all the shortcut files available, so you can split them up as you see fit and even set read-permissions based on groups, which
 will then allow for users to have same shortcut sets based on the AD-group they're in. Note that you can still have shortcuts locally
 in your app data folder (Pssst! It's there the MyShortcuts.hscut-file is) :) ..........
+
+Note that the "name" of the shortcut actually has to be replaced with "[SearchPath]" as it is not to be included as part of the shortcuts, but rather be a catalyst for finding more shortcuts.
 
 > [SearchPath];\\myserver.dk\myshare\HeibrochLaunchShortcutFolder\
 
