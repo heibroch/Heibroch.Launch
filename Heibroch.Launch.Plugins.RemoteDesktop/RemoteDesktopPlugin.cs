@@ -13,16 +13,6 @@ namespace Reload
 
         public string ShortcutFilter => "[Remote]";
 
-        public void OnProgramLoad() { }
-
-        public void OnShortcutLoad() { }
-
-        public void OnShortcutLaunched(ILaunchShortcut shortcut) { }
-
-        public void OnProgramLoaded() { }
-
-        public void OnShortcutsLoaded() { }
-
         private void ExecuteShortcut(string title, string description)
         {
             var commandLineArg = description.Remove(0, ShortcutFilter.Length);
@@ -30,7 +20,5 @@ namespace Reload
         }
 
         public ILaunchShortcut CreateShortcut(string title, string description) => new RemoteDesktopShortcut(ExecuteShortcut, title, description);
-
-        public void OnLoadShortcut(string shortcut) => throw new NotImplementedException();
     }
 }
