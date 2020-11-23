@@ -37,7 +37,7 @@ namespace Heibroch.Launch.Views
                 Container.Current.Register<ILogService>(logService);
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugin loader...", EventLogEntryType.Information));
-                pluginLoader = new PluginLoader(eventBus);
+                pluginLoader = new PluginLoader(eventBus, Container.Current);
                 Container.Current.Register<IPluginLoader>(pluginLoader);
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut collection...", EventLogEntryType.Information));
@@ -45,7 +45,7 @@ namespace Heibroch.Launch.Views
                 Container.Current.Register<IShortcutCollection<string, ILaunchShortcut>>(shortcutCollection);
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut executor...", EventLogEntryType.Information));
-                var shortcutExecutor = new ShortcutExecutor(shortcutCollection, pluginLoader);
+                var shortcutExecutor = new ShortcutExecutor(shortcutCollection);
                 Container.Current.Register<IShortcutExecutor>(shortcutExecutor);
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing setting collection...", EventLogEntryType.Information));
@@ -54,21 +54,10 @@ namespace Heibroch.Launch.Views
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugins...", EventLogEntryType.Information));
                 pluginLoader.Load();
-
-                foreach (var plugin in pluginLoader.Plugins)
-                {
-                    try
-                    {
-                        plugin.OnProgramLoaded();
-                    }
-                    catch (Exception exception)
-                    {
-                        System.Windows.MessageBox.Show($"{exception.ToString()}\r\n{exception.StackTrace}");
-                    }
-                }
+                eventBus.Publish(new ProgramLoadedEvent());
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing main view model...", EventLogEntryType.Information));
-                DataContext = new MainViewModel();
+                DataContext = new MainViewModel(eventBus, shortcutCollection, shortcutExecutor, settingCollection, pluginLoader);
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing hooks...", EventLogEntryType.Information));
                 hookId = SetHook(proc);

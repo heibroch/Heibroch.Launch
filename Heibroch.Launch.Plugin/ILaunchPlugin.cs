@@ -2,10 +2,6 @@
 {
     public interface ILaunchPlugin
     {
-        void OnProgramLoaded();
-
-        void OnShortcutsLoaded();
-
         ILaunchShortcut CreateShortcut(string title, string description);
 
         /// <summary>

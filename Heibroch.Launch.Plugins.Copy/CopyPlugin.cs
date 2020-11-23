@@ -10,7 +10,7 @@ namespace Heibroch.Launch.Plugins.Copy
     {
         public CopyPlugin() { }
 
-        public string ShortcutFilter => "[CopyText]";
+        public string ShortcutFilter => "[Copy]";
 
         public void OnProgramLoad() { }
 
@@ -24,17 +24,17 @@ namespace Heibroch.Launch.Plugins.Copy
 
         private void ExecuteShortcut(string title, string description)
         {
-            var arg = description.Remove(0, ShortcutFilter.Length);
+            //var arg = description.Remove(0, ShortcutFilter.Length);
 
-            ////If it's a path to a file, then copy it to the clipboard
+            //If it's a path to a file, then copy it to the clipboard
             //if (File.Exists(arg))
             //{
             //    var stringCollection = new StringCollection();
             //    stringCollection.Add(arg);
-            //    Clipboard.SetFileDropList(stringCollection);
+            //    Clipboard.SetText(description);
             //    return;
             //}
-
+            
             Clipboard.SetText(description.Remove(0, ShortcutFilter.Length));
         }
 

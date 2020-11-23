@@ -21,12 +21,14 @@ namespace Heibroch.Launch
     public class PluginLoader : IPluginLoader
     {
         private readonly IEventBus eventBus;
+        private readonly IContainer container;
         private List<Assembly> loadedAssemblies = new List<Assembly>();
 
-        public PluginLoader(IEventBus eventBus)
+        public PluginLoader(IEventBus eventBus, IContainer container)
         {
             Plugins = new List<ILaunchPlugin>();
             this.eventBus = eventBus;
+            this.container = container;
         }
 
         public List<ILaunchPlugin> Plugins { get; }
@@ -76,10 +78,9 @@ namespace Heibroch.Launch
                             var resolvedParameters = new List<object>();
                             foreach (var parameter in parameters)
                             {
-                                var currentContainer = Container.Current;
-                                var method = currentContainer.GetType().GetMethod("Resolve");
+                                var method = container.GetType().GetMethod("Resolve");
                                 var genericMethod = method.MakeGenericMethod(parameter.ParameterType);
-                                var resolvedParameter = genericMethod.Invoke(currentContainer, null);
+                                var resolvedParameter = genericMethod.Invoke(container, null);
                                 resolvedParameters.Add(resolvedParameter);
                             }
                             var resolvedPlugin = constructor.Invoke(resolvedParameters.ToArray());

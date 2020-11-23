@@ -19,13 +19,10 @@ namespace Heibroch.Launch
     public class ShortcutExecutor : IShortcutExecutor
     {
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
-        private readonly IPluginLoader pluginLoader;
 
-        public ShortcutExecutor(IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
-                                IPluginLoader pluginLoader)
+        public ShortcutExecutor(IShortcutCollection<string, ILaunchShortcut> shortcutCollection)
         {
             this.shortcutCollection = shortcutCollection;
-            this.pluginLoader = pluginLoader;
             Arguments = new Dictionary<string, string>();
         }
 

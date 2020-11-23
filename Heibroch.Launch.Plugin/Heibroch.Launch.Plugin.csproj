@@ -44,7 +44,9 @@
     <Compile Include="ILaunchPlugin.cs" />
     <Compile Include="ILaunchShortcut.cs" />
     <Compile Include="IShortcutCollection.cs" />
+    <Compile Include="ProgramLoadedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShortcutsLoadedEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
