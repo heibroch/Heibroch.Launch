@@ -45,7 +45,7 @@ namespace Heibroch.Launch.ViewModels
 
         private void Initialize()
         {
-            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, pluginLoader, eventBus);
+            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, eventBus);
             settingsViewModel = new SettingsViewModel(settingCollection);
             argumentsViewModel = new ArgumentsViewModel(shortcutExecutor);
 
