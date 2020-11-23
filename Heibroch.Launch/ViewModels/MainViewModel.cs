@@ -25,20 +25,10 @@ namespace Heibroch.Launch.ViewModels
         private static SettingsViewModel settingsViewModel;
         private static ArgumentsWindow currentArgumentsWindow = null;
         private static ArgumentsViewModel argumentsViewModel;
-
-
+               
         private DispatcherTimer dispatcherTimer;
         private TrayIcon trayIcon;
-
-        public MainViewModel() : this(Container.Current.Resolve<IEventBus>(),
-                                      Container.Current.Resolve<IShortcutCollection<string, ILaunchShortcut>>(),
-                                      Container.Current.Resolve<IShortcutExecutor>(),
-                                      Container.Current.Resolve<ISettingCollection>(),
-                                      Container.Current.Resolve<IPluginLoader>())
-        {
-
-        }
-
+        
         public MainViewModel(IEventBus eventBus,
                              IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                              IShortcutExecutor shortcutExecutor,
@@ -55,7 +45,7 @@ namespace Heibroch.Launch.ViewModels
 
         private void Initialize()
         {
-            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, pluginLoader);
+            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, pluginLoader, eventBus);
             settingsViewModel = new SettingsViewModel(settingCollection);
             argumentsViewModel = new ArgumentsViewModel(shortcutExecutor);
 
