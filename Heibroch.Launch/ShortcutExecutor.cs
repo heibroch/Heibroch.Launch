@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Web;
 using System.Windows;
 
 namespace Heibroch.Launch
@@ -33,7 +34,7 @@ namespace Heibroch.Launch
             //Just google it
             if (!shortcutCollection.Shortcuts.ContainsKey(shortcutKey))
             {
-                ProcessStart("https://www.google.com/search?q=" + shortcutKey.Replace(' ', '+'));
+                ProcessStart("https://www.google.com/search?q=" + HttpUtility.UrlEncode(shortcutKey));
                 return;
             }
 
