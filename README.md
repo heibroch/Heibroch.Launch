@@ -59,6 +59,10 @@ If you want an example:
 
 
 NEXT...
+- Improved first-use functionality
+-- Start the application after installation
+-- Tutorial that will pop up the first time the application
+-- Styling of the controls to highlight buttons etc.
 - A [SwitchIfExists] optional tag will be possible to add to shortcuts. This means that if it's started a previous process, then it will switch to that existing process rather than starting a new one. This can help if you e.g. use some web-links often.
 - On opening the shortcut window, it will display the last 5 things you selected, in an order of what you've used the most over the last week.
 - In setting, being able to open the folder location or file for the given shortcuts.
