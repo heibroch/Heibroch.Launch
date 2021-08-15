@@ -5,30 +5,67 @@ namespace Heibroch.Launch
 {
     public interface IStringSearchEngine<T>
     {
-        SortedList<string, T> Search(string searchString, Dictionary<string, T> _shortcuts);
+        List<KeyValuePair<string, T>> Search(string searchString, Dictionary<string, T> _shortcuts);
     }
 
     public class StringSearchEngine<T> : IStringSearchEngine<T>
     {
-        public SortedList<string, T> Search(string searchString, Dictionary<string, T> _shortcuts)
+        public bool IsMatch(string stringToSearch, string searchString)
+        {
+            //Run through string and pair up characters along the string to search
+            var searchStringIndex = 0;
+            for (int stringToSearchIndex = 0; stringToSearchIndex < stringToSearch.Length; stringToSearchIndex++)
+            {
+                //If there's no match in the current character in the string to the first character in the search string, then progress to
+                //the next character in the string we are trying to find matches in
+                if (stringToSearch[stringToSearchIndex] != searchString[searchStringIndex])
+                {
+                    continue;
+                }
+
+                //If there's a match, then increment the index
+                searchStringIndex++;
+
+                if (searchStringIndex >= searchString.Length)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public List<KeyValuePair<string, T>> Search(string searchString, Dictionary<string, T> shortcuts)
         {
             searchString = searchString.ToLower();
 
-            SortedList<string, T> searchResults;
             //It should be an empty list if no query string
             if (string.IsNullOrWhiteSpace(searchString))
-            {
-                searchResults = new SortedList<string, T>();
-            }
+                return new List<KeyValuePair<string, T>>();
+            
             //Redo the list
-            else
+
+            //Add exact matches
+            var exactMatches = new List<KeyValuePair<string, T>>();
+            var runningMatches = new List<KeyValuePair<string, T>>();
+
+            //Add running matches
+            foreach (var shortcut in shortcuts)
             {
-                searchResults = new SortedList<string, T>(_shortcuts
-                    .Where(x => x.Key.ToLower().StartsWith(searchString) || x.Key.ToLower().Contains(searchString))
-                    .ToDictionary(z => z.Key, y => y.Value));
+                //Is exact match
+                if (shortcut.Key.ToLower().Contains(searchString))
+                {
+                    exactMatches.Add(shortcut);
+                    continue;
+                }
+
+                //Is sticky match
+                if (IsMatch(shortcut.Key.ToLower(), searchString))
+                    runningMatches.Add(shortcut);
             }
 
-            return searchResults;
+            var results = new List<KeyValuePair<string, T>>();
+            results.AddRange(exactMatches.OrderBy(x => x.Key));
+            results.AddRange(runningMatches.OrderBy(x => x.Key));
+            return results;
         }
     }
 }

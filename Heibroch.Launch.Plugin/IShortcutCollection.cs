@@ -12,7 +12,7 @@ namespace Heibroch.Launch.Plugin
 
         void Filter(TKey searchKey);
 
-        SortedList<TKey, ILaunchShortcut> QueryResults { get; }
+        List<KeyValuePair<TKey, ILaunchShortcut>> QueryResults { get; }
 
         Dictionary<string, ILaunchShortcut> Shortcuts { get; }
 

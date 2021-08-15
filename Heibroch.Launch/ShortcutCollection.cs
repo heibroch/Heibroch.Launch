@@ -26,7 +26,7 @@ namespace Heibroch.Launch
         
         public Dictionary<string, ILaunchShortcut> Shortcuts { get; } = new Dictionary<string, ILaunchShortcut>();
 
-        public SortedList<string, ILaunchShortcut> QueryResults { get; private set; } = new SortedList<string, ILaunchShortcut>();
+        public List<KeyValuePair<string, ILaunchShortcut>> QueryResults { get; private set; } = new List<KeyValuePair<string, ILaunchShortcut>>();
 
         public string CurrentQuery { get; private set; }
         
