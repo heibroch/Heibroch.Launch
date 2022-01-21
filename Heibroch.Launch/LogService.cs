@@ -4,7 +4,9 @@ using System.Diagnostics;
 
 namespace Heibroch.Launch
 {
-    public interface ILogService { }
+    public interface ILogService 
+    { 
+    }
 
     internal class LogService : ILogService
     {

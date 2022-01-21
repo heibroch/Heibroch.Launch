@@ -53,16 +53,16 @@ namespace Heibroch.Launch.ViewModels
                 RaisePropertyChanged(nameof(QueryResultsVisibility));
                 RaisePropertyChanged(nameof(WaterMarkVisibility));
 
-                if (!QueryResults.ContainsKey(selectedItem.Key ?? string.Empty))
+                if (!QueryResults.Any(x => x.Key == (selectedItem.Key ?? string.Empty)))
                     SelectedItem = QueryResults.FirstOrDefault();
 
                 RaisePropertyChanged(nameof(SelectedItem));
             }
         }
         
-        public SortedList<string, ILaunchShortcut> DisplayedQueryResults => new SortedList<string, ILaunchShortcut>(selectionCycler.SubSelect(QueryResults).ToDictionary(x => x.Key, x => x.Value));
+        public List<KeyValuePair<string, ILaunchShortcut>> DisplayedQueryResults => new List<KeyValuePair<string, ILaunchShortcut>>(selectionCycler.SubSelect(QueryResults));
 
-        public SortedList<string, ILaunchShortcut> QueryResults => shortcutCollection.QueryResults;
+        public List<KeyValuePair<string, ILaunchShortcut>> QueryResults => shortcutCollection.QueryResults;
 
         public KeyValuePair<string, ILaunchShortcut> SelectedItem
         {
@@ -93,7 +93,7 @@ namespace Heibroch.Launch.ViewModels
                 return;
             }
 
-            if (!DisplayedQueryResults.ContainsKey(SelectedItem.Key) && DisplayedQueryResults.Any())
+            if (!DisplayedQueryResults.Any(x => x.Key == SelectedItem.Key) && DisplayedQueryResults.Any())
             {
                 SelectedItem = DisplayedQueryResults.First();
                 return;
@@ -105,7 +105,7 @@ namespace Heibroch.Launch.ViewModels
                 return;
             }
 
-            var index = DisplayedQueryResults.IndexOfKey(SelectedItem.Key) + increment;
+            var index = DisplayedQueryResults.FindIndex(x => x.Key == SelectedItem.Key) + increment;
             if (index >= DisplayedQueryResults.Count || index < 0) return;
 
             RaisePropertyChanged(nameof(DisplayedQueryResults));

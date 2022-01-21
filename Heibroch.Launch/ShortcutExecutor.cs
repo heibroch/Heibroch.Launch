@@ -38,7 +38,7 @@ namespace Heibroch.Launch
                 return;
             }
 
-            launchShortcut = launchShortcut ?? shortcutCollection.QueryResults[shortcutKey];
+            launchShortcut = launchShortcut ?? shortcutCollection.QueryResults.First(x => x.Key == shortcutKey).Value;
             launchShortcut.Execute(new Dictionary<string, string>(), GetFormattedString(Arguments, launchShortcut.Description));
             Arguments.Clear();
         }
