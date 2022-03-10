@@ -32,5 +32,13 @@ namespace Heibroch.Launch
 
             public const string Settings = "Settings";
         }
+
+        public static class SettingNames
+        {
+            public const string Modifier1 = "Modifier1";
+            public const string Modifier2 = "Modifier2";
+            public const string Key = "Key";
+            public const string UseStickySearch = "UseStickySearch";
+        }
     }
 }

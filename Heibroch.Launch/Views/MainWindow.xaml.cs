@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using Heibroch.Common;
 using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 using Heibroch.Launch.Plugin;
 using Heibroch.Launch.ViewModels;
 
@@ -14,7 +15,7 @@ namespace Heibroch.Launch.Views
     {
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
-        private static LowLevelKeyboardProc proc = HookCallback;
+        private static LowLevelKeyboardProc lowLevelKeyboardProc = HookCallback;
         private static IntPtr hookId = IntPtr.Zero;
         private static IEventBus eventBus;
         private IPluginLoader pluginLoader;
@@ -40,27 +41,32 @@ namespace Heibroch.Launch.Views
                 pluginLoader = new PluginLoader(eventBus, Container.Current);
                 Container.Current.Register<IPluginLoader>(pluginLoader);
 
+                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing string search engine...", EventLogEntryType.Information));
+                var stringSearchEngine = new StringSearchEngine<ILaunchShortcut>();
+
+                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing settings repository...", EventLogEntryType.Information));
+                var settingsRepository = new SettingsRepository(eventBus);
+                Container.Current.Register<ISettingsRepository>(settingsRepository);
+
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut collection...", EventLogEntryType.Information));
-                var shortcutCollection = new ShortcutCollection(pluginLoader, eventBus);
+                var shortcutCollection = new ShortcutCollection(pluginLoader, eventBus, stringSearchEngine, settingsRepository);
                 Container.Current.Register<IShortcutCollection<string, ILaunchShortcut>>(shortcutCollection);
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut executor...", EventLogEntryType.Information));
                 var shortcutExecutor = new ShortcutExecutor(shortcutCollection);
                 Container.Current.Register<IShortcutExecutor>(shortcutExecutor);
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing setting collection...", EventLogEntryType.Information));
-                var settingCollection = new SettingCollection(eventBus);
-                Container.Current.Register<ISettingCollection>(settingCollection);
+                
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugins...", EventLogEntryType.Information));
                 pluginLoader.Load();
                 eventBus.Publish(new ProgramLoadedEvent());
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing main view model...", EventLogEntryType.Information));
-                DataContext = new MainViewModel(eventBus, shortcutCollection, shortcutExecutor, settingCollection, pluginLoader);
+                DataContext = new MainViewModel(eventBus, shortcutCollection, shortcutExecutor, settingsRepository);
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing hooks...", EventLogEntryType.Information));
-                hookId = SetHook(proc);
+                hookId = SetHook(lowLevelKeyboardProc);
                 Closing += OnMainWindowClosing;
 
                 eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initialization complete", EventLogEntryType.Information));
@@ -84,9 +90,9 @@ namespace Heibroch.Launch.Views
 
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
-            using (Process curProcess = Process.GetCurrentProcess())
+            using (var curProcess = Process.GetCurrentProcess())
             {
-                using (ProcessModule curModule = curProcess.MainModule)
+                using (var curModule = curProcess.MainModule)
                 {
                     return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
                 }
@@ -108,7 +114,7 @@ namespace Heibroch.Launch.Views
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lowLevelKeyboardProc, IntPtr hMod, uint dwThreadId);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

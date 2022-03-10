@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch", "Heibroch.Launch\Heibroch.Launch.csproj", "{530C1FCE-29AE-4C01-880B-030C2DD55A08}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Plugins.RemoteDesktop", "Heibroch.Launch.Plugins.RemoteDesktop\Heibroch.Launch.Plugins.RemoteDesktop.csproj", "{7ECEA85D-731E-4667-8B26-B20E5D789A4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Plugins.Copy", "Heibroch.Launch.Plugins.Copy\Heibroch.Launch.Plugins.Copy.csproj", "{1382D720-52AD-47B1-9E23-ECA508326C18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Interfaces", "Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj", "{513CDA26-0D6B-4808-973F-AE5647809595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,18 @@ Global
 		{1382D720-52AD-47B1-9E23-ECA508326C18}.Test|Any CPU.Build.0 = Release|Any CPU
 		{1382D720-52AD-47B1-9E23-ECA508326C18}.Test|x64.ActiveCfg = Release|Any CPU
 		{1382D720-52AD-47B1-9E23-ECA508326C18}.Test|x64.Build.0 = Release|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Debug|x64.Build.0 = Debug|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Release|x64.ActiveCfg = Release|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Release|x64.Build.0 = Release|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Test|x64.ActiveCfg = Debug|Any CPU
+		{513CDA26-0D6B-4808-973F-AE5647809595}.Test|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using Heibroch.Common;
 using Heibroch.Common.Wpf;
 using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 using Heibroch.Launch.Plugin;
 using Heibroch.Launch.Views;
 
@@ -17,8 +18,7 @@ namespace Heibroch.Launch.ViewModels
 
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly IShortcutExecutor shortcutExecutor;
-        private readonly ISettingCollection settingCollection;
-        private readonly IPluginLoader pluginLoader;
+        private readonly ISettingsRepository settingRepository;
         private static ShortcutWindow currentShortcutWindow = null;
         private static ShortcutViewModel shortcutViewModel;
         private static SettingsWindow currentSettingsWindow = null;
@@ -32,21 +32,19 @@ namespace Heibroch.Launch.ViewModels
         public MainViewModel(IEventBus eventBus,
                              IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                              IShortcutExecutor shortcutExecutor,
-                             ISettingCollection settingCollection,
-                             IPluginLoader pluginLoader)
+                             ISettingsRepository settingsRepository)
         {
             this.eventBus = eventBus;
             this.shortcutCollection = shortcutCollection;
             this.shortcutExecutor = shortcutExecutor;
-            this.settingCollection = settingCollection;
-            this.pluginLoader = pluginLoader;
+            this.settingRepository = settingsRepository;
             Initialize();
         }
 
         private void Initialize()
         {
             shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, eventBus);
-            settingsViewModel = new SettingsViewModel(settingCollection);
+            settingsViewModel = new SettingsViewModel(settingRepository);
             argumentsViewModel = new ArgumentsViewModel(shortcutExecutor);
 
             eventBus.Subscribe<GlobalKeyPressed>(OnKeyPressed);

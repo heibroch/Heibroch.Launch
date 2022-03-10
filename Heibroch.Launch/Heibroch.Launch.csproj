@@ -107,20 +107,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Events\LogEntryPublished.cs" />
-    <Compile Include="Implementation\Cache.cs" />
-    <Compile Include="Implementation\CacheFilter.cs" />
-    <Compile Include="Implementation\CacheIndex.cs" />
-    <Compile Include="Interfaces\ICacheFilter.cs" />
-    <Compile Include="Interfaces\ICacheIndex.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Events\GlobalKeyPressed.cs" />
-    <Compile Include="Interfaces\ICache.cs" />
-    <Compile Include="Interfaces\ICacheItem.cs" />
     <Compile Include="LaunchShortcut.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="PluginLoader.cs" />
     <Compile Include="SelectionCycler.cs" />
-    <Compile Include="SettingCollection.cs" />
+    <Compile Include="SettingsRepository.cs" />
     <Compile Include="ShortcutExecutor.cs" />
     <Compile Include="StringSearchEngine.cs" />
     <Compile Include="TrayIcon.cs" />
@@ -228,6 +221,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj">
+      <Project>{513CDA26-0D6B-4808-973F-AE5647809595}</Project>
+      <Name>Heibroch.Launch.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj">
       <Project>{8d4f631d-3fe8-4cbb-919e-e18aadecedb8}</Project>
       <Name>Heibroch.Launch.Plugin</Name>

@@ -1,5 +1,6 @@
 ﻿using Heibroch.Common;
 using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 using Heibroch.Launch.Plugin;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,19 @@ namespace Heibroch.Launch
     public class ShortcutCollection : IShortcutCollection<string, ILaunchShortcut>
     {
         private IStringSearchEngine<ILaunchShortcut> stringSearchEngine;
+        private readonly ISettingsRepository settingsRepository;
         private IPluginLoader pluginLoader;
         private readonly IEventBus eventBus;
 
         public ShortcutCollection(IPluginLoader pluginLoader,
-                                  IEventBus eventBus)
+                                  IEventBus eventBus,
+                                  IStringSearchEngine<ILaunchShortcut> stringSearchEngine,
+                                  ISettingsRepository settingsRepository)
         {
             this.pluginLoader = pluginLoader;
             this.eventBus = eventBus;
-
-            stringSearchEngine = new StringSearchEngine<ILaunchShortcut>();
+            this.stringSearchEngine = stringSearchEngine;
+            this.settingsRepository = settingsRepository;
         }
         
         public Dictionary<string, ILaunchShortcut> Shortcuts { get; } = new Dictionary<string, ILaunchShortcut>();
@@ -101,7 +105,8 @@ namespace Heibroch.Launch
         
         public void Filter(string searchString)
         {
-            QueryResults = stringSearchEngine.Search(searchString, Shortcuts);
+            settingsRepository.Settings.TryGetValue(Constants.SettingNames.UseStickySearch, out var useStickySearch);
+            QueryResults = stringSearchEngine.Search(searchString, Shortcuts, bool.Parse(useStickySearch));
             CurrentQuery = searchString;
         }
 

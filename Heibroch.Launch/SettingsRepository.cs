@@ -1,32 +1,22 @@
 ﻿using Heibroch.Common;
 using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using System.Windows.Input;
 
 namespace Heibroch.Launch
 {
-    public interface ISettingCollection
-    {
-        void Load(string directoryPath = null, bool clear = true);
-
-        void Save(ModifierKeys modifier1, ModifierKeys modifier2, Keys key, string filePath = null);
-
-        SortedList<string, string> Settings { get; }
-    }
-
-    public class SettingCollection : ISettingCollection
+    public class SettingsRepository : ISettingsRepository
     {
         private readonly IEventBus eventBus;
 
-        public SettingCollection(IEventBus eventBus) => this.eventBus = eventBus;
+        public SettingsRepository(IEventBus eventBus) => this.eventBus = eventBus;
 
-        public SortedList<string, string> Settings { get; private set; } = new SortedList<string, string>();
+        public SortedList<string, string> Settings { get; } = new SortedList<string, string>();
 
         public void Load(string directoryPath = null, bool clear = true)
         {
@@ -54,9 +44,10 @@ namespace Heibroch.Launch
 
                 var fileStream = File.Create(defaultFilePath);
                 var streamWriter = new StreamWriter(fileStream);
-                streamWriter.Write("Modifier1;Control\r\n" +
-                                   "Modifier2;Shift\r\n" +
-                                   "Key;Space");
+                streamWriter.Write($"{Constants.SettingNames.Modifier1};Control\r\n" +
+                                   $"{Constants.SettingNames.Modifier2};Shift\r\n" +
+                                   $"{Constants.SettingNames.Key};Space\r\n" +
+                                   $"{Constants.SettingNames.UseStickySearch};true");
 
                 streamWriter.Flush();
                 streamWriter.Dispose();
@@ -80,16 +71,26 @@ namespace Heibroch.Launch
             }
         }
 
-        public void Save(ModifierKeys modifier1, ModifierKeys modifier2, Keys key, string filePath = null)
+        /// <summary> 
+        /// </summary>
+        /// <param name="modifier1">System.Windows.Input.ModifierKeys</param>
+        /// <param name="modifier2">System.Windows.Input.ModifierKeys</param>
+        /// <param name="key">System.Windows.Forms.Keys</param>
+        /// <param name="useStickySearch"></param>
+        /// <param name="filePath"></param>
+        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, string filePath = null)
         {
             filePath = filePath ?? $"{Constants.RootPath}{Constants.SettingFileName}{Constants.SettingFileExtension}";
 
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"Modifier1;{modifier1}");
-            stringBuilder.AppendLine($"Modifier2;{modifier2}");
-            stringBuilder.AppendLine($"Key;{key}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.Modifier1};{modifier1}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.Modifier2};{modifier2}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.Key};{key}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.UseStickySearch};{useStickySearch}");
 
             File.WriteAllText(filePath, stringBuilder.ToString());
+
+            Load();
         }
     }
 }

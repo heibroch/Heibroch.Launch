@@ -5,12 +5,12 @@ namespace Heibroch.Launch
 {
     public interface IStringSearchEngine<T>
     {
-        List<KeyValuePair<string, T>> Search(string searchString, Dictionary<string, T> _shortcuts);
+        List<KeyValuePair<string, T>> Search(string searchString, Dictionary<string, T> _shortcuts, bool useStickySearch);
     }
 
     public class StringSearchEngine<T> : IStringSearchEngine<T>
     {
-        public bool IsMatch(string stringToSearch, string searchString)
+        public bool IsStickyMatch(string stringToSearch, string searchString)
         {
             //Run through string and pair up characters along the string to search
             var searchStringIndex = 0;
@@ -33,7 +33,7 @@ namespace Heibroch.Launch
             return false;
         }
 
-        public List<KeyValuePair<string, T>> Search(string searchString, Dictionary<string, T> shortcuts)
+        public List<KeyValuePair<string, T>> Search(string searchString, Dictionary<string, T> shortcuts, bool useStickySearch)
         {
             searchString = searchString.ToLower();
 
@@ -58,7 +58,7 @@ namespace Heibroch.Launch
                 }
 
                 //Is sticky match
-                if (IsMatch(shortcut.Key.ToLower(), searchString))
+                if (useStickySearch && IsStickyMatch(shortcut.Key.ToLower(), searchString))
                     runningMatches.Add(shortcut);
             }
 

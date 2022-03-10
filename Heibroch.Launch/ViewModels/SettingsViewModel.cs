@@ -1,4 +1,5 @@
 ﻿using Heibroch.Common.Wpf;
+using Heibroch.Launch.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,28 +8,30 @@ using System.Windows.Input;
 
 namespace Heibroch.Launch.ViewModels
 {
-    public class SettingsViewModel
+    public class SettingsViewModel : ViewModelBase
     {
-        private readonly ISettingCollection settingCollection;
+        private readonly ISettingsRepository settingsRepository;
 
-        public SettingsViewModel(ISettingCollection settingCollection)
+        public SettingsViewModel(ISettingsRepository settingsRepository)
         {
-            this.settingCollection = settingCollection;
-            this.settingCollection.Load();
+            this.settingsRepository = settingsRepository;
+            this.settingsRepository.Load();
 
             ModifierKeys = Enum.GetValues(typeof(ModifierKeys)).Cast<ModifierKeys>().ToList();
             Keys = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
 
-            Enum.TryParse(this.settingCollection.Settings.FirstOrDefault(x => x.Key == "Modifier1").Value, out ModifierKeys modifierKey1);
+            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "Modifier1").Value, out ModifierKeys modifierKey1);
             Modifier1 = modifierKey1;
-            Enum.TryParse(this.settingCollection.Settings.FirstOrDefault(x => x.Key == "Modifier2").Value, out ModifierKeys modifierKey2);
+            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "Modifier2").Value, out ModifierKeys modifierKey2);
             Modifier2 = modifierKey2;
-            Enum.TryParse(this.settingCollection.Settings.FirstOrDefault(x => x.Key == "Key").Value, out Keys key);
+            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "Key").Value, out Keys key);
             Key = key;
-
+            bool.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "UseStickySearch").Value, out bool useStickySearch);
+            UseStickySearch = useStickySearch;
+            
             SaveCommand = new ActionCommand(x =>
             {
-                this.settingCollection.Save(Modifier1, Modifier2, Key);
+                this.settingsRepository.Save(Modifier1.ToString(), Modifier2.ToString(), Key.ToString(), UseStickySearch);
                 MessageBox.Show("Settings saved!");
             });
         }
@@ -38,6 +41,20 @@ namespace Heibroch.Launch.ViewModels
         public ModifierKeys Modifier2 { get; set; }
 
         public Keys Key { get; set; }
+
+        private bool useStickySearch;
+        public bool UseStickySearch
+        {
+            get
+            {
+                return useStickySearch;
+            }
+            set
+            {
+                useStickySearch = value;
+                RaisePropertyChanged(nameof(UseStickySearch));
+            }
+        }
 
         public List<Keys> Keys { get; set; }
 
