@@ -84,6 +84,18 @@
     <Reference Include="Heibroch.Common.Wpf">
       <HintPath>..\..\Heibroch\Heibroch.Common.Wpf\bin\Release\Heibroch.Common.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Heibroch.Infrastructure.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net5.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Heibroch.Infrastructure.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Logging\bin\Release\net5.0\Heibroch.Infrastructure.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Heibroch.Infrastructure.MessageBus, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.MessageBus\bin\Release\net5.0\Heibroch.Infrastructure.MessageBus.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -109,8 +121,8 @@
     <Compile Include="Events\LogEntryPublished.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Events\GlobalKeyPressed.cs" />
+    <Compile Include="Events\ShortcutExecutingStarted.cs" />
     <Compile Include="LaunchShortcut.cs" />
-    <Compile Include="LogService.cs" />
     <Compile Include="PluginLoader.cs" />
     <Compile Include="SelectionCycler.cs" />
     <Compile Include="SettingsRepository.cs" />

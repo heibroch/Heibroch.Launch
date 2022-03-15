@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Heibroch.Common;
 using Heibroch.Common.Wpf;
+using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Interfaces;
 using Heibroch.Launch.Plugin;
@@ -14,7 +15,7 @@ namespace Heibroch.Launch.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly IEventBus eventBus;
+        private readonly IInternalMessageBus internalMessageBus;
 
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly IShortcutExecutor shortcutExecutor;
@@ -29,12 +30,12 @@ namespace Heibroch.Launch.ViewModels
         private DispatcherTimer dispatcherTimer;
         private TrayIcon trayIcon;
         
-        public MainViewModel(IEventBus eventBus,
+        public MainViewModel(IInternalMessageBus internalMessageBus,
                              IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                              IShortcutExecutor shortcutExecutor,
                              ISettingsRepository settingsRepository)
         {
-            this.eventBus = eventBus;
+            this.internalMessageBus = internalMessageBus;
             this.shortcutCollection = shortcutCollection;
             this.shortcutExecutor = shortcutExecutor;
             this.settingRepository = settingsRepository;
@@ -43,18 +44,18 @@ namespace Heibroch.Launch.ViewModels
 
         private void Initialize()
         {
-            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, eventBus);
+            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, internalMessageBus);
             settingsViewModel = new SettingsViewModel(settingRepository);
             argumentsViewModel = new ArgumentsViewModel(shortcutExecutor);
 
-            eventBus.Subscribe<GlobalKeyPressed>(OnKeyPressed);
+            internalMessageBus.Subscribe<GlobalKeyPressed>(OnKeyPressed);
 
             dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background);
             dispatcherTimer.Interval = TimeSpan.FromMilliseconds(100);
             dispatcherTimer.Tick += OnDispatcherTimerTick;
             dispatcherTimer.Start();
 
-            trayIcon = new TrayIcon(eventBus, OnTrayIconContextMenuItemClicked, new List<string> { "Settings", "Exit" });
+            trayIcon = new TrayIcon(internalMessageBus, OnTrayIconContextMenuItemClicked, new List<string> { "Settings", "Exit" });
         }
 
         private void OnTrayIconContextMenuItemClicked(string obj)

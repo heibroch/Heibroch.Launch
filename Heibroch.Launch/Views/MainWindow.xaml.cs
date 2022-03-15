@@ -4,6 +4,10 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Heibroch.Common;
+using Heibroch.Infrastructure.Interfaces.Logging;
+using Heibroch.Infrastructure.Interfaces.MessageBus;
+using Heibroch.Infrastructure.Logging;
+using Heibroch.Infrastructure.Messaging;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Interfaces;
 using Heibroch.Launch.Plugin;
@@ -17,63 +21,66 @@ namespace Heibroch.Launch.Views
         private const int WM_KEYDOWN = 0x0100;
         private static LowLevelKeyboardProc lowLevelKeyboardProc = HookCallback;
         private static IntPtr hookId = IntPtr.Zero;
-        private static IEventBus eventBus;
+        private static IInternalMessageBus internalMessageBus;
         private IPluginLoader pluginLoader;
                 
         public MainWindow()
         {
             try
             {
-                eventBus = new EventBus();
-                Container.Current.Register<IEventBus>(eventBus);
+                var internalLogger = new InternalLogger();
+                internalLogger.LogInfoAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Information);
+                internalLogger.LogWarningAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Warning);
+                internalLogger.LogErrorAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Error);
+                Container.Current.Register<IInternalLogger>(internalLogger);
+
+                internalMessageBus = new InternalMessageBus(internalLogger);
+                Container.Current.Register<IInternalMessageBus>(internalMessageBus);
 
                 //Fixes an issue with current directory being system32 for the plugin loader and not the application path as desired
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Setting base directory...", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Setting base directory...", EventLogEntryType.Information));
                 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing components...", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing components...", EventLogEntryType.Information));
                 InitializeComponent();
-                
-                var logService = new LogService(eventBus);
-                Container.Current.Register<ILogService>(logService);
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugin loader...", EventLogEntryType.Information));
-                pluginLoader = new PluginLoader(eventBus, Container.Current);
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugin loader...", EventLogEntryType.Information));
+                pluginLoader = new PluginLoader(internalMessageBus, Container.Current);
                 Container.Current.Register<IPluginLoader>(pluginLoader);
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing string search engine...", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing string search engine...", EventLogEntryType.Information));
                 var stringSearchEngine = new StringSearchEngine<ILaunchShortcut>();
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing settings repository...", EventLogEntryType.Information));
-                var settingsRepository = new SettingsRepository(eventBus);
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing settings repository...", EventLogEntryType.Information));
+                var settingsRepository = new SettingsRepository(internalMessageBus);
                 Container.Current.Register<ISettingsRepository>(settingsRepository);
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut collection...", EventLogEntryType.Information));
-                var shortcutCollection = new ShortcutCollection(pluginLoader, eventBus, stringSearchEngine, settingsRepository);
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut collection...", EventLogEntryType.Information));
+                var shortcutCollection = new ShortcutCollection(pluginLoader, internalMessageBus, stringSearchEngine, settingsRepository);
                 Container.Current.Register<IShortcutCollection<string, ILaunchShortcut>>(shortcutCollection);
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut executor...", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing shortcut executor...", EventLogEntryType.Information));
                 var shortcutExecutor = new ShortcutExecutor(shortcutCollection);
                 Container.Current.Register<IShortcutExecutor>(shortcutExecutor);
 
-                
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugins...", EventLogEntryType.Information));
+
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugins...", EventLogEntryType.Information));
                 pluginLoader.Load();
-                eventBus.Publish(new ProgramLoadedEvent());
+                internalMessageBus.Publish(new ProgramLoadedEvent());
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing main view model...", EventLogEntryType.Information));
-                DataContext = new MainViewModel(eventBus, shortcutCollection, shortcutExecutor, settingsRepository);
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing main view model...", EventLogEntryType.Information));
+                DataContext = new MainViewModel(internalMessageBus, shortcutCollection, shortcutExecutor, settingsRepository);
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing hooks...", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing hooks...", EventLogEntryType.Information));
                 hookId = SetHook(lowLevelKeyboardProc);
                 Closing += OnMainWindowClosing;
 
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initialization complete", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initialization complete", EventLogEntryType.Information));
             }
             catch (Exception ex)
             {
-                eventBus.Publish(new LogEntryPublished("Heibroch.Launch", ex.StackTrace, EventLogEntryType.Error));
+                internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch", ex.StackTrace, EventLogEntryType.Error));
                 throw ex;
             }            
         }
@@ -106,7 +113,7 @@ namespace Heibroch.Launch.Views
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 var globalKeyPressed = new GlobalKeyPressed() { Key = Marshal.ReadInt32(lParam) };
-                eventBus.Publish(globalKeyPressed);
+                internalMessageBus.Publish(globalKeyPressed);
                 if (!globalKeyPressed.ProcessKey) return new IntPtr(1);
             }
 

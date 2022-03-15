@@ -1,4 +1,5 @@
 ﻿using Heibroch.Common;
+using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Interfaces;
 using Heibroch.Launch.Plugin;
@@ -15,15 +16,15 @@ namespace Heibroch.Launch
         private IStringSearchEngine<ILaunchShortcut> stringSearchEngine;
         private readonly ISettingsRepository settingsRepository;
         private IPluginLoader pluginLoader;
-        private readonly IEventBus eventBus;
+        private readonly IInternalMessageBus internalMessageBus;
 
         public ShortcutCollection(IPluginLoader pluginLoader,
-                                  IEventBus eventBus,
+                                  IInternalMessageBus internalMessageBus,
                                   IStringSearchEngine<ILaunchShortcut> stringSearchEngine,
                                   ISettingsRepository settingsRepository)
         {
             this.pluginLoader = pluginLoader;
-            this.eventBus = eventBus;
+            this.internalMessageBus = internalMessageBus;
             this.stringSearchEngine = stringSearchEngine;
             this.settingsRepository = settingsRepository;
         }
@@ -43,7 +44,7 @@ namespace Heibroch.Launch
 
             if (!Directory.Exists(directoryPath))
             {
-                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"Could not locate directory\r\n{Environment.StackTrace}", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"Could not locate directory\r\n{Environment.StackTrace}", EventLogEntryType.Information));
 
                 if (directoryPath == Constants.RootPath)
                     Directory.CreateDirectory(Constants.RootPath);
@@ -55,7 +56,7 @@ namespace Heibroch.Launch
             var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.ShortcutFileExtension)).ToList();
             if (!files.Any())
             {
-                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error));
+                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error));
                 var defaultShortcutFilePath = directoryPath + "\\MyShortcuts.hscut";
                 
                 var fileStream = File.Create(defaultShortcutFilePath);

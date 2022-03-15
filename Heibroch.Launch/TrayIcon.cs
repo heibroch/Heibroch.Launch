@@ -1,4 +1,5 @@
 ﻿using Heibroch.Common;
+using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Heibroch.Launch
         private readonly NotifyIcon notifyIcon;
         private readonly Action<string> contextMenuItemClicked;
 
-        public TrayIcon(IEventBus eventBus, Action<string> contextMenuItemClicked, List<string> contextMenuItems)
+        public TrayIcon(IInternalMessageBus internalMessageBus, Action<string> contextMenuItemClicked, List<string> contextMenuItems)
         {
             try
             {
@@ -40,8 +41,8 @@ namespace Heibroch.Launch
             {
                 MessageBox.Show("Could not launch tray icon.\r\nApplication will continue without");
 
-                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"TrayIcon creation failed!\r\n{e}", EventLogEntryType.Information));
-                eventBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"TrayIcon creation failed!\r\n{e}", EventLogEntryType.Information));
+                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"", EventLogEntryType.Information));
             }            
         }
 

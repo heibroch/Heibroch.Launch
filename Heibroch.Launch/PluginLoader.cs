@@ -1,4 +1,5 @@
 ﻿using Heibroch.Common;
+using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Plugin;
 using System;
@@ -20,14 +21,14 @@ namespace Heibroch.Launch
 
     public class PluginLoader : IPluginLoader
     {
-        private readonly IEventBus eventBus;
+        private readonly IInternalMessageBus internalMessageBus;
         private readonly IContainer container;
         private List<Assembly> loadedAssemblies = new List<Assembly>();
 
-        public PluginLoader(IEventBus eventBus, IContainer container)
+        public PluginLoader(IInternalMessageBus internalMessageBus, IContainer container)
         {
             Plugins = new List<ILaunchPlugin>();
-            this.eventBus = eventBus;
+            this.internalMessageBus = internalMessageBus;
             this.container = container;
         }
 
@@ -36,7 +37,7 @@ namespace Heibroch.Launch
         public void Load()
         {
             var path = Environment.CurrentDirectory + "\\Plugins";
-            eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Listing plugin directories...\r\nPath: {path}", EventLogEntryType.Information));
+            internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Listing plugin directories...\r\nPath: {path}", EventLogEntryType.Information));
             var pluginDirectories = Directory.GetDirectories(Environment.CurrentDirectory + "\\Plugins");
             var currentPluginDirectory = string.Empty;
 
@@ -90,7 +91,7 @@ namespace Heibroch.Launch
                 }
                 catch (Exception ex)
                 {
-                    eventBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Initializing plugin failed...\r\n \r\n {ex.StackTrace}", EventLogEntryType.Error));
+                    internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Initializing plugin failed...\r\n \r\n {ex.StackTrace}", EventLogEntryType.Error));
                     MessageBox.Show($"Could not load plugin from: \"{pluginDirectory}\"\r\n{ex}");
                 }                                
             }

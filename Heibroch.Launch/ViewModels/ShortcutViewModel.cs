@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using Heibroch.Common;
 using Heibroch.Common.Wpf;
+using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Plugin;
 
 namespace Heibroch.Launch.ViewModels
@@ -12,17 +13,17 @@ namespace Heibroch.Launch.ViewModels
     {
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly IShortcutExecutor shortcutExecutor;
-        private readonly IEventBus eventBus;
+        private readonly IInternalMessageBus internalMessageBus;
         private readonly SelectionCycler selectionCycler;
         private KeyValuePair<string, ILaunchShortcut> selectedItem;
         
         public ShortcutViewModel(IShortcutCollection<string, ILaunchShortcut> shortcutCollection, 
                                  IShortcutExecutor shortcutExecutor,
-                                 IEventBus eventBus)
+                                 IInternalMessageBus internalMessageBus)
         {
             this.shortcutCollection = shortcutCollection;
             this.shortcutExecutor = shortcutExecutor;
-            this.eventBus = eventBus;
+            this.internalMessageBus = internalMessageBus;
 
             selectionCycler = new SelectionCycler();
 
@@ -32,7 +33,7 @@ namespace Heibroch.Launch.ViewModels
         private void Initialize()
         {
             shortcutCollection.Load();
-            eventBus.Publish(new ShortcutsLoadedEvent());
+            internalMessageBus.Publish(new ShortcutsLoadedEvent());
         }
         
         public string LaunchText

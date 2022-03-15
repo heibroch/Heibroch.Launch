@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
+using System.Diagnostics;
 
 namespace Heibroch.Launch.Events
 {
-    public class LogEntryPublished
+    public class LogEntryPublished : IInternalEvent
     {
         public LogEntryPublished(string title, string message, EventLogEntryType eventLogEntryType)
         {
@@ -12,7 +13,11 @@ namespace Heibroch.Launch.Events
         }
 
         public string Title { get; }
+
         public string Message { get; }
+
         public EventLogEntryType EventLogEntryType { get; }
+
+        public bool LogEvent { get; set; } = true;
     }
 }

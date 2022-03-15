@@ -1,4 +1,9 @@
-﻿namespace Heibroch.Launch.Plugin
+﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
+
+namespace Heibroch.Launch.Plugin
 {
-    public class ProgramLoadedEvent { }
+    public class ProgramLoadedEvent : IInternalEvent
+    {
+        public bool LogEvent { get; set; } = true;
+    }
 }
