@@ -21,11 +21,11 @@ namespace Heibroch.Launch
                 var formattedCommand = formattedDescription.StartsWith("\"") ? formattedDescription.Substring(1, formattedDescription.Length - 2) : formattedDescription;
                 Process.Start(formattedCommand);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
                 MessageBox.Show($"Could not launch shortcut \"{Title}\"\r\n{ex}");
-            }            
+            }
         };
 
         public string Title { get; }

@@ -27,26 +27,25 @@ namespace Heibroch.Launch
                 notifyIcon.Icon = new Icon(Path.Combine(Constants.RootPath, $"LaunchLogo.ico"));
                 notifyIcon.Visible = true;
 
-                var contextMenu = new ContextMenu();
+                notifyIcon.ContextMenuStrip = new ContextMenuStrip();
+
                 foreach (var contextMenuItem in contextMenuItems)
                 {
-                    var menuItem = new MenuItem(contextMenuItem);
-                    menuItem.Click += MenuItem_Click;
-                    contextMenu.MenuItems.Add(menuItem);
+                    var toolStripMenuItem = new ToolStripMenuItem(contextMenuItem);
+                    toolStripMenuItem.Click += ToolStripMenuItem_Click;
+                    notifyIcon.ContextMenuStrip.Items.Add(toolStripMenuItem);
                 }
-
-                notifyIcon.ContextMenu = contextMenu;
             }
             catch (Exception e)
             {
-                MessageBox.Show("Could not launch tray icon.\r\nApplication will continue without");
+                System.Windows.MessageBox.Show("Could not launch tray icon.\r\nApplication will continue without");
 
                 internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"TrayIcon creation failed!\r\n{e}", EventLogEntryType.Information));
                 internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"", EventLogEntryType.Information));
-            }            
+            }
         }
 
-        private void MenuItem_Click(object sender, EventArgs e) => contextMenuItemClicked(((MenuItem)sender).Text);
+        private void ToolStripMenuItem_Click(object? sender, EventArgs e) => contextMenuItemClicked(((ToolStripMenuItem)sender).Text);
 
         private void OnTrayIconDoubleClick(object sender, EventArgs e) { }
 

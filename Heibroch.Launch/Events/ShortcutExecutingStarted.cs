@@ -3,9 +3,9 @@ using Heibroch.Launch.Plugin;
 
 namespace Heibroch.Launch.Events
 {
-    public class ShortcutExecutingStarted : IInternalEvent
+    public class ShortcutExecutingStarted : IInternalMessage
     {
-        public bool LogEvent { get; set; } = true;
+        public bool LogPublish { get; set; } = true;
 
         public string ShortcutKey { get; set; }
         

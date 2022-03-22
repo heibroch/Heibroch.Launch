@@ -28,13 +28,13 @@ namespace Heibroch.Launch
             this.stringSearchEngine = stringSearchEngine;
             this.settingsRepository = settingsRepository;
         }
-        
+
         public Dictionary<string, ILaunchShortcut> Shortcuts { get; } = new Dictionary<string, ILaunchShortcut>();
 
         public List<KeyValuePair<string, ILaunchShortcut>> QueryResults { get; private set; } = new List<KeyValuePair<string, ILaunchShortcut>>();
 
         public string CurrentQuery { get; private set; }
-        
+
         public void Load(string directoryPath = null, bool clear = true)
         {
             if (clear)
@@ -58,11 +58,11 @@ namespace Heibroch.Launch
             {
                 internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error));
                 var defaultShortcutFilePath = directoryPath + "\\MyShortcuts.hscut";
-                
+
                 var fileStream = File.Create(defaultShortcutFilePath);
                 var streamWriter = new StreamWriter(fileStream);
                 streamWriter.Write("//To add a shortcut to a file or whatever\r\n" +
-                                   "MySearchSite;\"https://duckduckgo.com/" + Environment.NewLine + 
+                                   "MySearchSite;\"https://duckduckgo.com/" + Environment.NewLine +
                                    $"{Constants.SearchLocation};\\\\sys.dom\\dfs\\v\\users\\DWAP\\HeibrochLaunch\\");
 
                 streamWriter.Flush();
@@ -70,7 +70,7 @@ namespace Heibroch.Launch
 
                 files.Add(defaultShortcutFilePath);
             }
-            
+
             foreach (var file in files)
             {
                 //Add shortcuts in case of modification needed
@@ -91,7 +91,7 @@ namespace Heibroch.Launch
                     }
 
                     var plugin = pluginLoader.Plugins.Where(x => !string.IsNullOrWhiteSpace(x.ShortcutFilter)).FirstOrDefault(x => values[1].ToLower().StartsWith(x.ShortcutFilter.ToLower()));
-                                        
+
                     //Update or add
                     Shortcuts[values[0]] = plugin?.CreateShortcut(values[0], values[1]) ?? new LaunchShortcut(values[0], values[1]);
                 }
@@ -103,7 +103,7 @@ namespace Heibroch.Launch
             if (!Shortcuts.ContainsKey(shortcutName)) return;
             Shortcuts.Remove(shortcutName);
         }
-        
+
         public void Filter(string searchString)
         {
             settingsRepository.Settings.TryGetValue(Constants.SettingNames.UseStickySearch, out var useStickySearch);

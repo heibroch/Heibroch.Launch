@@ -42,7 +42,7 @@ namespace Heibroch.Launch
             if (CycleIndex <= 0)
             {
                 CycleIndex = 0;
-                
+
                 if (collectionCount > Delta && (StartIndex + increment) >= 0)
                 {
                     StartIndex += increment;

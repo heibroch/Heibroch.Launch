@@ -57,13 +57,18 @@ namespace Heibroch.Launch
             }
 
             var file = files.First();
-            var lines = File.ReadAllLines(file);
+            var lines = File.ReadAllLines(file).ToList();
+
+            //Add setting in case it's missing
+            if (!lines.Any(x => x.Contains(Constants.SettingNames.UseStickySearch)))
+                lines.Add($"{Constants.SettingNames.UseStickySearch};false");
+
             foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
                 if (line.StartsWith("//")) continue;
                 var values = line.Split(';');
-                
+
                 //Update or add
                 if (Settings.ContainsKey(values[0]))
                     Settings[values[0]] = values[1];

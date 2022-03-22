@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Heibroch.Launch.Events
 {
-    public class LogEntryPublished : IInternalEvent
+    public class LogEntryPublished : IInternalMessage
     {
         public LogEntryPublished(string title, string message, EventLogEntryType eventLogEntryType)
         {
@@ -18,6 +18,6 @@ namespace Heibroch.Launch.Events
 
         public EventLogEntryType EventLogEntryType { get; }
 
-        public bool LogEvent { get; set; } = true;
+        public bool LogPublish { get; set; } = true;
     }
 }

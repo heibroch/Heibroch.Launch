@@ -28,7 +28,7 @@ namespace Heibroch.Launch.ViewModels
             Key = key;
             bool.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "UseStickySearch").Value, out bool useStickySearch);
             UseStickySearch = useStickySearch;
-            
+
             SaveCommand = new ActionCommand(x =>
             {
                 this.settingsRepository.Save(Modifier1.ToString(), Modifier2.ToString(), Key.ToString(), UseStickySearch);
@@ -62,6 +62,6 @@ namespace Heibroch.Launch.ViewModels
 
         public ActionCommand SaveCommand { get; set; }
 
-        public string SettingsTitle => $"{Application.ProductName} v. {Application.ProductVersion}";
+        public string SettingsTitle => $"{Application.ProductName} v. {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
     }
 }

@@ -29,7 +29,7 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="Modifier 1: "/>
         <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="Modifier 2: "/>
         <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Text="Key: "/>

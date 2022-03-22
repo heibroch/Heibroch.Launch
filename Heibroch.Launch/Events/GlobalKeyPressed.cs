@@ -2,12 +2,12 @@
 
 namespace Heibroch.Launch.Events
 {
-    public class GlobalKeyPressed : IInternalEvent
+    public class GlobalKeyPressed : IInternalMessage
     {
         public int Key { get; set; }
 
         public bool ProcessKey { get; set; } = true;
 
-        public bool LogEvent { get; set; } = true;
+        public bool LogPublish { get; set; } = true;
     }
 }

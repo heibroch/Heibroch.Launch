@@ -23,7 +23,7 @@ namespace Heibroch.Launch.Views
         private static IntPtr hookId = IntPtr.Zero;
         private static IInternalMessageBus internalMessageBus;
         private IPluginLoader pluginLoader;
-                
+
         public MainWindow()
         {
             try
@@ -82,7 +82,7 @@ namespace Heibroch.Launch.Views
             {
                 internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch", ex.StackTrace, EventLogEntryType.Error));
                 throw ex;
-            }            
+            }
         }
 
         private void OnTrayIconDoubleClick(object sender, EventArgs e) => throw new NotImplementedException();

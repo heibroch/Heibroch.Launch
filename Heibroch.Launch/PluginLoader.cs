@@ -25,6 +25,18 @@ namespace Heibroch.Launch
         private readonly IContainer container;
         private List<Assembly> loadedAssemblies = new List<Assembly>();
 
+        private List<string> exceptions = new List<string>()
+        {
+            "\\PresentationCore.dll",
+            "\\System.Drawing.Common.dll",
+            "\\System.IO.Packaging.dll",
+            "\\System.Security.Permissions.dll",
+            "\\System.Windows.Extensions.dll",
+            "\\System.Windows.Input.Manipulations.dll",
+            "\\System.Xaml.dll",
+            "\\UIAutomationTypes.dll"
+        };
+
         public PluginLoader(IInternalMessageBus internalMessageBus, IContainer container)
         {
             Plugins = new List<ILaunchPlugin>();
@@ -54,6 +66,9 @@ namespace Heibroch.Launch
                     //Load assemblies
                     foreach (var assemblyFilePath in assemblyFiles)
                     {
+                        if (exceptions.Any(x => assemblyFilePath.EndsWith(x)))
+                            continue;
+
                         var assembly = Assembly.LoadFile(Path.GetFullPath(assemblyFilePath));//LoadDependencies(assemblyFilePath);
                         loadedAssemblies.Add(assembly);
                         pluginDirectoryAssemblies.Add(assembly);
@@ -64,9 +79,7 @@ namespace Heibroch.Launch
                     {
                         if (assembly.FullName.Contains("Microsoft")) continue;
                         if (assembly.FullName.StartsWith("System")) continue;
-                        //AppDomain.CurrentDomain.Load
-                        //if (assemblyFile.Contains("Heibroch.Launch.Plugin.dll")) continue;
-                        //var assembly = AppDomain.CurrentDomain.LoadFile(Path.GetFullPath(assemblyFile)); //LoadDependencies(assemblyFile);//Assembly.Load(assemblyFile);
+
                         var types = assembly.GetExportedTypes();
 
                         foreach (var type in types)
@@ -93,7 +106,7 @@ namespace Heibroch.Launch
                 {
                     internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Initializing plugin failed...\r\n \r\n {ex.StackTrace}", EventLogEntryType.Error));
                     MessageBox.Show($"Could not load plugin from: \"{pluginDirectory}\"\r\n{ex}");
-                }                                
+                }
             }
         }
     }

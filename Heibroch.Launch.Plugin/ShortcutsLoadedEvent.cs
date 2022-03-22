@@ -2,8 +2,8 @@
 
 namespace Heibroch.Launch.Plugin
 {
-    public class ShortcutsLoadedEvent : IInternalEvent
+    public class ShortcutsLoadedEvent : IInternalMessage
     {
-        public bool LogEvent { get; set; }
+        public bool LogPublish { get; set; }
     }
 }

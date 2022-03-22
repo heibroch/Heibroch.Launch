@@ -2,8 +2,8 @@
 
 namespace Heibroch.Launch.Plugin
 {
-    public class ProgramLoadedEvent : IInternalEvent
+    public class ProgramLoadedEvent : IInternalMessage
     {
-        public bool LogEvent { get; set; } = true;
+        public bool LogPublish { get; set; } = true;
     }
 }

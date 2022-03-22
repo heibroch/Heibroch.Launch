@@ -26,10 +26,10 @@ namespace Heibroch.Launch.ViewModels
         private static SettingsViewModel settingsViewModel;
         private static ArgumentsWindow currentArgumentsWindow = null;
         private static ArgumentsViewModel argumentsViewModel;
-               
+
         private DispatcherTimer dispatcherTimer;
         private TrayIcon trayIcon;
-        
+
         public MainViewModel(IInternalMessageBus internalMessageBus,
                              IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                              IShortcutExecutor shortcutExecutor,
@@ -81,9 +81,6 @@ namespace Heibroch.Launch.ViewModels
 
             if (!currentShortcutWindow.IsActive)
                 currentShortcutWindow.Activate();
-
-            //if (!currentShortcutWindow.IsFocused)
-            //    currentShortcutWindow.Focus();
         }
 
         private void OnKeyPressed(GlobalKeyPressed obj)
@@ -151,7 +148,7 @@ namespace Heibroch.Launch.ViewModels
 
                             argumentsViewModel.Command = command;
                             argumentsViewModel.ArgumentKey = argumentKey;
-                           
+
                             OpenArgumentWindow();
                             break;
                         }

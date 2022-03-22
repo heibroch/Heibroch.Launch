@@ -40,7 +40,7 @@ namespace Heibroch.Launch
             //It should be an empty list if no query string
             if (string.IsNullOrWhiteSpace(searchString))
                 return new List<KeyValuePair<string, T>>();
-            
+
             //Redo the list
 
             //Add exact matches

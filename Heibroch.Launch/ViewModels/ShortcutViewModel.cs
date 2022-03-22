@@ -16,8 +16,8 @@ namespace Heibroch.Launch.ViewModels
         private readonly IInternalMessageBus internalMessageBus;
         private readonly SelectionCycler selectionCycler;
         private KeyValuePair<string, ILaunchShortcut> selectedItem;
-        
-        public ShortcutViewModel(IShortcutCollection<string, ILaunchShortcut> shortcutCollection, 
+
+        public ShortcutViewModel(IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                                  IShortcutExecutor shortcutExecutor,
                                  IInternalMessageBus internalMessageBus)
         {
@@ -35,7 +35,7 @@ namespace Heibroch.Launch.ViewModels
             shortcutCollection.Load();
             internalMessageBus.Publish(new ShortcutsLoadedEvent());
         }
-        
+
         public string LaunchText
         {
             get => shortcutCollection.CurrentQuery ?? string.Empty;
@@ -60,7 +60,7 @@ namespace Heibroch.Launch.ViewModels
                 RaisePropertyChanged(nameof(SelectedItem));
             }
         }
-        
+
         public List<KeyValuePair<string, ILaunchShortcut>> DisplayedQueryResults => new List<KeyValuePair<string, ILaunchShortcut>>(selectionCycler.SubSelect(QueryResults));
 
         public List<KeyValuePair<string, ILaunchShortcut>> QueryResults => shortcutCollection.QueryResults;
@@ -122,7 +122,7 @@ namespace Heibroch.Launch.ViewModels
                             $"CollectionCount {shortcutCollection.QueryResults.Count}" +
                             $"-----------------------------------------------");
         }
-        
+
         public void ExecuteSelection() => shortcutExecutor.Execute(QueryResults.Count == 1 ? QueryResults.First().Key : (SelectedItem.Key ?? LaunchText));
 
         public Visibility QueryResultsVisibility => QueryResults.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
