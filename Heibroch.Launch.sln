@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch", "Heibroch.Launch\Heibroch.Launch.csproj", "{5103A43B-3863-446A-85A1-DC172A37A7C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch", "Heibroch.Launch\Heibroch.Launch.csproj", "{5103A43B-3863-446A-85A1-DC172A37A7C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Plugin", "Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj", "{9A0D0AE5-826C-4545-93EA-DA6FA146F3BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Plugin", "Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj", "{9A0D0AE5-826C-4545-93EA-DA6FA146F3BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{98403100-0C73-4A32-B0B1-477D2916B171}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Plugins.Copy", "Heibroch.Launch.Plugins.Copy\Heibroch.Launch.Plugins.Copy.csproj", "{ED0C0236-7FF3-4AF8-9C14-9D1E287CDE25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Plugins.Copy", "Heibroch.Launch.Plugins.Copy\Heibroch.Launch.Plugins.Copy.csproj", "{ED0C0236-7FF3-4AF8-9C14-9D1E287CDE25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Plugins.Reloader", "Heibroch.Launch.Plugins.Reloader\Heibroch.Launch.Plugins.Reloader.csproj", "{29AB26B7-CB39-4BC2-BE02-853FE58765B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Plugins.Reloader", "Heibroch.Launch.Plugins.Reloader\Heibroch.Launch.Plugins.Reloader.csproj", "{29AB26B7-CB39-4BC2-BE02-853FE58765B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Plugins.RemoteDesktop", "Heibroch.Launch.Plugins.RemoteDesktop\Heibroch.Launch.Plugins.RemoteDesktop.csproj", "{A82B4F05-F8C5-4784-92CF-76C5FD79D6BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Plugins.RemoteDesktop", "Heibroch.Launch.Plugins.RemoteDesktop\Heibroch.Launch.Plugins.RemoteDesktop.csproj", "{A82B4F05-F8C5-4784-92CF-76C5FD79D6BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Interfaces", "Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj", "{4B65E470-88B5-423C-8C4A-D239523ACAD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Interfaces", "Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj", "{4B65E470-88B5-423C-8C4A-D239523ACAD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Tests", "Heibroch.Launch.Tests\Heibroch.Launch.Tests.csproj", "{44D1CA05-0E24-44E1-B036-61D74C43D363}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Tests", "Heibroch.Launch.Tests\Heibroch.Launch.Tests.csproj", "{44D1CA05-0E24-44E1-B036-61D74C43D363}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Heibroch.Launch.Installer", "Heibroch.Launch.Installer\Heibroch.Launch.Installer.vdproj", "{72449730-2A3D-4BA2-B152-538DA778CBBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{44D1CA05-0E24-44E1-B036-61D74C43D363}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44D1CA05-0E24-44E1-B036-61D74C43D363}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44D1CA05-0E24-44E1-B036-61D74C43D363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72449730-2A3D-4BA2-B152-538DA778CBBF}.Debug|Any CPU.ActiveCfg = Debug
+		{72449730-2A3D-4BA2-B152-538DA778CBBF}.Debug|Any CPU.Build.0 = Debug
+		{72449730-2A3D-4BA2-B152-538DA778CBBF}.Release|Any CPU.ActiveCfg = Release
+		{72449730-2A3D-4BA2-B152-538DA778CBBF}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@
 
 /bin
 *.suo
+*.user
 /.vs/Heibroch.Launch/DesignTimeBuild
 /.vs/Heibroch.Launch/v17/.futdcache.v1
 /Heibroch.Launch/obj
@@ -20,4 +21,5 @@
 /Heibroch.Launch.Plugin/bin
 /Heibroch.Launch.Interfaces/obj
 /Heibroch.Launch.Interfaces/bin
-*.user
+/Heibroch.Launch.Installer/Debug
+/Heibroch.Launch.Installer/Release
