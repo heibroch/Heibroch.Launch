@@ -1,6 +1,6 @@
-﻿using Heibroch.Common;
-using Heibroch.Infrastructure.Interfaces.MessageBus;
-using Heibroch.Launch.Plugin;
+﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
+using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 
 namespace Reload
 {
@@ -16,13 +16,13 @@ namespace Reload
             this.shortcutCollection = shortcutCollection;
             this.reloadShortcut = new ReloadShortcut(shortcutCollection);
             this.internalMessageBus = internalMessageBus;
-            this.internalMessageBus.Subscribe<ShortcutsLoadedEvent>(OnShortcutsLoaded);
+            this.internalMessageBus.Subscribe<ShortcutsLoadingCompleted>(OnShortcutsLoadingCompleted);
         }
 
-        public string ShortcutFilter => null;
+        private void OnShortcutsLoadingCompleted(ShortcutsLoadingCompleted obj) => shortcutCollection.Add(reloadShortcut);
 
-        public ILaunchShortcut CreateShortcut(string title, string description) => null;
+        public string? ShortcutFilter => null;
 
-        private void OnShortcutsLoaded(ShortcutsLoadedEvent shortcutsLoadedEvent) => shortcutCollection.Add(reloadShortcut);
+        public ILaunchShortcut? CreateShortcut(string title, string description) => null;
     }
 }

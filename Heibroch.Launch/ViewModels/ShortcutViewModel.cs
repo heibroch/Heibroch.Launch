@@ -2,27 +2,24 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using Heibroch.Common;
 using Heibroch.Common.Wpf;
 using Heibroch.Infrastructure.Interfaces.MessageBus;
-using Heibroch.Launch.Plugin;
+using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 
 namespace Heibroch.Launch.ViewModels
 {
     public class ShortcutViewModel : ViewModelBase
     {
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
-        private readonly IShortcutExecutor shortcutExecutor;
         private readonly IInternalMessageBus internalMessageBus;
         private readonly SelectionCycler selectionCycler;
         private KeyValuePair<string, ILaunchShortcut> selectedItem;
 
         public ShortcutViewModel(IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
-                                 IShortcutExecutor shortcutExecutor,
                                  IInternalMessageBus internalMessageBus)
         {
             this.shortcutCollection = shortcutCollection;
-            this.shortcutExecutor = shortcutExecutor;
             this.internalMessageBus = internalMessageBus;
 
             selectionCycler = new SelectionCycler();
@@ -30,11 +27,7 @@ namespace Heibroch.Launch.ViewModels
             Initialize();
         }
 
-        private void Initialize()
-        {
-            shortcutCollection.Load();
-            internalMessageBus.Publish(new ShortcutsLoadedEvent());
-        }
+        private void Initialize() => shortcutCollection.Load(Constants.RootPath, true);
 
         public string LaunchText
         {
@@ -123,7 +116,10 @@ namespace Heibroch.Launch.ViewModels
                             $"-----------------------------------------------");
         }
 
-        public void ExecuteSelection() => shortcutExecutor.Execute(QueryResults.Count == 1 ? QueryResults.First().Key : (SelectedItem.Key ?? LaunchText));
+        public void ExecuteSelection() => internalMessageBus.Publish(new ShortcutExecutingStarted()
+        {
+            ShortcutKey = QueryResults.Count == 1 ? QueryResults.First().Key : (SelectedItem.Key ?? LaunchText)
+        });
 
         public Visibility QueryResultsVisibility => QueryResults.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 

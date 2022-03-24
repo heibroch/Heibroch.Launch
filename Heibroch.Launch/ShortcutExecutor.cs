@@ -1,4 +1,6 @@
-﻿using Heibroch.Launch.Plugin;
+﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
+using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,26 +10,29 @@ using System.Windows;
 
 namespace Heibroch.Launch
 {
-    public interface IShortcutExecutor
-    {
-        void AddArgument(string key, string value);
-        void Execute(string shortcutKey, ILaunchShortcut launchShortcut = null);
-        IEnumerable<string> GetArgKeys(string shortcut);
-        bool IsArgShortcut(string shortcut);
-        Dictionary<string, string> Arguments { get; }
-    }
-
     public class ShortcutExecutor : IShortcutExecutor
     {
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
+        private readonly IInternalMessageBus internalMessageBus;
 
-        public ShortcutExecutor(IShortcutCollection<string, ILaunchShortcut> shortcutCollection)
+        public ShortcutExecutor(IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
+                                IInternalMessageBus internalMessageBus)
         {
             this.shortcutCollection = shortcutCollection;
+            this.internalMessageBus = internalMessageBus;
+
             Arguments = new Dictionary<string, string>();
+
+            internalMessageBus.Subscribe<ShortcutExecutingStarted>(OnShortcutExecutingStarted);
         }
 
-        public void Execute(string shortcutKey, ILaunchShortcut launchShortcut = null)
+        private void OnShortcutExecutingStarted(ShortcutExecutingStarted obj)
+        {
+            Execute(obj.ShortcutKey, obj.LaunchShortcut);
+            internalMessageBus.Publish(new ShortcutExecutingCompleted());
+        }
+
+        private void Execute(string shortcutKey, ILaunchShortcut? launchShortcut = null)
         {
             if (string.IsNullOrWhiteSpace(shortcutKey)) return;
 

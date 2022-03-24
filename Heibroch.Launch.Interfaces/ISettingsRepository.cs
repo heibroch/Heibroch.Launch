@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace Heibroch.Launch.Interfaces
+﻿namespace Heibroch.Launch.Interfaces
 {
     public interface ISettingsRepository
     {
         /// <summary>
-        /// 
+        /// Loads in the persisted settings
         /// </summary>
-        void Load(string directoryPath = null, bool clear = true);
+        void Load(string directoryPath);
 
         /// <summary>
         /// Saves the settings to file

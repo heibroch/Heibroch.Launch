@@ -1,7 +1,4 @@
-﻿using Heibroch.Launch.Plugin;
-using System;
-using System.Collections.Specialized;
-using System.IO;
+﻿using Heibroch.Launch.Interfaces;
 using System.Windows;
 
 namespace Heibroch.Launch.Plugins.Copy

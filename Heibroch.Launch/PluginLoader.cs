@@ -1,7 +1,7 @@
 ﻿using Heibroch.Common;
 using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
-using Heibroch.Launch.Plugin;
+using Heibroch.Launch.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,13 +12,6 @@ using System.Windows;
 
 namespace Heibroch.Launch
 {
-    public interface IPluginLoader
-    {
-        List<ILaunchPlugin> Plugins { get; }
-
-        void Load();
-    }
-
     public class PluginLoader : IPluginLoader
     {
         private readonly IInternalMessageBus internalMessageBus;
@@ -49,7 +42,9 @@ namespace Heibroch.Launch
         public void Load()
         {
             var path = Environment.CurrentDirectory + "\\Plugins";
-            internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Listing plugin directories...\r\nPath: {path}", EventLogEntryType.Information));
+
+            internalMessageBus.Publish(new PluginsLoadingStarted(path));
+
             var pluginDirectories = Directory.GetDirectories(Environment.CurrentDirectory + "\\Plugins");
             var currentPluginDirectory = string.Empty;
 
@@ -57,19 +52,21 @@ namespace Heibroch.Launch
             {
                 try
                 {
+                    internalMessageBus.Publish(new PluginLoadingStarted(pluginDirectory));
+
                     currentPluginDirectory = pluginDirectory;
 
-                    //var appDomain = AppDomain.CreateDomain(pluginDirectory, null, appDomainSetup);
                     var assemblyFiles = Directory.GetFiles(pluginDirectory, "*.dll");
 
                     var pluginDirectoryAssemblies = new List<Assembly>();
+
                     //Load assemblies
                     foreach (var assemblyFilePath in assemblyFiles)
                     {
                         if (exceptions.Any(x => assemblyFilePath.EndsWith(x)))
                             continue;
 
-                        var assembly = Assembly.LoadFile(Path.GetFullPath(assemblyFilePath));//LoadDependencies(assemblyFilePath);
+                        var assembly = Assembly.LoadFile(Path.GetFullPath(assemblyFilePath));
                         loadedAssemblies.Add(assembly);
                         pluginDirectoryAssemblies.Add(assembly);
                     }
@@ -77,8 +74,10 @@ namespace Heibroch.Launch
                     //Load types
                     foreach (var assembly in pluginDirectoryAssemblies)
                     {
-                        if (assembly.FullName.Contains("Microsoft")) continue;
-                        if (assembly.FullName.StartsWith("System")) continue;
+                        var assemblyFullName = assembly.FullName;
+                        if (assemblyFullName == null) continue;
+                        if (assemblyFullName.Contains("Microsoft")) continue;
+                        if (assemblyFullName.StartsWith("System")) continue;
 
                         var types = assembly.GetExportedTypes();
 
@@ -101,13 +100,17 @@ namespace Heibroch.Launch
                             Plugins.Add((ILaunchPlugin)resolvedPlugin);
                         }
                     }
+
+                    internalMessageBus.Publish(new PluginLoadingCompleted(pluginDirectory));
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
-                    internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", $"Initializing plugin failed...\r\n \r\n {ex.StackTrace}", EventLogEntryType.Error));
-                    MessageBox.Show($"Could not load plugin from: \"{pluginDirectory}\"\r\n{ex}");
+                    internalMessageBus.Publish(new PluginLoadingFailed(exception));
+                    MessageBox.Show($"Could not load plugin from: \"{pluginDirectory}\"\r\n{exception}");
                 }
             }
+
+            internalMessageBus.Publish(new PluginsLoadingCompleted());
         }
     }
 }

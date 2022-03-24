@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
     <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
   </ItemGroup>
 

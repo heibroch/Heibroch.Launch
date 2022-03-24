@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Heibroch.Launch.Plugin
+namespace Heibroch.Launch.Interfaces
 {
     public interface IShortcutCollection<TKey, TShortcut>
     {
-        void Load(string directoryPath = null, bool clear = true);
+        void Load(string? directoryPath = null, bool clear = true);
 
         void Add(ILaunchShortcut launchShortcut);
 

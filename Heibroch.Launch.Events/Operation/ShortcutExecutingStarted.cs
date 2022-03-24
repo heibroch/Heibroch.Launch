@@ -1,5 +1,5 @@
 ﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
-using Heibroch.Launch.Plugin;
+using Heibroch.Launch.Interfaces;
 
 namespace Heibroch.Launch.Events
 {
@@ -10,5 +10,7 @@ namespace Heibroch.Launch.Events
         public string ShortcutKey { get; set; }
         
         public ILaunchShortcut LaunchShortcut { get; set; }
+
+        public override string ToString() => $"Shortcut execution of {ShortcutKey} started";
     }
 }

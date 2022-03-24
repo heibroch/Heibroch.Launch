@@ -19,62 +19,62 @@ namespace Heibroch.Launch
 
         public SortedList<string, string> Settings { get; } = new SortedList<string, string>();
 
-        public void Load(string directoryPath = null, bool clear = true)
+        public void Load(string directoryPath)
         {
-            if (clear)
+            try
+            {
+                var filePath = directoryPath + "Settings" + Constants.SettingFileExtension;
+                internalMessageBus.Publish(new SettingsLoadingStarted(filePath));
+
                 Settings.Clear();
 
-            directoryPath = directoryPath ?? $"{Constants.RootPath}";
+                //Create directory if it does not exist
+                if (!Directory.Exists(directoryPath))
+                    Directory.CreateDirectory(directoryPath);
 
-            if (!Directory.Exists(directoryPath))
-            {
-                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"Could not locate directory\r\n{Environment.StackTrace}", EventLogEntryType.Information));
+                //If no settings file exists, then create one
+                var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.SettingFileExtension)).ToList();
+                if (!files.Any())
+                {
+                    var fileStream = File.Create(filePath);
+                    var streamWriter = new StreamWriter(fileStream);
+                    streamWriter.Write($"{Constants.SettingNames.Modifier1};Control\r\n" +
+                                       $"{Constants.SettingNames.Modifier2};Shift\r\n" +
+                                       $"{Constants.SettingNames.Key};Space\r\n" +
+                                       $"{Constants.SettingNames.UseStickySearch};true");
 
-                if (directoryPath == Constants.RootPath)
-                    Directory.CreateDirectory(Constants.RootPath);
+                    streamWriter.Flush();
+                    streamWriter.Dispose();
 
-                return;
+                    files.Add(filePath);
+                }
+
+                var file = files.First();
+                var lines = File.ReadAllLines(file).ToList();
+
+                //Add setting in case it's missing
+                if (!lines.Any(x => x.Contains(Constants.SettingNames.UseStickySearch)))
+                    lines.Add($"{Constants.SettingNames.UseStickySearch};false");
+
+                foreach (var line in lines)
+                {
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+                    if (line.StartsWith("//")) continue;
+                    var values = line.Split(';');
+
+                    //Update or add
+                    if (Settings.ContainsKey(values[0]))
+                        Settings[values[0]] = values[1];
+                    else
+                        Settings.Add(values[0], values[1]);
+                }
+
+                internalMessageBus.Publish(new SettingsLoadingCompleted(filePath));
             }
-
-            //Add files
-            var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.SettingFileExtension)).ToList();
-            if (!files.Any())
+            catch (Exception exception)
             {
-                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"No files found in directory\r\n{Environment.StackTrace}", EventLogEntryType.Error));
-                var defaultFilePath = directoryPath + "Settings" + Constants.SettingFileExtension;
-
-                var fileStream = File.Create(defaultFilePath);
-                var streamWriter = new StreamWriter(fileStream);
-                streamWriter.Write($"{Constants.SettingNames.Modifier1};Control\r\n" +
-                                   $"{Constants.SettingNames.Modifier2};Shift\r\n" +
-                                   $"{Constants.SettingNames.Key};Space\r\n" +
-                                   $"{Constants.SettingNames.UseStickySearch};true");
-
-                streamWriter.Flush();
-                streamWriter.Dispose();
-
-                files.Add(defaultFilePath);
-            }
-
-            var file = files.First();
-            var lines = File.ReadAllLines(file).ToList();
-
-            //Add setting in case it's missing
-            if (!lines.Any(x => x.Contains(Constants.SettingNames.UseStickySearch)))
-                lines.Add($"{Constants.SettingNames.UseStickySearch};false");
-
-            foreach (var line in lines)
-            {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-                if (line.StartsWith("//")) continue;
-                var values = line.Split(';');
-
-                //Update or add
-                if (Settings.ContainsKey(values[0]))
-                    Settings[values[0]] = values[1];
-                else
-                    Settings.Add(values[0], values[1]);
-            }
+                internalMessageBus.Publish(new SettingsLoadingFailed(exception));
+            }           
         }
 
         /// <summary> 
@@ -84,7 +84,7 @@ namespace Heibroch.Launch
         /// <param name="key">System.Windows.Forms.Keys</param>
         /// <param name="useStickySearch"></param>
         /// <param name="filePath"></param>
-        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, string filePath = null)
+        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, string? filePath = null)
         {
             filePath = filePath ?? $"{Constants.RootPath}{Constants.SettingFileName}{Constants.SettingFileExtension}";
 
@@ -96,7 +96,7 @@ namespace Heibroch.Launch
 
             File.WriteAllText(filePath, stringBuilder.ToString());
 
-            Load();
+            Load(Constants.RootPath);
         }
     }
 }

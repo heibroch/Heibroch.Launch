@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Heibroch.Common;
 using Heibroch.Common.Wpf;
 using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Interfaces;
-using Heibroch.Launch.Plugin;
 using Heibroch.Launch.Views;
 
 namespace Heibroch.Launch.ViewModels
@@ -44,9 +42,9 @@ namespace Heibroch.Launch.ViewModels
 
         private void Initialize()
         {
-            shortcutViewModel = new ShortcutViewModel(shortcutCollection, shortcutExecutor, internalMessageBus);
+            shortcutViewModel = new ShortcutViewModel(shortcutCollection, internalMessageBus);
             settingsViewModel = new SettingsViewModel(settingRepository);
-            argumentsViewModel = new ArgumentsViewModel(shortcutExecutor);
+            argumentsViewModel = new ArgumentsViewModel(internalMessageBus);
 
             internalMessageBus.Subscribe<GlobalKeyPressed>(OnKeyPressed);
 
@@ -75,7 +73,7 @@ namespace Heibroch.Launch.ViewModels
             }
         }
 
-        private void OnDispatcherTimerTick(object sender, EventArgs e)
+        private void OnDispatcherTimerTick(object? sender, EventArgs e)
         {
             if (currentShortcutWindow == null) return;
 
@@ -123,7 +121,7 @@ namespace Heibroch.Launch.ViewModels
 
                             if (arguments.Count() <= shortcutExecutor.Arguments.Count)
                             {
-                                shortcutExecutor.Execute(command.Title, command);
+                                internalMessageBus.Publish(new ShortcutExecutingStarted() { ShortcutKey = command.Title, LaunchShortcut = command });
                                 break;
                             }
 
@@ -153,13 +151,13 @@ namespace Heibroch.Launch.ViewModels
                             break;
                         }
 
-                        //if the arg window is open and it's filled out, then execute the shortcut
-                        if (currentArgumentsWindow != null && IsArgumentShortcut() && IsArgumentShortcutFilled())
-                        {
-                            argumentsViewModel.Execute();
-                            CloseArgumentWindow();
-                            break;
-                        }
+                        //if the arg window is open and it's filled out, then execute the shortcut //Never gets hit!
+                        //if (currentArgumentsWindow != null && IsArgumentShortcut() && IsArgumentShortcutFilled())
+                        //{
+                        //    argumentsViewModel.Execute();
+                        //    CloseArgumentWindow();
+                        //    break;
+                        //}
 
                         break;
                 }

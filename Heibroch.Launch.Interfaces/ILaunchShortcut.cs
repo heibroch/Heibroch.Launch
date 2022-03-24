@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Heibroch.Launch.Plugin
+namespace Heibroch.Launch.Interfaces
 {
     public interface ILaunchShortcut
     {

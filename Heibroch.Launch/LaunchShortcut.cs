@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
-using Heibroch.Launch.Plugin;
+using Heibroch.Launch.Interfaces;
 
 namespace Heibroch.Launch
 {

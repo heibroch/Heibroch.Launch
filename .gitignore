@@ -23,3 +23,7 @@
 /Heibroch.Launch.Interfaces/bin
 /Heibroch.Launch.Installer/Debug
 /Heibroch.Launch.Installer/Release
+/Heibroch.Launch.Events/bin
+/Heibroch.Launch.Events/obj
+/Heibroch.Launch.Model/bin
+/Heibroch.Launch.Model/obj

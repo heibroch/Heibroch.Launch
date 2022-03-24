@@ -1,8 +1,8 @@
 ﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
 
-namespace Heibroch.Launch.Plugin
+namespace Heibroch.Launch.Events
 {
-    public class ProgramLoadedEvent : IInternalMessage
+    public class PluginsLoadingCompleted : IInternalMessage
     {
         public bool LogPublish { get; set; } = true;
     }

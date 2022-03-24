@@ -1,6 +1,4 @@
-﻿using Heibroch.Launch.Plugin;
-using System;
-using System.Collections.Generic;
+﻿using Heibroch.Launch.Interfaces;
 
 namespace Heibroch.Launch.Plugins.RemoteDesktop
 {

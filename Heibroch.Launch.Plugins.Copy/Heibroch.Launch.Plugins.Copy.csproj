@@ -10,6 +10,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj" />
     <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj">
       <CopyLocal>True</CopyLocal>
     </ProjectReference>

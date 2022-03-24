@@ -1,20 +1,20 @@
 ﻿using System.Windows;
 using Heibroch.Common.Wpf;
-using Heibroch.Launch.Plugin;
+using Heibroch.Infrastructure.Interfaces.MessageBus;
+using Heibroch.Launch.Events;
+using Heibroch.Launch.Interfaces;
 
 namespace Heibroch.Launch.ViewModels
 {
     public class ArgumentsViewModel : ViewModelBase
     {
-        private readonly IShortcutExecutor shortcutExecutor;
-        private string launchText;
-        private string argumentKey;
+        private readonly IInternalMessageBus internalMessageBus;
+        private string? launchText;
+        private string? argumentKey;
 
-        public ArgumentsViewModel(IShortcutExecutor shortcutExecutor) => this.shortcutExecutor = shortcutExecutor;
+        public ArgumentsViewModel(IInternalMessageBus internalMessageBus) => this.internalMessageBus = internalMessageBus;
 
-        public void Execute() => shortcutExecutor.AddArgument(ArgumentKey, launchText);
-
-        public string LaunchText
+        public string? LaunchText
         {
             get => launchText;
             set
@@ -27,11 +27,11 @@ namespace Heibroch.Launch.ViewModels
 
         public string WaterMarkText => $"{ArgumentKey}...";
 
-        public ILaunchShortcut Command { get; set; }
+        public ILaunchShortcut? Command { get; set; }
 
         public Visibility WaterMarkVisibility => LaunchText?.Length <= 0 || string.IsNullOrWhiteSpace(launchText) ? Visibility.Visible : Visibility.Hidden;
 
-        public string ArgumentKey
+        public string? ArgumentKey
         {
             get => argumentKey;
             internal set
@@ -48,6 +48,6 @@ namespace Heibroch.Launch.ViewModels
             Command = null;
         }
 
-        public void ExecuteArgument() => shortcutExecutor.AddArgument(ArgumentKey, LaunchText);
+        public void ExecuteArgument() => internalMessageBus.Publish(new ShortcutArgumentFilled(ArgumentKey, launchText));
     }
 }

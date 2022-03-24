@@ -1,9 +1,7 @@
-﻿using Heibroch.Common;
-using Heibroch.Infrastructure.Interfaces.MessageBus;
+﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -22,8 +20,6 @@ namespace Heibroch.Launch
                 this.contextMenuItemClicked = contextMenuItemClicked;
                 //Tray icon
                 notifyIcon = new NotifyIcon();
-                notifyIcon.Click += new EventHandler(OnTrayIconClick);
-                notifyIcon.DoubleClick += new EventHandler(OnTrayIconDoubleClick);
                 notifyIcon.Icon = new Icon(Path.Combine(Constants.RootPath, $"LaunchLogo.ico"));
                 notifyIcon.Visible = true;
 
@@ -36,20 +32,14 @@ namespace Heibroch.Launch
                     notifyIcon.ContextMenuStrip.Items.Add(toolStripMenuItem);
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
+                internalMessageBus.Publish(new TrayIconInitializingFailed(exception));
                 System.Windows.MessageBox.Show("Could not launch tray icon.\r\nApplication will continue without");
-
-                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"TrayIcon creation failed!\r\n{e}", EventLogEntryType.Information));
-                internalMessageBus.Publish(new LogEntryPublished(Constants.ApplicationName, $"", EventLogEntryType.Information));
             }
         }
 
         private void ToolStripMenuItem_Click(object? sender, EventArgs e) => contextMenuItemClicked(((ToolStripMenuItem)sender).Text);
-
-        private void OnTrayIconDoubleClick(object sender, EventArgs e) { }
-
-        private void OnTrayIconClick(object sender, EventArgs e) { }
 
         public void Dispose()
         {
