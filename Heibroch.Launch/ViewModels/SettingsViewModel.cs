@@ -20,18 +20,20 @@ namespace Heibroch.Launch.ViewModels
             ModifierKeys = Enum.GetValues(typeof(ModifierKeys)).Cast<ModifierKeys>().ToList();
             Keys = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
 
-            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "Modifier1").Value, out ModifierKeys modifierKey1);
+            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == Constants.SettingNames.Modifier1).Value, out ModifierKeys modifierKey1);
             Modifier1 = modifierKey1;
-            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "Modifier2").Value, out ModifierKeys modifierKey2);
+            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == Constants.SettingNames.Modifier2).Value, out ModifierKeys modifierKey2);
             Modifier2 = modifierKey2;
-            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "Key").Value, out Keys key);
+            Enum.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == Constants.SettingNames.Key).Value, out Keys key);
             Key = key;
-            bool.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == "UseStickySearch").Value, out bool useStickySearch);
+            bool.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == Constants.SettingNames.UseStickySearch).Value, out bool useStickySearch);
             UseStickySearch = useStickySearch;
+            bool.TryParse(this.settingsRepository.Settings.FirstOrDefault(x => x.Key == Constants.SettingNames.ShowMostUsed).Value, out bool showMostUsed);
+            ShowMostUsed = showMostUsed;
 
             SaveCommand = new ActionCommand(x =>
             {
-                this.settingsRepository.Save(Modifier1.ToString(), Modifier2.ToString(), Key.ToString(), UseStickySearch);
+                this.settingsRepository.Save(Modifier1.ToString(), Modifier2.ToString(), Key.ToString(), UseStickySearch, ShowMostUsed);
                 MessageBox.Show("Settings saved!");
             });
         }
@@ -42,19 +44,9 @@ namespace Heibroch.Launch.ViewModels
 
         public Keys Key { get; set; }
 
-        private bool useStickySearch;
-        public bool UseStickySearch
-        {
-            get
-            {
-                return useStickySearch;
-            }
-            set
-            {
-                useStickySearch = value;
-                RaisePropertyChanged(nameof(UseStickySearch));
-            }
-        }
+        public bool UseStickySearch { get; set; }
+
+        public bool ShowMostUsed { get; set; }
 
         public List<Keys> Keys { get; set; }
 

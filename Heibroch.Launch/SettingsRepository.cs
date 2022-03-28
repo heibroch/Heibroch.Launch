@@ -41,7 +41,8 @@ namespace Heibroch.Launch
                     streamWriter.Write($"{Constants.SettingNames.Modifier1};Control\r\n" +
                                        $"{Constants.SettingNames.Modifier2};Shift\r\n" +
                                        $"{Constants.SettingNames.Key};Space\r\n" +
-                                       $"{Constants.SettingNames.UseStickySearch};true");
+                                       $"{Constants.SettingNames.UseStickySearch};true " +
+                                       $"{Constants.SettingNames.ShowMostUsed};false");
 
                     streamWriter.Flush();
                     streamWriter.Dispose();
@@ -55,6 +56,10 @@ namespace Heibroch.Launch
                 //Add setting in case it's missing
                 if (!lines.Any(x => x.Contains(Constants.SettingNames.UseStickySearch)))
                     lines.Add($"{Constants.SettingNames.UseStickySearch};false");
+
+                //Add setting in case it's missing
+                if (!lines.Any(x => x.Contains(Constants.SettingNames.ShowMostUsed)))
+                    lines.Add($"{Constants.SettingNames.ShowMostUsed};false");
 
                 foreach (var line in lines)
                 {
@@ -83,8 +88,9 @@ namespace Heibroch.Launch
         /// <param name="modifier2">System.Windows.Input.ModifierKeys</param>
         /// <param name="key">System.Windows.Forms.Keys</param>
         /// <param name="useStickySearch"></param>
+        /// <param name="showMostUsed"></param>
         /// <param name="filePath"></param>
-        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, string? filePath = null)
+        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed, string? filePath = null)
         {
             filePath = filePath ?? $"{Constants.RootPath}{Constants.SettingFileName}{Constants.SettingFileExtension}";
 
@@ -93,6 +99,7 @@ namespace Heibroch.Launch
             stringBuilder.AppendLine($"{Constants.SettingNames.Modifier2};{modifier2}");
             stringBuilder.AppendLine($"{Constants.SettingNames.Key};{key}");
             stringBuilder.AppendLine($"{Constants.SettingNames.UseStickySearch};{useStickySearch}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.ShowMostUsed};{showMostUsed}");
 
             File.WriteAllText(filePath, stringBuilder.ToString());
 

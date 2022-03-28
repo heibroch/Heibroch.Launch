@@ -42,7 +42,7 @@ namespace Heibroch.Launch.ViewModels
 
         private void Initialize()
         {
-            shortcutViewModel = new ShortcutViewModel(shortcutCollection, internalMessageBus);
+            shortcutViewModel = new ShortcutViewModel(shortcutCollection, settingRepository, internalMessageBus);
             settingsViewModel = new SettingsViewModel(settingRepository);
             argumentsViewModel = new ArgumentsViewModel(internalMessageBus);
 
@@ -93,10 +93,10 @@ namespace Heibroch.Launch.ViewModels
                         CloseArgumentWindow();
                         break;
                     case 0x00000028: //Down
-                        shortcutViewModel?.IncrementSelection(1);
+                        internalMessageBus.Publish(new UserShortcutSelectionIncremented() { Increment = 1 });
                         break;
                     case 0x00000026: //Up
-                        shortcutViewModel?.IncrementSelection(-1);
+                        internalMessageBus.Publish(new UserShortcutSelectionIncremented() { Increment = -1 });
                         break;
                     case 0x0000000D: //Enter
                         obj.ProcessKey = false;
@@ -139,7 +139,7 @@ namespace Heibroch.Launch.ViewModels
                         //If the shortcut window is open and it has args, then open the arg window
                         if (currentShortcutWindow != null && IsArgumentShortcut() && !IsArgumentShortcutFilled())
                         {
-                            var command = shortcutViewModel.SelectedItem.Value;
+                            var command = shortcutViewModel.SelectedQueryResult.Value;
                             var argumentKey = GetArgs().ElementAt(shortcutExecutor.Arguments.Count);
 
                             CloseShortcutWindow();
@@ -177,7 +177,7 @@ namespace Heibroch.Launch.ViewModels
 
         private bool IsArgumentShortcut()
         {
-            var description = shortcutViewModel?.SelectedItem.Value?.Description ?? argumentsViewModel?.Command?.Description;
+            var description = shortcutViewModel?.SelectedQueryResult.Value?.Description ?? argumentsViewModel?.Command?.Description;
             if (description == null) return false;
             return shortcutExecutor.IsArgShortcut(description);
         }
@@ -186,7 +186,7 @@ namespace Heibroch.Launch.ViewModels
 
         private IEnumerable<string> GetArgs()
         {
-            var description = shortcutViewModel?.SelectedItem.Value?.Description ?? argumentsViewModel?.Command?.Description;
+            var description = shortcutViewModel?.SelectedQueryResult.Value?.Description ?? argumentsViewModel?.Command?.Description;
             if (description == null) return new List<string>();
             return shortcutExecutor.GetArgKeys(description);
         }

@@ -29,7 +29,6 @@ namespace Heibroch.Launch
         public class ContextMenu
         {
             public const string Exit = "Exit";
-
             public const string Settings = "Settings";
         }
 
@@ -39,6 +38,7 @@ namespace Heibroch.Launch
             public const string Modifier2 = "Modifier2";
             public const string Key = "Key";
             public const string UseStickySearch = "UseStickySearch";
+            public const string ShowMostUsed = "ShowMostUsed";
         }
     }
 }

@@ -14,8 +14,9 @@
         /// <param name="modifier2">System.Windows.Input.ModifierKeys</param>
         /// <param name="key">System.Windows.Forms.Keys</param>
         /// <param name="useStickySearch"></param>
+        /// <param name="showMostUsed"></param>
         /// <param name="filePath"></param> 
-        void Save(string modifier1, string modifier2, string key, bool useStickySearch, string filePath = null);
+        void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed, string filePath = null);
 
         /// <summary>
         /// 
