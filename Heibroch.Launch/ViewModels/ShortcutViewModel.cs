@@ -150,7 +150,7 @@ namespace Heibroch.Launch.ViewModels
             get
             {
                 bool.TryParse(settingsRepository.Settings[Constants.SettingNames.ShowMostUsed], out var showMostUsed);
-                return showMostUsed ? Visibility.Visible : Visibility.Hidden;
+                return showMostUsed ? Visibility.Visible : Visibility.Collapsed;
             }
             
         }
