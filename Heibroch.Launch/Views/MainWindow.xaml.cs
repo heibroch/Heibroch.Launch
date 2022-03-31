@@ -41,7 +41,7 @@ namespace Heibroch.Launch.Views
                 //Fixes an issue with current directory being system32 for the plugin loader and not the application path as desired
                 //internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Setting base directory...", EventLogEntryType.Information));
                 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-
+                
                 //internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing components...", EventLogEntryType.Information));
                 InitializeComponent();
 
@@ -66,6 +66,9 @@ namespace Heibroch.Launch.Views
 
                 //internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing plugins...", EventLogEntryType.Information));
                 pluginLoader.Load();
+
+                //Load shortcuts
+                internalMessageBus.Publish(new ShortcutsLoadingStarted(Constants.RootPath, true));
 
                 //internalMessageBus.Publish(new LogEntryPublished("Heibroch.Launch - Initializing", "Initializing main view model...", EventLogEntryType.Information));
                 DataContext = new MainViewModel(internalMessageBus, shortcutCollection, shortcutExecutor, settingsRepository);

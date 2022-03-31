@@ -19,11 +19,15 @@ namespace Heibroch.Launch
             try
             {
                 var formattedCommand = formattedDescription.StartsWith("\"") ? formattedDescription.Substring(1, formattedDescription.Length - 2) : formattedDescription;
-                Process.Start(formattedCommand);
-            }
-            catch (Exception ex)
-            {
 
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo();
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.FileName = formattedCommand;
+                process.Start();
+            }
+            catch (Exception ex)            
+            {
                 MessageBox.Show($"Could not launch shortcut \"{Title}\"\r\n{ex}");
             }
         };

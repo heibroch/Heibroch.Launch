@@ -25,9 +25,23 @@ namespace Heibroch.Launch
             this.internalMessageBus = internalMessageBus;
             this.stringSearchEngine = stringSearchEngine;
             this.settingsRepository = settingsRepository;
+
+            internalMessageBus.Subscribe<ShortcutAddingStarted>(OnShortcutAddingStarted);
+            internalMessageBus.Subscribe<ShortcutsLoadingStarted>(OnShortcutsLoadingStarted);
         }
 
-        public Dictionary<string, ILaunchShortcut> Shortcuts { get; } = new Dictionary<string, ILaunchShortcut>();
+        private void OnShortcutsLoadingStarted(ShortcutsLoadingStarted obj)
+        {
+            Load(obj.Path, obj.Clear);
+        }
+
+        private void OnShortcutAddingStarted(ShortcutAddingStarted obj)
+        {
+            Shortcuts.Add(obj.LaunchShortcut.Title, obj.LaunchShortcut);
+            internalMessageBus.Publish(new ShortcutAddingCompleted(obj.LaunchShortcut));
+        }
+
+        public Dictionary<string, ILaunchShortcut> Shortcuts { get; set; } = new Dictionary<string, ILaunchShortcut>();
 
         public List<KeyValuePair<string, ILaunchShortcut>> QueryResults { get; private set; } = new List<KeyValuePair<string, ILaunchShortcut>>();
 
@@ -40,11 +54,7 @@ namespace Heibroch.Launch
                 directoryPath = directoryPath ?? $"{Constants.RootPath}";
 
                 if (clear)
-                {
-                    //If it's a full reload, publish it has completed
-                    internalMessageBus.Publish(new ShortcutsLoadingStarted(directoryPath));
                     Shortcuts.Clear();
-                }
 
                 //If the directory doesn't exist, then create it
                 if (!Directory.Exists(directoryPath) && clear)
@@ -99,7 +109,7 @@ namespace Heibroch.Launch
 
                 //If it's a full reload, publish it has completed
                 if (clear)
-                    internalMessageBus.Publish(new ShortcutsLoadingCompleted(directoryPath));
+                    internalMessageBus.Publish(new ShortcutsLoadingCompleted(directoryPath) { Shortcuts = this.Shortcuts });
             }
             catch (Exception exception)
             {
@@ -119,7 +129,5 @@ namespace Heibroch.Launch
             QueryResults = stringSearchEngine.Search(searchString, Shortcuts, bool.Parse(useStickySearch));
             CurrentQuery = searchString;
         }
-
-        public void Add(ILaunchShortcut launchShortcut) => Shortcuts.Add(launchShortcut.Title, launchShortcut);
     }
 }

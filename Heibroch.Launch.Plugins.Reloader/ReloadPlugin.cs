@@ -7,19 +7,19 @@ namespace Reload
     public class ReloadPlugin : ILaunchPlugin
     {
         private ReloadShortcut reloadShortcut;
-        private IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private IInternalMessageBus internalMessageBus;
 
-        public ReloadPlugin(IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
-                            IInternalMessageBus internalMessageBus)
+        public ReloadPlugin(IInternalMessageBus internalMessageBus)
         {
-            this.shortcutCollection = shortcutCollection;
-            this.reloadShortcut = new ReloadShortcut(shortcutCollection);
+            this.reloadShortcut = new ReloadShortcut(internalMessageBus);
             this.internalMessageBus = internalMessageBus;
-            this.internalMessageBus.Subscribe<ShortcutsLoadingCompleted>(OnShortcutsLoadingCompleted);
+            this.internalMessageBus.Subscribe<ApplicationLoadingCompleted>(OnShortcutsLoadingCompleted);
         }
 
-        private void OnShortcutsLoadingCompleted(ShortcutsLoadingCompleted obj) => shortcutCollection.Add(reloadShortcut);
+        private void OnShortcutsLoadingCompleted(ApplicationLoadingCompleted obj)
+        {
+            internalMessageBus.Publish(new ShortcutAddingStarted(reloadShortcut));
+        }
 
         public string? ShortcutFilter => null;
 

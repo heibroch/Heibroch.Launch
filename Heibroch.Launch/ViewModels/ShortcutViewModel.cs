@@ -28,13 +28,6 @@ namespace Heibroch.Launch.ViewModels
 
             selectionCycler = new SelectionCycler();
 
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            shortcutCollection.Load(Constants.RootPath, true);
-
             internalMessageBus.Subscribe<UserShortcutSelectionIncremented>(OnUserShortcutSelectionIncremented);
         }
 
@@ -105,7 +98,6 @@ namespace Heibroch.Launch.ViewModels
                 RaisePropertyChanged(nameof(SelectedQueryResult));
             }
         }
-
 
         public List<KeyValuePair<string, ILaunchShortcut>> DisplayedMostUsedResults => new List<KeyValuePair<string, ILaunchShortcut>>()
         {

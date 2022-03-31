@@ -1,17 +1,19 @@
-﻿using Heibroch.Launch.Interfaces;
+﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
+using Heibroch.Launch.Interfaces;
+using Heibroch.Launch.Events;
 
 namespace Reload
 {
     public class ReloadShortcut : ILaunchShortcut
     {
-        private IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
+        private IInternalMessageBus internalMessageBus;
 
-        public ReloadShortcut(IShortcutCollection<string, ILaunchShortcut> shortcutCollection) => this.shortcutCollection = shortcutCollection;
+        public ReloadShortcut(IInternalMessageBus internalMessageBus) => this.internalMessageBus = internalMessageBus;
 
         public Action<IEnumerable<KeyValuePair<string, string>>, string> Execute => (IEnumerable<KeyValuePair<string, string>> args, string formattedDescription) =>
         {
-            shortcutCollection.Load();
-            shortcutCollection.Add(this);
+            internalMessageBus.Publish(new ShortcutsLoadingStarted(null, true));
+            internalMessageBus.Publish(new ShortcutAddingStarted(this));
         };
         
         public string Title => "Reload";
