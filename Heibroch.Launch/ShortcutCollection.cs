@@ -28,6 +28,13 @@ namespace Heibroch.Launch
 
             internalMessageBus.Subscribe<ShortcutAddingStarted>(OnShortcutAddingStarted);
             internalMessageBus.Subscribe<ShortcutsLoadingStarted>(OnShortcutsLoadingStarted);
+            internalMessageBus.Subscribe<ShortcutsFilteredStarted>(OnShortcutsFilteredStarted);
+        }
+
+        private void OnShortcutsFilteredStarted(ShortcutsFilteredStarted obj)
+        {
+            Filter(obj.NewFilter);
+            internalMessageBus.Publish(new ShortcutsFilteredCompleted(obj.OldFilter, obj.NewFilter));
         }
 
         private void OnShortcutsLoadingStarted(ShortcutsLoadingStarted obj)
@@ -47,7 +54,7 @@ namespace Heibroch.Launch
 
         public string CurrentQuery { get; private set; }
 
-        public void Load(string? directoryPath = null, bool clear = true)
+        private void Load(string? directoryPath = null, bool clear = true)
         {
             try
             {
@@ -123,7 +130,7 @@ namespace Heibroch.Launch
             Shortcuts.Remove(shortcutName);
         }
 
-        public void Filter(string searchString)
+        private void Filter(string searchString)
         {
             settingsRepository.Settings.TryGetValue(Constants.SettingNames.UseStickySearch, out var useStickySearch);
             QueryResults = stringSearchEngine.Search(searchString, Shortcuts, bool.Parse(useStickySearch));

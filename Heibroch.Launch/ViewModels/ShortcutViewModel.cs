@@ -29,6 +29,27 @@ namespace Heibroch.Launch.ViewModels
             selectionCycler = new SelectionCycler();
 
             internalMessageBus.Subscribe<UserShortcutSelectionIncremented>(OnUserShortcutSelectionIncremented);
+            internalMessageBus.Subscribe<ShortcutsFilteredCompleted>(OnShortcutsFilteredCompleted);
+        }
+
+        private void OnShortcutsFilteredCompleted(ShortcutsFilteredCompleted obj)
+        {
+            var oldFilter = obj.OldFilter;
+            var newFilter = obj.NewFilter;
+
+            if (newFilter.Length < oldFilter.Length && oldFilter.StartsWith(newFilter))
+                selectionCycler.Reset();
+
+            RaisePropertyChanged(nameof(LaunchText));
+            RaisePropertyChanged(nameof(DisplayedQueryResults));
+            RaisePropertyChanged(nameof(DisplayedMostUsedResults));
+            RaisePropertyChanged(nameof(QueryResultsVisibility));
+            RaisePropertyChanged(nameof(WaterMarkVisibility));
+
+            if (!shortcutCollection.QueryResults.Any(x => x.Key == (selectedQueryResult.Key ?? string.Empty)))
+                SelectedQueryResult = shortcutCollection.QueryResults.FirstOrDefault();
+
+            RaisePropertyChanged(nameof(SelectedQueryResult));
         }
 
         private void OnUserShortcutSelectionIncremented(UserShortcutSelectionIncremented obj)
@@ -81,21 +102,7 @@ namespace Heibroch.Launch.ViewModels
             {
                 var oldValue = shortcutCollection?.CurrentQuery ?? string.Empty;
 
-                shortcutCollection.Filter(value);
-
-                if (value.Length < oldValue.Length && oldValue.StartsWith(value))
-                    selectionCycler.Reset();
-
-                RaisePropertyChanged(nameof(LaunchText));
-                RaisePropertyChanged(nameof(DisplayedQueryResults));
-                RaisePropertyChanged(nameof(DisplayedMostUsedResults));
-                RaisePropertyChanged(nameof(QueryResultsVisibility));
-                RaisePropertyChanged(nameof(WaterMarkVisibility));
-
-                if (!shortcutCollection.QueryResults.Any(x => x.Key == (selectedQueryResult.Key ?? string.Empty)))
-                    SelectedQueryResult = shortcutCollection.QueryResults.FirstOrDefault();
-
-                RaisePropertyChanged(nameof(SelectedQueryResult));
+                internalMessageBus.Publish(new ShortcutsFilteredStarted(oldValue, value));
             }
         }
 
