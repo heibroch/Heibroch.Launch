@@ -9,8 +9,8 @@
     <OutputPath>..\bin\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <AssemblyVersion>2022.04.07.1</AssemblyVersion>
-    <FileVersion>2022.04.07.1</FileVersion>
+    <AssemblyVersion>2022.04.07.2</AssemblyVersion>
+    <FileVersion>2022.04.07.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

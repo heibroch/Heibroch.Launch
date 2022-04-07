@@ -115,7 +115,7 @@ namespace Heibroch.Launch.ViewModels
             {
                 if (string.IsNullOrEmpty(LaunchText) && IsShowMostUsedEnabled)
                 {
-                    return mostUsedRepository.ShortcutUseCounts.OrderBy(x => x.Item2)
+                    return mostUsedRepository.ShortcutUseCounts.OrderByDescending(x => x.Item2)
                         .Select(x => shortcutCollection.Shortcuts.FirstOrDefault(y => y.Key == x.Item1))
                         .Where(x => x.Key != default)
                         .ToList();
