@@ -31,36 +31,9 @@
             </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView x:Name="MostUsedResultList" 
-                      Grid.Row="0"
-                      ItemsSource="{Binding DisplayedMostUsedResults, Mode=OneWay}" 
-                      Visibility="{Binding MostUsedResultsVisibility}"
-                      SelectedValue="{Binding MostUsedSelectedItem}"
-                      Focusable="False"
-                      IsHitTestVisible="False"
-                      Height="Auto"
-                      BorderThickness="0"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="{TemplateBinding ListView.Background}" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Key}" FontWeight="Bold" Padding="2,0,0,0"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Value.Description}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
             <TextBox x:Name="QueryTextBox"
-                     Grid.Row="2"
                      Text="{Binding LaunchText, UpdateSourceTrigger=PropertyChanged}" 
                      BorderThickness="0,0,0,0"
                      Padding="5,0,0,0"
@@ -70,8 +43,7 @@
                      FontWeight="Bold"
                      Focusable="True"
                      IsHitTestVisible="True"/>
-            <TextBlock Text="Type search text..." 
-                       Grid.Row="2"
+            <TextBlock Text="Type search text..."
                        Padding="8,0,0,0"
                        Canvas.ZIndex = "100"
                        VerticalAlignment="Center"
@@ -79,7 +51,7 @@
                        FontWeight="Bold"
                        Opacity="0.7"/>
             <ListView x:Name="QueryResultList" 
-                      Grid.Row="3" Visibility="{Binding QueryResultsVisibility}"
+                      Grid.Row="1" Visibility="{Binding QueryResultsVisibility}"
                       ItemsSource="{Binding DisplayedQueryResults, Mode=OneWay}" 
                       SelectedValue="{Binding SelectedQueryResult}"
                       Focusable="False"

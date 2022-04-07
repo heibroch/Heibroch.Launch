@@ -3,7 +3,6 @@ using Heibroch.Launch.Events;
 using Heibroch.Launch.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -37,10 +36,7 @@ namespace Heibroch.Launch
             internalMessageBus.Publish(new ShortcutsFilteredCompleted(obj.OldFilter, obj.NewFilter));
         }
 
-        private void OnShortcutsLoadingStarted(ShortcutsLoadingStarted obj)
-        {
-            Load(obj.Path, obj.Clear);
-        }
+        private void OnShortcutsLoadingStarted(ShortcutsLoadingStarted obj) => Load(Constants.RootPath, true);
 
         private void OnShortcutAddingStarted(ShortcutAddingStarted obj)
         {
@@ -54,12 +50,10 @@ namespace Heibroch.Launch
 
         public string CurrentQuery { get; private set; }
 
-        private void Load(string? directoryPath = null, bool clear = true)
+        private void Load(string directoryPath, bool clear)
         {
             try
             {
-                directoryPath = directoryPath ?? $"{Constants.RootPath}";
-
                 if (clear)
                     Shortcuts.Clear();
 
@@ -71,7 +65,7 @@ namespace Heibroch.Launch
                 }
 
                 //Create default file if it doesn't exist
-                var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.ShortcutFileExtension)).ToList();
+                var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.FileExtensions.ShortcutFileExtension)).ToList();
                 if (!files.Any())
                 {
                     var defaultShortcutFilePath = directoryPath + "\\MyShortcuts.hscut";
@@ -116,7 +110,7 @@ namespace Heibroch.Launch
 
                 //If it's a full reload, publish it has completed
                 if (clear)
-                    internalMessageBus.Publish(new ShortcutsLoadingCompleted(directoryPath) { Shortcuts = this.Shortcuts });
+                    internalMessageBus.Publish(new ShortcutsLoadingCompleted() { Shortcuts = this.Shortcuts });
             }
             catch (Exception exception)
             {

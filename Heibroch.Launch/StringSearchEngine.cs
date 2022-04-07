@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Heibroch.Launch.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Heibroch.Launch
 {
-    public interface IStringSearchEngine<T>
-    {
-        List<KeyValuePair<string, T>> Search(string searchString, Dictionary<string, T> _shortcuts, bool useStickySearch);
-    }
-
     public class StringSearchEngine<T> : IStringSearchEngine<T>
     {
         public bool IsStickyMatch(string stringToSearch, string searchString)

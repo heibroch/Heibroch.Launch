@@ -15,7 +15,7 @@ namespace Heibroch.Launch.ViewModels
         public SettingsViewModel(ISettingsRepository settingsRepository)
         {
             this.settingsRepository = settingsRepository;
-            this.settingsRepository.Load(Constants.RootPath);
+            this.settingsRepository.Load();
 
             ModifierKeys = Enum.GetValues(typeof(ModifierKeys)).Cast<ModifierKeys>().ToList();
             Keys = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();

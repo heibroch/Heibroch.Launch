@@ -5,7 +5,7 @@
         /// <summary>
         /// Loads in the persisted settings
         /// </summary>
-        void Load(string directoryPath);
+        void Load();
 
         /// <summary>
         /// Saves the settings to file
@@ -16,7 +16,7 @@
         /// <param name="useStickySearch"></param>
         /// <param name="showMostUsed"></param>
         /// <param name="filePath"></param> 
-        void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed, string filePath = null);
+        void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed);
 
         /// <summary>
         /// 

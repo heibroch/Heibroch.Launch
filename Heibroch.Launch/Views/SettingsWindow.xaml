@@ -35,7 +35,7 @@
         <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="Modifier 2: "/>
         <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Text="Key: "/>
         <TextBlock Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Text="Use sticky search: " ToolTip="Will use a roll-over matching algorithm for searching secondary to exact matches. This allows for not having to type the whole shortcut name, but rather just parts of it."/>
-        <TextBlock Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Text="Show most used: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
+        <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" Text="Show most used on empty search: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
 
         <ComboBox Grid.Column="2" Grid.Row="1" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier1}" Margin="2,2,2,2"/>
         <ComboBox Grid.Column="2" Grid.Row="2" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier2}" Margin="2,2,2,2"/>

@@ -14,17 +14,19 @@ namespace Heibroch.Launch.ViewModels
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly ISettingsRepository settingsRepository;
         private readonly IInternalMessageBus internalMessageBus;
+        private readonly IMostUsedRepository mostUsedRepository;
         private readonly SelectionCycler selectionCycler;
         private KeyValuePair<string, ILaunchShortcut> selectedQueryResult;
-        private KeyValuePair<string, ILaunchShortcut> selectedMostUsedResult;
-
+        
         public ShortcutViewModel(IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                                  ISettingsRepository settingsRepository,
-                                 IInternalMessageBus internalMessageBus)
+                                 IInternalMessageBus internalMessageBus,
+                                 IMostUsedRepository mostUsedRepository)
         {
             this.shortcutCollection = shortcutCollection;
             this.settingsRepository = settingsRepository;
             this.internalMessageBus = internalMessageBus;
+            this.mostUsedRepository = mostUsedRepository;
 
             selectionCycler = new SelectionCycler();
 
@@ -42,7 +44,6 @@ namespace Heibroch.Launch.ViewModels
 
             RaisePropertyChanged(nameof(LaunchText));
             RaisePropertyChanged(nameof(DisplayedQueryResults));
-            RaisePropertyChanged(nameof(DisplayedMostUsedResults));
             RaisePropertyChanged(nameof(QueryResultsVisibility));
             RaisePropertyChanged(nameof(WaterMarkVisibility));
 
@@ -58,7 +59,9 @@ namespace Heibroch.Launch.ViewModels
             if (DisplayedQueryResults.Count <= 0) return;
 
             //Move/cycle visibility/shortcuts
-            selectionCycler.Increment(increment, shortcutCollection.QueryResults.Count);
+            selectionCycler.Increment(increment, IsShowMostUsedEnabled && string.IsNullOrEmpty(LaunchText)
+                ? mostUsedRepository.ShortcutUseCounts.Count
+                : shortcutCollection.QueryResults.Count);
 
             if (string.IsNullOrWhiteSpace(SelectedQueryResult.Key))
             {
@@ -106,24 +109,20 @@ namespace Heibroch.Launch.ViewModels
             }
         }
 
-        public List<KeyValuePair<string, ILaunchShortcut>> DisplayedMostUsedResults => new List<KeyValuePair<string, ILaunchShortcut>>()
+        public List<KeyValuePair<string, ILaunchShortcut>> DisplayedQueryResults
         {
-            new KeyValuePair<string, ILaunchShortcut>("test1", new LaunchShortcut("test1", "bleeeeeurgh")),
-            new KeyValuePair<string, ILaunchShortcut>("test2", new LaunchShortcut("test3", "bleeeeweeurgh")),
-            new KeyValuePair<string, ILaunchShortcut>("test3", new LaunchShortcut("test3", "bleeewfeeeurgh")),
-        };
-
-        public KeyValuePair<string, ILaunchShortcut> SelectedMostUsedResult
-        {
-            get => selectedMostUsedResult;
-            set
+            get
             {
-                selectedMostUsedResult = value;
-                RaisePropertyChanged(nameof(SelectedMostUsedResult));
-            }
+                if (string.IsNullOrEmpty(LaunchText) && IsShowMostUsedEnabled)
+                {
+                    return mostUsedRepository.ShortcutUseCounts.OrderBy(x => x.Item2)
+                        .Select(x => shortcutCollection.Shortcuts.FirstOrDefault(y => y.Key == x.Item1))
+                        .Where(x => x.Key != default)
+                        .ToList();
+                }
+                return new List<KeyValuePair<string, ILaunchShortcut>>(selectionCycler.SubSelect(shortcutCollection.QueryResults));
+            }           
         }
-
-        public List<KeyValuePair<string, ILaunchShortcut>> DisplayedQueryResults => new List<KeyValuePair<string, ILaunchShortcut>>(selectionCycler.SubSelect(shortcutCollection.QueryResults));
 
         public KeyValuePair<string, ILaunchShortcut> SelectedQueryResult
         {
@@ -139,23 +138,32 @@ namespace Heibroch.Launch.ViewModels
         {
             LaunchText = string.Empty;
             selectionCycler.Reset();
-            RaisePropertyChanged(nameof(MostUsedResultsVisibility));
         }
 
-        public void ExecuteSelection() => internalMessageBus.Publish(new ShortcutExecutingStarted() { ShortcutKey = shortcutCollection.QueryResults.Count == 1 ? shortcutCollection.QueryResults.First().Key : (SelectedQueryResult.Key ?? LaunchText) });
+        public void ExecuteSelection()
+        {
+            internalMessageBus.Publish(new ShortcutExecutingStarted() 
+            { 
+                ShortcutKey = shortcutCollection.QueryResults.Count == 1 
+                    ? shortcutCollection.QueryResults.First().Key 
+                    : (SelectedQueryResult.Key ?? LaunchText) 
+            });
+        }
 
-        public Visibility MostUsedResultsVisibility
+        public Visibility QueryResultsVisibility => IsShowMostUsedEnabled && mostUsedRepository.ShortcutUseCounts.Count > 0 || 
+            shortcutCollection.QueryResults.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility WaterMarkVisibility => LaunchText?.Length <= 0 ? Visibility.Visible : Visibility.Hidden;
+
+        private bool IsShowMostUsedEnabled
         {
             get
             {
-                bool.TryParse(settingsRepository.Settings[Constants.SettingNames.ShowMostUsed], out var showMostUsed);
-                return showMostUsed ? Visibility.Visible : Visibility.Collapsed;
+                if (!bool.TryParse(settingsRepository.Settings[Constants.SettingNames.ShowMostUsed], out var showMostUsed))
+                    return false;
+
+                return showMostUsed;
             }
-            
         }
-
-        public Visibility QueryResultsVisibility => shortcutCollection.QueryResults.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-
-        public Visibility WaterMarkVisibility => LaunchText?.Length <= 0 ? Visibility.Visible : Visibility.Hidden;
     }
 }

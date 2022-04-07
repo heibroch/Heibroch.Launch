@@ -29,7 +29,7 @@ namespace Heibroch.Launch
         private void OnShortcutExecutingStarted(ShortcutExecutingStarted obj)
         {
             Execute(obj.ShortcutKey, obj.LaunchShortcut);
-            internalMessageBus.Publish(new ShortcutExecutingCompleted());
+            internalMessageBus.Publish(new ShortcutExecutingCompleted() { ShortcutKey = obj.ShortcutKey, LaunchShortcut = obj.LaunchShortcut });
         }
 
         private void Execute(string shortcutKey, ILaunchShortcut? launchShortcut = null)

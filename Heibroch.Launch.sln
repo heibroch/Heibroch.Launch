@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Tests", "He
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Heibroch.Launch.Installer", "Heibroch.Launch.Installer\Heibroch.Launch.Installer.vdproj", "{72449730-2A3D-4BA2-B152-538DA778CBBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Events", "Heibroch.Launch.Events\Heibroch.Launch.Events.csproj", "{E8347425-9B1A-448C-BFFD-ADF38A331957}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Events", "Heibroch.Launch.Events\Heibroch.Launch.Events.csproj", "{E8347425-9B1A-448C-BFFD-ADF38A331957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heibroch.Launch.Model", "Heibroch.Launch.Model\Heibroch.Launch.Model.csproj", "{CC099865-3172-4DA2-92DE-C2CB4FFF0FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heibroch.Launch.Model", "Heibroch.Launch.Model\Heibroch.Launch.Model.csproj", "{CC099865-3172-4DA2-92DE-C2CB4FFF0FC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

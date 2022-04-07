@@ -18,6 +18,7 @@ namespace Heibroch.Launch.ViewModels
         private readonly IShortcutCollection<string, ILaunchShortcut> shortcutCollection;
         private readonly IShortcutExecutor shortcutExecutor;
         private readonly ISettingsRepository settingRepository;
+        private readonly IMostUsedRepository mostUsedRepository;
         private static ShortcutWindow currentShortcutWindow = null;
         private static ShortcutViewModel shortcutViewModel;
         private static SettingsWindow currentSettingsWindow = null;
@@ -31,18 +32,20 @@ namespace Heibroch.Launch.ViewModels
         public MainViewModel(IInternalMessageBus internalMessageBus,
                              IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                              IShortcutExecutor shortcutExecutor,
-                             ISettingsRepository settingsRepository)
+                             ISettingsRepository settingsRepository,
+                             IMostUsedRepository mostUsedRepository)
         {
             this.internalMessageBus = internalMessageBus;
             this.shortcutCollection = shortcutCollection;
             this.shortcutExecutor = shortcutExecutor;
             this.settingRepository = settingsRepository;
+            this.mostUsedRepository = mostUsedRepository;
             Initialize();
         }
 
         private void Initialize()
         {
-            shortcutViewModel = new ShortcutViewModel(shortcutCollection, settingRepository, internalMessageBus);
+            shortcutViewModel = new ShortcutViewModel(shortcutCollection, settingRepository, internalMessageBus, mostUsedRepository);
             settingsViewModel = new SettingsViewModel(settingRepository);
             argumentsViewModel = new ArgumentsViewModel(internalMessageBus);
 

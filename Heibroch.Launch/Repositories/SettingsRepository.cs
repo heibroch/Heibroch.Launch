@@ -1,10 +1,8 @@
-﻿using Heibroch.Common;
-using Heibroch.Infrastructure.Interfaces.MessageBus;
+﻿using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,27 +12,31 @@ namespace Heibroch.Launch
     public class SettingsRepository : ISettingsRepository
     {
         private readonly IInternalMessageBus internalMessageBus;
+        private readonly IPathRepository pathRepository;
 
-        public SettingsRepository(IInternalMessageBus internalMessageBus) => this.internalMessageBus = internalMessageBus;
+        public SettingsRepository(IInternalMessageBus internalMessageBus, IPathRepository pathRepository)
+        {
+            this.internalMessageBus = internalMessageBus;
+            this.pathRepository = pathRepository;
+        }
 
         public SortedList<string, string> Settings { get; } = new SortedList<string, string>();
 
-        public void Load(string directoryPath)
+        public void Load()
         {
             try
             {
-                var filePath = directoryPath + "Settings" + Constants.SettingFileExtension;
+                var filePath = pathRepository.AppSettingsDirectory + Constants.FileNames.Settings + Constants.FileExtensions.SettingFileExtension;
                 internalMessageBus.Publish(new SettingsLoadingStarted(filePath));
 
                 Settings.Clear();
 
                 //Create directory if it does not exist
-                if (!Directory.Exists(directoryPath))
-                    Directory.CreateDirectory(directoryPath);
+                if (!Directory.Exists(pathRepository.AppSettingsDirectory))
+                    Directory.CreateDirectory(pathRepository.AppSettingsDirectory);
 
                 //If no settings file exists, then create one
-                var files = Directory.GetFiles(directoryPath).Where(x => x.EndsWith(Constants.SettingFileExtension)).ToList();
-                if (!files.Any())
+                if (!File.Exists(filePath))
                 {
                     var fileStream = File.Create(filePath);
                     var streamWriter = new StreamWriter(fileStream);
@@ -46,12 +48,9 @@ namespace Heibroch.Launch
 
                     streamWriter.Flush();
                     streamWriter.Dispose();
-
-                    files.Add(filePath);
                 }
 
-                var file = files.First();
-                var lines = File.ReadAllLines(file).ToList();
+                var lines = File.ReadAllLines(filePath).ToList();
 
                 //Add setting in case it's missing
                 if (!lines.Any(x => x.Contains(Constants.SettingNames.UseStickySearch)))
@@ -90,9 +89,9 @@ namespace Heibroch.Launch
         /// <param name="useStickySearch"></param>
         /// <param name="showMostUsed"></param>
         /// <param name="filePath"></param>
-        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed, string? filePath = null)
+        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed)
         {
-            filePath = filePath ?? $"{Constants.RootPath}{Constants.SettingFileName}{Constants.SettingFileExtension}";
+            var filePath = $"{pathRepository.AppSettingsDirectory}{Constants.FileNames.Settings}{Constants.FileExtensions.SettingFileExtension}";
 
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"{Constants.SettingNames.Modifier1};{modifier1}");
@@ -103,7 +102,7 @@ namespace Heibroch.Launch
 
             File.WriteAllText(filePath, stringBuilder.ToString());
 
-            Load(Constants.RootPath);
+            Load();
         }
     }
 }
