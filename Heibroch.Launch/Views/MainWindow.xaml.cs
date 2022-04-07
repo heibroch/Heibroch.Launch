@@ -46,17 +46,18 @@ namespace Heibroch.Launch.Views
                 var pathRepository = new PathRepository();
                 Container.Current.Register<IPathRepository>(pathRepository);
 
+                var settingsRepository = new SettingsRepository(internalMessageBus, pathRepository);
+                settingsRepository.Load();
+                Container.Current.Register<ISettingsRepository>(settingsRepository);
+
                 pluginLoader = new PluginLoader(internalMessageBus, Container.Current);
                 Container.Current.Register<IPluginLoader>(pluginLoader);
 
                 var stringSearchEngine = new StringSearchEngine<ILaunchShortcut>();
                 Container.Current.Register<IStringSearchEngine<ILaunchShortcut>>(stringSearchEngine);
 
-                var mostUsedRepository = new MostUsedRepository(internalMessageBus, pathRepository);
+                var mostUsedRepository = new MostUsedRepository(internalMessageBus, pathRepository, settingsRepository);
                 Container.Current.Register<IMostUsedRepository>(mostUsedRepository);
-
-                var settingsRepository = new SettingsRepository(internalMessageBus, pathRepository);
-                Container.Current.Register<ISettingsRepository>(settingsRepository);
 
                 var shortcutCollection = new ShortcutCollection(pluginLoader, internalMessageBus, stringSearchEngine, settingsRepository);
                 Container.Current.Register<IShortcutCollection<string, ILaunchShortcut>>(shortcutCollection);

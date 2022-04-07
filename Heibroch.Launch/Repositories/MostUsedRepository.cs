@@ -12,11 +12,13 @@ namespace Heibroch.Launch
     {
         private readonly IInternalMessageBus internalMessageBus;
         private readonly IPathRepository pathRepository;
+        private readonly ISettingsRepository settingsRepository;
 
-        public MostUsedRepository(IInternalMessageBus internalMessageBus, IPathRepository pathRepository)
+        public MostUsedRepository(IInternalMessageBus internalMessageBus, IPathRepository pathRepository, ISettingsRepository settingsRepository)
         {
             this.internalMessageBus = internalMessageBus;
             this.pathRepository = pathRepository;
+            this.settingsRepository = settingsRepository;
 
             this.internalMessageBus.Subscribe<ShortcutExecutingCompleted>(OnShortcutExecutingCompleted);
             this.internalMessageBus.Subscribe<ShortcutsLoadingCompleted>(OnShortcutsLoadingCompleted);
@@ -26,6 +28,8 @@ namespace Heibroch.Launch
 
         private void OnShortcutsLoadingCompleted(ShortcutsLoadingCompleted obj)
         {
+            if (!IsMostUsedEnabled) return;
+
             ShortcutUseCounts.Clear();
 
             var filePath = FilePath;
@@ -67,6 +71,8 @@ namespace Heibroch.Launch
 
         private void OnShortcutExecutingCompleted(ShortcutExecutingCompleted obj)
         {
+            if (!IsMostUsedEnabled) return;
+
             var mostUsedShortcutMatch = ShortcutUseCounts.FirstOrDefault(x => x.Item1 == obj.ShortcutKey);
             if (mostUsedShortcutMatch == null)
                 ShortcutUseCounts.Add(new Tuple<string, int>(obj.ShortcutKey, 1));
@@ -83,5 +89,7 @@ namespace Heibroch.Launch
         }
 
         private string FilePath => $"{pathRepository.AppSettingsDirectory}{Constants.FileNames.MostUsed}{Constants.FileExtensions.MostUsedFileExtension}";
+
+        private bool IsMostUsedEnabled => bool.Parse(settingsRepository.Settings.First(x => x.Key == Constants.SettingNames.ShowMostUsed).Value);
     }
 }
