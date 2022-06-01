@@ -73,7 +73,14 @@ namespace Heibroch.Launch
             try
             {
                 var formattedCommand = command.StartsWith("\"") ? command.Substring(1, command.Length - 2) : command;
-                Process.Start(formattedCommand);
+
+                var processStartInfo = new ProcessStartInfo()
+                {
+                    FileName = formattedCommand,
+                    UseShellExecute = true
+                };
+                
+                Process.Start(processStartInfo);
             }
             catch (Exception e)
             {
