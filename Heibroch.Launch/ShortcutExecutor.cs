@@ -24,7 +24,10 @@ namespace Heibroch.Launch
             Arguments = new Dictionary<string, string>();
 
             internalMessageBus.Subscribe<ShortcutExecutingStarted>(OnShortcutExecutingStarted);
+            internalMessageBus.Subscribe<ShortcutArgumentFilled>(OnShortcutArgumentFilled);
         }
+
+        private void OnShortcutArgumentFilled(ShortcutArgumentFilled obj) => AddArgument(obj.Key, obj.Value);
 
         private void OnShortcutExecutingStarted(ShortcutExecutingStarted obj)
         {
