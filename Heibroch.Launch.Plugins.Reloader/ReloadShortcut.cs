@@ -13,7 +13,6 @@ namespace Reload
         public Action<IEnumerable<KeyValuePair<string, string>>, string> Execute => (IEnumerable<KeyValuePair<string, string>> args, string formattedDescription) =>
         {
             internalMessageBus.Publish(new ShortcutsLoadingStarted());
-            internalMessageBus.Publish(new ShortcutAddingStarted(this));
         };
         
         public string Title => "Reload";

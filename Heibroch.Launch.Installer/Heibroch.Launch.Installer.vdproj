@@ -37,6 +37,12 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_DCFDB99C48294B2585901BB182321659"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -124,7 +130,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.6.1"
+                "FrameworkVersion" = "8:v4.6.1"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=671728"
                 }
@@ -195,6 +201,26 @@
             "Hidden" = "11:FALSE"
             "System" = "11:FALSE"
             "Permanent" = "11:TRUE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DCFDB99C48294B2585901BB182321659"
+            {
+            "SourcePath" = "8:C:\\Users\\Dwayn\\OneDrive\\Skrivebord\\Temp\\Keys.hsvault"
+            "TargetName" = "8:Keys.hsvault"
+            "Tag" = "8:"
+            "Folder" = "8:_11D4781D933044A696710435A5948AD6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
@@ -282,6 +308,17 @@
                     "Property" = "8:_0FE9BE425DCE45D290071B964A31D26E"
                         "Folders"
                         {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_18E8B3129EF3438FA6CCD997553EEE8E"
+                            {
+                            "Name" = "8:Heibroch.Launch.Plugins.KeyVault"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_782EFEB2D43F41BE93EDC49C9AF118AF"
+                                "Folders"
+                                {
+                                }
+                            }
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_818697832A734060803CDDB3852B4C55"
                             {
                             "Name" = "8:Heibroch.Launch.Plugins.Reloader"
@@ -346,15 +383,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Launch"
-        "ProductCode" = "8:{30AA2424-C49E-4263-B7AE-9190579BB4E5}"
-        "PackageCode" = "8:{F948649B-862D-4088-AEC3-DE732BD6E5B5}"
+        "ProductCode" = "8:{D37593D5-CA8B-46C5-ACC5-D772CAB0E86A}"
+        "PackageCode" = "8:{FDFB1B06-2765-4112-A424-790B8445B6ED}"
         "UpgradeCode" = "8:{F2FABF04-76C2-4529-B378-FA6022FD0EB8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:23.1.9"
         "Manufacturer" = "8:Heibroch"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -880,6 +917,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_50B0BD0C28C94DD29F5F9E982B870736"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_18E8B3129EF3438FA6CCD997553EEE8E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:PublishItems"
+            "OutputProjectGuid" = "8:{A6CFC0E4-E6B9-4BA2-A1EB-853CB5B04418}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_58585256F2B4427682B9E8308BE39026"
             {
             "SourcePath" = "8:"

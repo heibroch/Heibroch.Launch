@@ -28,7 +28,7 @@ namespace Heibroch.Launch.ViewModels
             this.internalMessageBus = internalMessageBus;
             this.mostUsedRepository = mostUsedRepository;
 
-            selectionCycler = new SelectionCycler();
+            selectionCycler = new SelectionCycler(Constants.MaxResultCount);
 
             internalMessageBus.Subscribe<UserShortcutSelectionIncremented>(OnUserShortcutSelectionIncremented);
             internalMessageBus.Subscribe<ShortcutsFilteredCompleted>(OnShortcutsFilteredCompleted);
@@ -86,14 +86,14 @@ namespace Heibroch.Launch.ViewModels
 
             RaisePropertyChanged(nameof(DisplayedQueryResults));
 
-            SelectedQueryResult = DisplayedQueryResults.ElementAt(selectionCycler.CycleIndex);
+            SelectedQueryResult = DisplayedQueryResults.ElementAt(selectionCycler.CyclingWindowCurrentIndex);
 
             Debug.WriteLine($"SelectedItem now {SelectedQueryResult.Key} \r\n" +
-                            $"StartIndex {selectionCycler.StartIndex}\r\n" +
-                            $"StopIndex {selectionCycler.StopIndex}\r\n" +
-                            $"TotalIndex {selectionCycler.CurrentIndex}\r\n" +
-                            $"CycleIndex {selectionCycler.CycleIndex}\r\n" +
-                            $"Delta {selectionCycler.Delta}\r\n" +
+                            $"StartIndex {selectionCycler.FullCollectionStartIndex}\r\n" +
+                            $"StopIndex {selectionCycler.FullCollectionStopIndex}\r\n" +
+                            $"TotalIndex {selectionCycler.FullCollectionCurrentIndex}\r\n" +
+                            $"CycleIndex {selectionCycler.CyclingWindowCurrentIndex}\r\n" +
+                            $"Delta {selectionCycler.CylingWindowSize}\r\n" +
                             $"CollectionCount {shortcutCollection.QueryResults.Count}" +
                             $"-----------------------------------------------");
         }

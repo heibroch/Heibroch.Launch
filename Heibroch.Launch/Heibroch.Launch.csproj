@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <!--<BaseOutputPath>..\bin\</BaseOutputPath>-->
     <OutputPath>..\bin\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <AssemblyVersion>2022.06.03.1</AssemblyVersion>
-    <FileVersion>2022.06.03.1</FileVersion>
+    <AssemblyVersion>2023.01.09.1</AssemblyVersion>
+    <FileVersion>2023.01.09.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,9 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="TextCopy" Version="6.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
     <ProjectReference Include="..\Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj" />
     <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
+    <ProjectReference Include="..\Heibroch.Launch.Utilities\Heibroch.Launch.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,7 +33,7 @@
       <HintPath>..\..\Heibroch\Heibroch.Common\bin\Release\Heibroch.Common.dll</HintPath>
     </Reference>
     <Reference Include="Heibroch.Common.Wpf">
-      <HintPath>..\..\Heibroch\Heibroch.Common.Wpf\bin\Release\net6.0-windows\Heibroch.Common.Wpf.dll</HintPath>
+      <HintPath>..\..\Heibroch\Heibroch.Common.Wpf\bin\Release\Heibroch.Common.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Heibroch.Infrastructure.Interfaces">
       <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net6.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>

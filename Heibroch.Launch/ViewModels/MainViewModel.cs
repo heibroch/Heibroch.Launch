@@ -19,12 +19,12 @@ namespace Heibroch.Launch.ViewModels
         private readonly IShortcutExecutor shortcutExecutor;
         private readonly ISettingsRepository settingRepository;
         private readonly IMostUsedRepository mostUsedRepository;
-        private static ShortcutWindow currentShortcutWindow = null;
-        private static ShortcutViewModel shortcutViewModel;
-        private static SettingsWindow currentSettingsWindow = null;
-        private static SettingsViewModel settingsViewModel;
-        private static ArgumentsWindow currentArgumentsWindow = null;
-        private static ArgumentsViewModel argumentsViewModel;
+        private static ShortcutWindow? currentShortcutWindow = null;
+        private static ShortcutViewModel? shortcutViewModel;
+        private static SettingsWindow? currentSettingsWindow = null;
+        private static SettingsViewModel? settingsViewModel;
+        private static ArgumentsWindow? currentArgumentsWindow = null;
+        private static ArgumentsViewModel? argumentsViewModel;
 
         private DispatcherTimer dispatcherTimer;
         private TrayIcon trayIcon;

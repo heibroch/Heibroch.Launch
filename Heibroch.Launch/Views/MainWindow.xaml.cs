@@ -20,7 +20,7 @@ namespace Heibroch.Launch.Views
         private const int WM_KEYDOWN = 0x0100;
         private static LowLevelKeyboardProc lowLevelKeyboardProc = HookCallback;
         private static IntPtr hookId = IntPtr.Zero;
-        private static IInternalMessageBus internalMessageBus;
+        private static IInternalMessageBus? internalMessageBus;
         private IPluginLoader pluginLoader;
 
         public MainWindow()
@@ -75,11 +75,11 @@ namespace Heibroch.Launch.Views
                 hookId = SetHook(lowLevelKeyboardProc);
                 Closing += OnMainWindowClosing;
 
-                internalMessageBus.Publish(new ApplicationLoadingCompleted());
+                internalMessageBus?.Publish(new ApplicationLoadingCompleted { RootPath = Constants.RootPath });
             }
             catch (Exception exception)
             {
-                internalMessageBus.Publish(new ApplicationLoadingFailed(exception));
+                internalMessageBus?.Publish(new ApplicationLoadingFailed(exception));
                 throw;
             }
         }

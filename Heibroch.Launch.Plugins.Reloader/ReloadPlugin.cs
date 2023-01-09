@@ -13,13 +13,10 @@ namespace Reload
         {
             this.reloadShortcut = new ReloadShortcut(internalMessageBus);
             this.internalMessageBus = internalMessageBus;
-            this.internalMessageBus.Subscribe<ApplicationLoadingCompleted>(OnShortcutsLoadingCompleted);
+            this.internalMessageBus.Subscribe<ShortcutsLoadingStarted>(OnShortcutsLoadingStarted);
         }
 
-        private void OnShortcutsLoadingCompleted(ApplicationLoadingCompleted obj)
-        {
-            internalMessageBus.Publish(new ShortcutAddingStarted(reloadShortcut));
-        }
+        private void OnShortcutsLoadingStarted(ShortcutsLoadingStarted obj) => internalMessageBus.Publish(new ShortcutAddingStarted(reloadShortcut));
 
         public string? ShortcutFilter => null;
 

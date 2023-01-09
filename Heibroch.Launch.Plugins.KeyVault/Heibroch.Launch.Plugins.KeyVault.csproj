@@ -4,8 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!--<BaseOutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Reloader\</BaseOutputPath>-->
-    <OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Reloader\</OutputPath>
+    <OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.KeyVault\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
@@ -16,12 +15,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Heibroch.Common">
-      <HintPath>..\..\Heibroch\Heibroch.Common\bin\Release\Heibroch.Common.dll</HintPath>
-    </Reference>
     <Reference Include="Heibroch.Infrastructure.Interfaces">
       <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net6.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TextCopy" Version="6.2.1" />
   </ItemGroup>
 
 </Project>
