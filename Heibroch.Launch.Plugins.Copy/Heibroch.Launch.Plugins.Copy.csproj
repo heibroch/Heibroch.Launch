@@ -1,26 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <!--<BaseOutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Copy\</BaseOutputPath>-->
-    <OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Copy\</OutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj" />
-    <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj">
-      <CopyLocal>True</CopyLocal>
-    </ProjectReference>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!--<BaseOutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Copy\</BaseOutputPath>-->
+		<OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Copy\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj" />
+		<ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj">
+			<CopyLocal>True</CopyLocal>
+		</ProjectReference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="PresentationCore">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.5\ref\net6.0\PresentationCore.dll</HintPath>
-      <CopyLocal>True</CopyLocal>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="PresentationCore">
+			<HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\7.0.4\ref\net7.0\PresentationCore.dll</HintPath>
+			<CopyLocal>True</CopyLocal>
+		</Reference>
+	</ItemGroup>
 
 </Project>

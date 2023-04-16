@@ -1,31 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.KeyVault\</OutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.KeyVault\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
-    <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
+		<ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Infrastructure.Interfaces\Heibroch.Infrastructure.Interfaces.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Heibroch.Infrastructure.Interfaces">
-      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net6.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Events\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="TextCopy" Version="6.2.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="TextCopy" Version="6.2.1" />
+	</ItemGroup>
 
 </Project>

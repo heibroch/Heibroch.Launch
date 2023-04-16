@@ -1,27 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <!--<BaseOutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Reloader\</BaseOutputPath>-->
-    <OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Reloader\</OutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!--<BaseOutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Reloader\</BaseOutputPath>-->
+		<OutputPath>..\bin\Plugins\Heibroch.Launch.Plugins.Reloader\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
-    <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
+		<ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Infrastructure.Interfaces\Heibroch.Infrastructure.Interfaces.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Common\Heibroch.Common.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Heibroch.Common">
-      <HintPath>..\..\Heibroch\Heibroch.Common\bin\Release\Heibroch.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Heibroch.Infrastructure.Interfaces">
-      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net6.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
 </Project>
