@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="Heibroch.Infrastructure.Interfaces">
-      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net6.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Infrastructure.Interfaces\Heibroch.Infrastructure.Interfaces.csproj" />
+	</ItemGroup>
 
 </Project>

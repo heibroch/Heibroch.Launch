@@ -1,58 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <!--<BaseOutputPath>..\bin\</BaseOutputPath>-->
-    <OutputPath>..\bin\</OutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <AssemblyVersion>2023.01.09.1</AssemblyVersion>
-    <FileVersion>2023.01.09.1</FileVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<!--<BaseOutputPath>..\bin\</BaseOutputPath>-->
+		<OutputPath>..\bin\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<AssemblyVersion>2023.01.09.1</AssemblyVersion>
+		<FileVersion>2023.01.09.1</FileVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Resources\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="TextCopy" Version="6.2.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="TextCopy" Version="6.2.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
-    <ProjectReference Include="..\Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj" />
-    <ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
-    <ProjectReference Include="..\Heibroch.Launch.Utilities\Heibroch.Launch.Utilities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Heibroch.Launch.Events\Heibroch.Launch.Events.csproj" />
+		<ProjectReference Include="..\Heibroch.Launch.Interfaces\Heibroch.Launch.Interfaces.csproj" />
+		<ProjectReference Include="..\Heibroch.Launch.Plugin\Heibroch.Launch.Plugin.csproj" />
+		<ProjectReference Include="..\Heibroch.Launch.Utilities\Heibroch.Launch.Utilities.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Common\Heibroch.Common.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Common.Wpf\Heibroch.Common.Wpf.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Infrastructure.Interfaces\Heibroch.Infrastructure.Interfaces.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Infrastructure.Logging\Heibroch.Infrastructure.Logging.csproj" />
+		<ProjectReference Include="..\..\Heibroch\Heibroch.Infrastructure.MessageBus\Heibroch.Infrastructure.MessageBus.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Heibroch.Common">
-      <HintPath>..\..\Heibroch\Heibroch.Common\bin\Release\Heibroch.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Heibroch.Common.Wpf">
-      <HintPath>..\..\Heibroch\Heibroch.Common.Wpf\bin\Release\Heibroch.Common.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Heibroch.Infrastructure.Interfaces">
-      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net6.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Heibroch.Infrastructure.Logging">
-      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Logging\bin\Release\net6.0\Heibroch.Infrastructure.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Heibroch.Infrastructure.MessageBus">
-      <HintPath>..\..\Heibroch\Heibroch.Infrastructure.MessageBus\bin\Release\net6.0\Heibroch.Infrastructure.MessageBus.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.5\ref\net6.0\System.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing.Common">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.5\ref\net6.0\System.Drawing.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.5\ref\net6.0\System.Windows.Forms.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="System.Drawing">
+			<HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\7.0.4\ref\net7.0\System.Drawing.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Drawing.Common">
+			<HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\7.0.4\ref\net7.0\System.Drawing.Common.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Windows.Forms">
+			<HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\7.0.4\ref\net7.0\System.Windows.Forms.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>
