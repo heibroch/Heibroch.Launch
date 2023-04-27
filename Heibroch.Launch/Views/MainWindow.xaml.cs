@@ -30,7 +30,7 @@ namespace Heibroch.Launch.Views
                 var internalLogger = new InternalLogger();
                 internalLogger.LogInfoAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Information);
                 internalLogger.LogWarningAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Warning);
-                internalLogger.LogErrorAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Error);
+                internalLogger.LogErrorAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Error);              
                 Container.Current.Register<IInternalLogger>(internalLogger);
 
                 internalMessageBus = new InternalMessageBus(internalLogger);
@@ -70,7 +70,7 @@ namespace Heibroch.Launch.Views
                 //Load shortcuts
                 internalMessageBus.Publish(new ShortcutsLoadingStarted());
 
-                DataContext = new MainViewModel(internalMessageBus, shortcutCollection, shortcutExecutor, settingsRepository, mostUsedRepository);
+                DataContext = new MainViewModel(internalMessageBus, shortcutCollection, shortcutExecutor, settingsRepository, mostUsedRepository, internalLogger);
 
                 hookId = SetHook(lowLevelKeyboardProc);
                 Closing += OnMainWindowClosing;

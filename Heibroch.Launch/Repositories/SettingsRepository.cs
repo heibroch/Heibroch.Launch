@@ -43,8 +43,11 @@ namespace Heibroch.Launch
                     streamWriter.Write($"{Constants.SettingNames.Modifier1};Control\r\n" +
                                        $"{Constants.SettingNames.Modifier2};Shift\r\n" +
                                        $"{Constants.SettingNames.Key};Space\r\n" +
-                                       $"{Constants.SettingNames.UseStickySearch};true " +
-                                       $"{Constants.SettingNames.ShowMostUsed};false");
+                                       $"{Constants.SettingNames.UseStickySearch};true\r\n" +
+                                       $"{Constants.SettingNames.ShowMostUsed};false\r\n" +
+                                       $"{Constants.SettingNames.LogInfo};false\r\n" +
+                                       $"{Constants.SettingNames.LogWarnings};false\r\n" +
+                                       $"{Constants.SettingNames.LogErrors};false");
 
                     streamWriter.Flush();
                     streamWriter.Dispose();
@@ -52,13 +55,11 @@ namespace Heibroch.Launch
 
                 var lines = File.ReadAllLines(filePath).ToList();
 
-                //Add setting in case it's missing
-                if (!lines.Any(x => x.Contains(Constants.SettingNames.UseStickySearch)))
-                    lines.Add($"{Constants.SettingNames.UseStickySearch};false");
-
-                //Add setting in case it's missing
-                if (!lines.Any(x => x.Contains(Constants.SettingNames.ShowMostUsed)))
-                    lines.Add($"{Constants.SettingNames.ShowMostUsed};false");
+                AddLineIfMissing(lines, Constants.SettingNames.UseStickySearch, "false");
+                AddLineIfMissing(lines, Constants.SettingNames.ShowMostUsed, "false");
+                AddLineIfMissing(lines, Constants.SettingNames.LogInfo, "false");
+                AddLineIfMissing(lines, Constants.SettingNames.LogWarnings, "false");
+                AddLineIfMissing(lines, Constants.SettingNames.LogErrors, "false");
 
                 foreach (var line in lines)
                 {
@@ -81,6 +82,14 @@ namespace Heibroch.Launch
             }           
         }
 
+        private void AddLineIfMissing(List<string> lines, string settingName, string settingValue)
+        {
+            if (lines.Any(x => x.Contains(settingName))) 
+                return;
+
+            lines.Add($"{settingName};{settingValue}");
+        }
+
         /// <summary> 
         /// </summary>
         /// <param name="modifier1">System.Windows.Input.ModifierKeys</param>
@@ -89,7 +98,7 @@ namespace Heibroch.Launch
         /// <param name="useStickySearch"></param>
         /// <param name="showMostUsed"></param>
         /// <param name="filePath"></param>
-        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed)
+        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed, bool logInfo, bool logWarnings, bool logErrors)
         {
             var filePath = $"{pathRepository.AppSettingsDirectory}{Constants.FileNames.Settings}{Constants.FileExtensions.SettingFileExtension}";
 
@@ -99,6 +108,9 @@ namespace Heibroch.Launch
             stringBuilder.AppendLine($"{Constants.SettingNames.Key};{key}");
             stringBuilder.AppendLine($"{Constants.SettingNames.UseStickySearch};{useStickySearch}");
             stringBuilder.AppendLine($"{Constants.SettingNames.ShowMostUsed};{showMostUsed}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.LogInfo};{logInfo}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.LogWarnings};{logWarnings}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.LogErrors};{logErrors}");
 
             File.WriteAllText(filePath, stringBuilder.ToString());
 

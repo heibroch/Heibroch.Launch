@@ -9,8 +9,8 @@
     <OutputPath>..\bin\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <AssemblyVersion>2023.01.09.1</AssemblyVersion>
-    <FileVersion>2023.01.09.1</FileVersion>
+    <AssemblyVersion>2023.04.27.1</AssemblyVersion>
+    <FileVersion>2023.04.27.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +33,7 @@
       <HintPath>..\..\Heibroch\Heibroch.Common\bin\Release\Heibroch.Common.dll</HintPath>
     </Reference>
     <Reference Include="Heibroch.Common.Wpf">
-      <HintPath>..\..\Heibroch\Heibroch.Common.Wpf\bin\Release\Heibroch.Common.Wpf.dll</HintPath>
+      <HintPath>..\..\Heibroch\Heibroch.Common.Wpf\bin\Release\net6.0-windows\Heibroch.Common.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Heibroch.Infrastructure.Interfaces">
       <HintPath>..\..\Heibroch\Heibroch.Infrastructure.Interfaces\bin\Release\net6.0\Heibroch.Infrastructure.Interfaces.dll</HintPath>
@@ -45,13 +45,13 @@
       <HintPath>..\..\Heibroch\Heibroch.Infrastructure.MessageBus\bin\Release\net6.0\Heibroch.Infrastructure.MessageBus.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.5\ref\net6.0\System.Drawing.dll</HintPath>
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\7.0.4\ref\net7.0\System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing.Common">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.5\ref\net6.0\System.Drawing.Common.dll</HintPath>
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\7.0.4\ref\net7.0\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms">
-      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.5\ref\net6.0\System.Windows.Forms.dll</HintPath>
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\7.0.4\ref\net7.0\System.Windows.Forms.dll</HintPath>
     </Reference>
   </ItemGroup>
 

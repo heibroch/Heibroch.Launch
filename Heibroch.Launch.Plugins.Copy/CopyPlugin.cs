@@ -31,8 +31,8 @@ namespace Heibroch.Launch.Plugins.Copy
             //    Clipboard.SetText(description);
             //    return;
             //}
-            
-            Clipboard.SetText(description.Remove(0, ShortcutFilter.Length));
+
+            TextCopy.ClipboardService.SetText(description.Remove(0, ShortcutFilter.Length));            
         }
 
         public ILaunchShortcut CreateShortcut(string title, string description) => new CopyShortcut(ExecuteShortcut, title, description);

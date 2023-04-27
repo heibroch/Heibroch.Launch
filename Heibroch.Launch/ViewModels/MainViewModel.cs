@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Heibroch.Common.Wpf;
+using Heibroch.Infrastructure.Interfaces.Logging;
 using Heibroch.Infrastructure.Interfaces.MessageBus;
 using Heibroch.Launch.Events;
 using Heibroch.Launch.Interfaces;
@@ -19,6 +20,7 @@ namespace Heibroch.Launch.ViewModels
         private readonly IShortcutExecutor shortcutExecutor;
         private readonly ISettingsRepository settingRepository;
         private readonly IMostUsedRepository mostUsedRepository;
+        private readonly IInternalLogger internalLogger;
         private static ShortcutWindow? currentShortcutWindow = null;
         private static ShortcutViewModel? shortcutViewModel;
         private static SettingsWindow? currentSettingsWindow = null;
@@ -33,20 +35,22 @@ namespace Heibroch.Launch.ViewModels
                              IShortcutCollection<string, ILaunchShortcut> shortcutCollection,
                              IShortcutExecutor shortcutExecutor,
                              ISettingsRepository settingsRepository,
-                             IMostUsedRepository mostUsedRepository)
+                             IMostUsedRepository mostUsedRepository,
+                             IInternalLogger internalLogger)
         {
             this.internalMessageBus = internalMessageBus;
             this.shortcutCollection = shortcutCollection;
             this.shortcutExecutor = shortcutExecutor;
             this.settingRepository = settingsRepository;
             this.mostUsedRepository = mostUsedRepository;
+            this.internalLogger = internalLogger;
             Initialize();
         }
 
         private void Initialize()
         {
             shortcutViewModel = new ShortcutViewModel(shortcutCollection, settingRepository, internalMessageBus, mostUsedRepository);
-            settingsViewModel = new SettingsViewModel(settingRepository);
+            settingsViewModel = new SettingsViewModel(settingRepository, internalLogger);
             argumentsViewModel = new ArgumentsViewModel(internalMessageBus);
 
             internalMessageBus.Subscribe<GlobalKeyPressed>(OnKeyPressed);

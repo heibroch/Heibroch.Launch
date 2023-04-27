@@ -38,6 +38,9 @@ namespace Heibroch.Launch
             public const string Key = "Key";
             public const string UseStickySearch = "UseStickySearch";
             public const string ShowMostUsed = "ShowMostUsed";
+            public const string LogInfo = "LogInfo";
+            public const string LogWarnings = "LogWarnings";
+            public const string LogErrors = "LogErrors";
         }
     }
 }
