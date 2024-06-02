@@ -8,7 +8,7 @@
         d:DataContext="{d:DesignInstance vm:SettingsViewModel}"
         Title="Settings"
         Icon="/Resources/LaunchLogo.ico"
-        Height="300"
+        Height="375"
         Width="500"
         Style="{DynamicResource SettingsWindowStyle}">
     <Grid x:Name="MainGrid"
@@ -28,27 +28,29 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Modifier 1: "/>
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Modifier 2: "/>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Key: "/>
-        <TextBlock Grid.Column="0" Grid.Row="3" Text="Use sticky search: " ToolTip="Will use a roll-over matching algorithm for searching secondary to exact matches. This allows for not having to type the whole shortcut name, but rather just parts of it."/>
-        <TextBlock Grid.Column="0" Grid.Row="4" Text="Show most used on empty search: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
-        <TextBlock Grid.Column="0" Grid.Row="5" Text="Log info: " ToolTip="Will log in the windows event log. Note that you might not have permissions to do this."/>
-        <TextBlock Grid.Column="0" Grid.Row="6" Text="Log warnings: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
-        <TextBlock Grid.Column="0" Grid.Row="7" Text="Log errors: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Theme: "/>
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="Use sticky search: " ToolTip="Will use a roll-over matching algorithm for searching secondary to exact matches. This allows for not having to type the whole shortcut name, but rather just parts of it."/>
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="Show most used on empty search: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
+        <TextBlock Grid.Column="0" Grid.Row="6" Text="Log info: " ToolTip="Will log in the windows event log. Note that you might not have permissions to do this."/>
+        <TextBlock Grid.Column="0" Grid.Row="7" Text="Log warnings: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
+        <TextBlock Grid.Column="0" Grid.Row="8" Text="Log errors: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
 
         <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier1}"/>
         <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier2}"/>
         <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Keys}" SelectedValue="{Binding Key}"/>
+        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme}"/>
         <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding UseStickySearch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding ShowMostUsed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <CheckBox Grid.Column="1" Grid.Row="6" IsChecked="{Binding LogInfo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <CheckBox Grid.Column="1" Grid.Row="7" IsChecked="{Binding LogWarnings, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding LogErrors, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
-        <Button
-            Grid.ColumnSpan="2" Grid.Row="8" Content="Save" Command="{Binding SaveCommand}" IsEnabled="{Binding CanExecuteSaveCommand}"/>
+        <Button Grid.ColumnSpan="2" Grid.Row="9" Content="Save" Command="{Binding SaveCommand}" IsEnabled="{Binding CanExecuteSaveCommand}"/>
     </Grid>
 </Window>
