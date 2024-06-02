@@ -1,71 +1,40 @@
 ﻿<Window x:Class="Heibroch.Launch.Views.ArgumentsWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vs="clr-namespace:Heibroch.Launch.ViewModels"
-        mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance vs:ArgumentsViewModel}"
-        Height="500" Width="800"
-        AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="None" Focusable="True"
-        ShowInTaskbar="False"
-        Topmost="True"
-        Background="Transparent">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
-        <Grid Background="Transparent" Focusable="False">
-            <Grid.Effect>
-                <DropShadowEffect ShadowDepth="6"/>
-            </Grid.Effect>
-            <Grid.Resources>
-                <ResourceDictionary>
-                    <SolidColorBrush x:Key="DefaultBackgroundBrush" Color="#34373a"/>
-                    <SolidColorBrush x:Key="DefaultForegroundBrush" Color="#f4f6f7"/>
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:vm="clr-namespace:Heibroch.Launch.ViewModels"
+         mc:Ignorable="d"
+         d:DataContext="{d:DesignInstance vm:ArgumentsViewModel}"
+         Height="520" Width="820"
+         AllowsTransparency="True"
+         WindowStartupLocation="CenterScreen"
+         WindowStyle="None" Focusable="True"
+         ShowInTaskbar="False"
+         Topmost="True"
+         HorizontalAlignment="Center"
+         Style="{DynamicResource BaseWindowStyle}">
+    <Grid x:Name="MainGrid"
+          Focusable="False"
+          Style="{DynamicResource MainGridStyle}"
+          Effect="{DynamicResource MainGridShadow}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-                    <Style TargetType="TextBox">
-                        <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
-                        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
-                    </Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
-                        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
-                    </Style>
-                    <Style TargetType="ListView">
-                        <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
-                        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
-                    </Style>
-                    <Style TargetType="ComboBox">
-                        <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
-                        <Setter Property="Foreground" Value="{StaticResource DefaultForegroundBrush}"/>
-                    </Style>
-                </ResourceDictionary>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBox x:Name="QueryTextBox" 
-                     Text="{Binding LaunchText, UpdateSourceTrigger=PropertyChanged}" 
-                     BorderThickness="0,0,0,0"
-                     Padding="5,0,0,0"
-                     VerticalContentAlignment="Center"
-                     Height="30"
-                     BorderBrush="LightGray"
-                     FontWeight="Bold"
-                     Focusable="True"
-                     IsHitTestVisible="True"/>
-            <TextBlock Text="{Binding WaterMarkText, Mode=OneWay}" 
-               Padding="8,0,0,0"
-               Canvas.ZIndex = "100"
-               VerticalAlignment="Center"
-               Visibility="{Binding WaterMarkVisibility, Mode=OneWay}"
-               FontWeight="Bold"
-               Opacity="0.7"/>
-        </Grid>
+        <TextBox x:Name="QueryTextBox"
+                 Grid.Row="0"
+                 Text="{Binding LaunchText, UpdateSourceTrigger=PropertyChanged}"
+                 Focusable="True"
+                 IsHitTestVisible="True"
+                 Style="{DynamicResource QueryTextBoxStyle}"/>
+
+        <TextBlock x:Name="ArgumentTextBlock"
+                   Grid.Row="0"
+                   Text="{Binding WaterMarkText, Mode=OneWay}"
+                   Canvas.ZIndex = "100"
+                   Visibility="{Binding WaterMarkVisibility, Mode=OneWay}"
+                   Style="{DynamicResource ArgumentTextBlockStyle}"/>
     </Grid>
 </Window>
