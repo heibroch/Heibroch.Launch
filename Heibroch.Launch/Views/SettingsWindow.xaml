@@ -6,6 +6,8 @@
         xmlns:vm="clr-namespace:Heibroch.Launch.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:SettingsViewModel}"
+        Title="Settings"
+        Icon="/Resources/LaunchLogo.ico"
         Height="300"
         Width="500"
         Style="{DynamicResource SettingsWindowStyle}">

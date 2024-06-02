@@ -55,4 +55,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\LaunchLogo.ico" />
+    <Resource Include="Resources\LaunchLogo.ico" />
+  </ItemGroup>
+
 </Project>

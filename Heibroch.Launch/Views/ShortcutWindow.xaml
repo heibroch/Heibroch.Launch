@@ -6,6 +6,8 @@
         xmlns:vm="clr-namespace:Heibroch.Launch.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance vm:ShortcutViewModel}"
+        Title="Heibroch Launch"
+        Icon="/Resources/LaunchLogo.ico"
         Height="520" Width="820"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
