@@ -22,11 +22,12 @@ namespace Heibroch.Launch
                 process.StartInfo = new ProcessStartInfo();
                 process.StartInfo.UseShellExecute = true;
 
-                if (formattedDescription.StartsWith(">"))
+                if (formattedDescription.StartsWith("[CMD]"))
                 {
+                    int skip = "[CMD]".Length;
                     process.StartInfo.FileName = "cmd.exe";
                     process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                    process.StartInfo.Arguments = $"/c {formattedDescription.Substring(1, formattedDescription.Length - 1)}";
+                    process.StartInfo.Arguments = $"/c {formattedDescription[skip..]}";
                 }
 
                 else if (formattedDescription.StartsWith("\""))
