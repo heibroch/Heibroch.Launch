@@ -58,6 +58,8 @@ namespace Heibroch.Launch.ViewModels
                 RaisePropertyChanged(nameof(LogInfo));
                 RaisePropertyChanged(nameof(LogWarnings));
                 RaisePropertyChanged(nameof(LogErrors));
+
+                System.Windows.Application.Current.Windows.OfType<Views.SettingsWindow>().FirstOrDefault()?.Close();
             });
         }
 
