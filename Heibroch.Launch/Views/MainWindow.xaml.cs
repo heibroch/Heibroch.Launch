@@ -30,7 +30,7 @@ namespace Heibroch.Launch.Views
                 var internalLogger = new InternalLogger();
                 internalLogger.LogInfoAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Information);
                 internalLogger.LogWarningAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Warning);
-                internalLogger.LogErrorAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Error);              
+                internalLogger.LogErrorAction = x => EventLog.WriteEntry("Heibroch.Launch", x, EventLogEntryType.Error);
                 Container.Current.Register<IInternalLogger>(internalLogger);
 
                 internalMessageBus = new InternalMessageBus(internalLogger);
@@ -40,7 +40,7 @@ namespace Heibroch.Launch.Views
 
                 //Fixes an issue with current directory being system32 for the plugin loader and not the application path as desired
                 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-                
+
                 InitializeComponent();
 
                 var pathRepository = new PathRepository();

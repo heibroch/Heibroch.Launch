@@ -81,7 +81,10 @@ namespace Heibroch.Launch
                 string theme = Settings[Constants.SettingNames.Theme];
                 if (string.IsNullOrEmpty(theme)) return;
                 var uri = new Uri(Constants.ThemesPath + "\\" + theme, UriKind.Absolute);
-                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = uri });
+                if (Application.Current.Resources.MergedDictionaries.Count > 0)
+                    Application.Current.Resources.MergedDictionaries[0].Source = uri;
+                else
+                    Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = uri });
 
                 internalMessageBus.Publish(new SettingsLoadingCompleted(filePath));
             }
