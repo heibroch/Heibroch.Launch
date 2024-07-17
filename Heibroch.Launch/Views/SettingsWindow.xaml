@@ -11,9 +11,7 @@
         Height="375"
         Width="500"
         Style="{DynamicResource SettingsWindowStyle}">
-    <Grid x:Name="MainGrid"
-          Style="{DynamicResource SettingsGridStyle}"
-          Effect="{DynamicResource SettingsGridShadow}">
+    <Grid x:Name="MainGrid" Style="{DynamicResource SettingsGridStyle}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -41,9 +39,9 @@
         <TextBlock Grid.Column="0" Grid.Row="7" Text="Log warnings: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
         <TextBlock Grid.Column="0" Grid.Row="8" Text="Log errors: " ToolTip="Will display the most used entries above the shortcut bar for quick access."/>
 
-        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier1}"/>
-        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ModifierKeys}" SelectedValue="{Binding Modifier2}"/>
-        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Keys}" SelectedValue="{Binding Key}"/>
+        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ModifierKeysStrings}" SelectedValue="{Binding Modifier1String}"/>
+        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ModifierKeysStrings}" SelectedValue="{Binding Modifier2String}"/>
+        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding KeysStrings}" SelectedValue="{Binding KeyString}"/>
         <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme}"/>
         <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding UseStickySearch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding ShowMostUsed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

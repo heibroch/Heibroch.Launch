@@ -62,10 +62,25 @@ namespace Heibroch.Launch.ViewModels
         }
 
         public ModifierKeys Modifier1 { get; set; }
+        public string Modifier1String
+        {
+            get => Modifier1.ToString();
+            set => Modifier1 = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), value);
+        }
 
         public ModifierKeys Modifier2 { get; set; }
+        public string Modifier2String
+        {
+            get => Modifier2.ToString();
+            set => Modifier2 = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), value);
+        }
 
         public Keys Key { get; set; }
+        public string KeyString
+        {
+            get => Key.ToString();
+            set => Key = (Keys)Enum.Parse(typeof(Keys), value);
+        }
 
         public string Theme { get; set; }
 
@@ -74,10 +89,12 @@ namespace Heibroch.Launch.ViewModels
         public bool ShowMostUsed { get; set; }
 
         public List<Keys> Keys { get; set; }
-
-        public List<ModifierKeys> ModifierKeys { get; set; }
+        public List<string> KeysStrings => Keys.Select(x => x.ToString()).ToList();
 
         public List<string> Themes { get; set; }
+
+        public List<ModifierKeys> ModifierKeys { get; set; }
+        public List<string> ModifierKeysStrings => ModifierKeys.Select(x => x.ToString()).ToList();
 
         public ActionCommand SaveCommand { get; set; }
 
