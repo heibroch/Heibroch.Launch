@@ -7,6 +7,7 @@
 
     <Style TargetType="Window" x:Key="BaseWindowStyle">
         <Setter Property="FontFamily" Value="Inter"/>
+        <Setter Property="Background" Value="Transparent"/>
     </Style>
 
     <Style TargetType="TextBox" x:Key="BaseTextBoxStyle">
@@ -48,9 +49,7 @@
     <!--#endregion -->
 
     <!--#region ShortcutWindow -->
-    <Style x:Key="MainWindowStyle" TargetType="Window" BasedOn="{StaticResource BaseWindowStyle}">
-        <Setter Property="Background" Value="Transparent"/>
-    </Style>
+    <Style x:Key="MainWindowStyle" TargetType="Window" BasedOn="{StaticResource BaseWindowStyle}"/>
 
     <Style x:Key="MainGridStyle" TargetType="Grid">
         <Setter Property="Background" Value="Transparent"/>
@@ -129,11 +128,9 @@
     <!--#endregion -->
 
     <!--#region SettingsWindow -->
-    <Style x:Key="SettingsWindowStyle" TargetType="Window" BasedOn="{StaticResource BaseWindowStyle}">
+    <Style x:Key="SettingsWindowStyle" TargetType="Window">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
     </Style>
-
-    <DropShadowEffect x:Key="SettingsGridShadow" Color="#000000" Direction="0" ShadowDepth="0" BlurRadius="5" Opacity="0.2"/>
 
     <Style x:Key="SettingsGridStyle" TargetType="Grid" BasedOn="{StaticResource MainGridStyle}">
         <Style.Resources>

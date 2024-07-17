@@ -4,9 +4,7 @@
     <SolidColorBrush x:Key="DefaultForegroundBrush" Color="#f4f6f7"/>
     <CornerRadius x:Key="DefaultCornerRadius">0</CornerRadius>
 
-    <Style TargetType="Window" x:Key="BaseWindowStyle">
-        <Setter Property="Background" Value="Transparent"/>
-    </Style>
+    <Style TargetType="Window" x:Key="BaseWindowStyle"/>
 
     <Style TargetType="TextBox" x:Key="BaseTextBoxStyle">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
@@ -80,8 +78,6 @@
     <Style x:Key="SettingsWindowStyle" TargetType="Window" BasedOn="{StaticResource BaseWindowStyle}">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}"/>
     </Style>
-
-    <DropShadowEffect x:Key="SettingsGridShadow" Opacity="0"/>
 
     <Style x:Key="SettingsGridStyle" TargetType="Grid" BasedOn="{StaticResource MainGridStyle}">
         <Style.Resources>

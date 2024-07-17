@@ -6,6 +6,7 @@
 
     <Style TargetType="Window" x:Key="BaseWindowStyle">
         <Setter Property="FontFamily" Value="Inter"/>
+        <Setter Property="Background" Value="Transparent"/>
     </Style>
 
     <Style TargetType="TextBox" x:Key="BaseTextBoxStyle">
@@ -47,9 +48,7 @@
     <!--#endregion -->
 
     <!--#region ShortcutWindow -->
-    <Style x:Key="MainWindowStyle" TargetType="Window" BasedOn="{StaticResource BaseWindowStyle}">
-        <Setter Property="Background" Value="Transparent"/>
-    </Style>
+    <Style x:Key="MainWindowStyle" TargetType="Window" BasedOn="{StaticResource BaseWindowStyle}"/>
 
     <Style x:Key="MainGridStyle" TargetType="Grid">
         <Setter Property="Background" Value="Transparent"/>
@@ -140,6 +139,19 @@
 
             <Style TargetType="ComboBox">
                 <Setter Property="Margin" Value="2.5, 5"/>
+                <Style.Resources>
+                    <Style TargetType="ContentPresenter">
+                        <Style.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource DefaultBackgroundBrush}"/>
+                            </Style>
+                        </Style.Resources>
+                    </Style>
+                </Style.Resources>
+            </Style>
+
+            <Style TargetType="ComboBoxItem">
+                <Setter Property="Foreground" Value="{StaticResource DefaultBackgroundBrush}"/>
             </Style>
 
             <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
