@@ -25,9 +25,9 @@ namespace Heibroch.Launch.ViewModels
             }
         }
 
-        public string WaterMarkText => $"{ArgumentKey}...";
 
         public ILaunchShortcut? Command { get; set; }
+        public string WaterMarkText => Command == null ? $"{ArgumentKey}:" : $"{Command?.Title} › {ArgumentKey}:";
 
         public Visibility WaterMarkVisibility => LaunchText?.Length <= 0 || string.IsNullOrWhiteSpace(launchText) ? Visibility.Visible : Visibility.Hidden;
 

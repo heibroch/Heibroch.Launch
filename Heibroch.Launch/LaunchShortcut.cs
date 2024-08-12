@@ -26,7 +26,7 @@ namespace Heibroch.Launch
                 process.StartInfo.FileName = formattedCommand;
                 process.Start();
             }
-            catch (Exception ex)            
+            catch (Exception ex)
             {
                 MessageBox.Show($"Could not launch shortcut \"{Title}\"\r\n{ex}");
             }

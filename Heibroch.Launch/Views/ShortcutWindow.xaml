@@ -3,76 +3,76 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Heibroch.Launch"
-        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+        xmlns:vm="clr-namespace:Heibroch.Launch.ViewModels"
         mc:Ignorable="d"
-        Height="500" Width="800"
+        d:DataContext="{d:DesignInstance vm:ShortcutViewModel}"
+        Title="Heibroch Launch"
+        Icon="/Resources/LaunchLogo.ico"
+        Height="520" Width="820"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" Focusable="True"
         ShowInTaskbar="False"
         Topmost="True"
-        Background="Transparent">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
-        <Grid Background="Transparent" Focusable="False">
-            <Grid.Effect>
-                <DropShadowEffect ShadowDepth="6"/>
-            </Grid.Effect>
-            <Grid.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="/Resources/DarkTheme.xaml"/>
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBox x:Name="QueryTextBox"
-                     Text="{Binding LaunchText, UpdateSourceTrigger=PropertyChanged}" 
-                     BorderThickness="0,0,0,0"
-                     Padding="5,0,0,0"
-                     VerticalContentAlignment="Center"
-                     Height="30"
-                     BorderBrush="LightGray"
-                     FontWeight="Bold"
-                     Focusable="True"
-                     IsHitTestVisible="True"/>
-            <TextBlock Text="Type search text..."
-                       Padding="8,0,0,0"
-                       Canvas.ZIndex = "100"
-                       VerticalAlignment="Center"
-                       Visibility="{Binding WaterMarkVisibility, Mode=OneWay}"
-                       FontWeight="Bold"
-                       Opacity="0.7"/>
-            <ListView x:Name="QueryResultList" 
-                      Grid.Row="1" Visibility="{Binding QueryResultsVisibility}"
-                      ItemsSource="{Binding DisplayedQueryResults, Mode=OneWay}" 
-                      SelectedValue="{Binding SelectedQueryResult}"
-                      Focusable="False"
-                      IsHitTestVisible="False"
-                      Height="Auto"
-                      BorderThickness="0"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="{TemplateBinding ListView.Background}" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Key}" FontWeight="Bold" Padding="2,0,0,0"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Value.Description}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        HorizontalAlignment="Center"
+        Style="{StaticResource MainWindowStyle}">
+    <Grid x:Name="MainGrid"
+          Focusable="False"
+          Style="{DynamicResource MainGridStyle}"
+          Effect="{DynamicResource MainGridShadow}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="QueryTextBox"
+                 Grid.Row="0"
+                 Text="{Binding LaunchText, UpdateSourceTrigger=PropertyChanged}"
+                 Focusable="True"
+                 IsHitTestVisible="True"
+                 Style="{DynamicResource QueryTextBoxStyle}"/>
+
+        <TextBlock x:Name="WaterMarkTextBlock"
+                   Grid.Row="0"
+                   Text="Type search text..."
+                   Canvas.ZIndex="100"
+                   Visibility="{Binding WaterMarkVisibility, Mode=OneWay}"
+                   Style="{DynamicResource WaterMarkTextBlockStyle}"/>
+
+        <ListView x:Name="QueryResultList"
+                  Grid.Row="1"
+                  Visibility="{Binding QueryResultsVisibility}"
+                  ItemsSource="{Binding DisplayedQueryResults, Mode=OneWay}"
+                  SelectedValue="{Binding SelectedQueryResult}"
+                  Focusable="False"
+                  IsHitTestVisible="False"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  Style="{DynamicResource QueryResultListStyle}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="2.5, 0, 3, 0" MaxWidth="790">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="ShortcutRow"
+                            Grid.ColumnSpan="3"
+                            Style="{DynamicResource ShortcutRowStyle}"
+                        />
+
+                        <TextBlock x:Name="ShortcutKeyTextBlock"
+                            Grid.Column="0"
+                            Text="{Binding Key}"
+                            Style="{DynamicResource ShortcutKeyTextBlockStyle}"/>
+
+                        <TextBlock x:Name="ShortcutDescTextBlock"
+                            Grid.Column="1"
+                            Text="{Binding Value.Description}"
+                            Style="{DynamicResource ShortcutDescTextBlockStyle}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

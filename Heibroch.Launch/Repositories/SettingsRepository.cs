@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace Heibroch.Launch
 {
@@ -43,6 +44,7 @@ namespace Heibroch.Launch
                     streamWriter.Write($"{Constants.SettingNames.Modifier1};Control\r\n" +
                                        $"{Constants.SettingNames.Modifier2};Shift\r\n" +
                                        $"{Constants.SettingNames.Key};Space\r\n" +
+                                       $"{Constants.SettingNames.Theme};SpaciousDark.xaml\r\n" +
                                        $"{Constants.SettingNames.UseStickySearch};true\r\n" +
                                        $"{Constants.SettingNames.ShowMostUsed};false\r\n" +
                                        $"{Constants.SettingNames.LogInfo};false\r\n" +
@@ -55,6 +57,7 @@ namespace Heibroch.Launch
 
                 var lines = File.ReadAllLines(filePath).ToList();
 
+                AddLineIfMissing(lines, Constants.SettingNames.Theme, "SpaciousDark.xaml");
                 AddLineIfMissing(lines, Constants.SettingNames.UseStickySearch, "false");
                 AddLineIfMissing(lines, Constants.SettingNames.ShowMostUsed, "false");
                 AddLineIfMissing(lines, Constants.SettingNames.LogInfo, "false");
@@ -74,12 +77,21 @@ namespace Heibroch.Launch
                         Settings.Add(values[0], values[1]);
                 }
 
+                // Update theme
+                string theme = Settings[Constants.SettingNames.Theme];
+                if (string.IsNullOrEmpty(theme)) return;
+                var uri = new Uri(Constants.ThemesPath + "\\" + theme, UriKind.Absolute);
+                if (Application.Current.Resources.MergedDictionaries.Count > 0)
+                    Application.Current.Resources.MergedDictionaries[0].Source = uri;
+                else
+                    Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = uri });
+
                 internalMessageBus.Publish(new SettingsLoadingCompleted(filePath));
             }
             catch (Exception exception)
             {
                 internalMessageBus.Publish(new SettingsLoadingFailed(exception));
-            }           
+            }
         }
 
         private void AddLineIfMissing(List<string> lines, string settingName, string settingValue)
@@ -95,10 +107,11 @@ namespace Heibroch.Launch
         /// <param name="modifier1">System.Windows.Input.ModifierKeys</param>
         /// <param name="modifier2">System.Windows.Input.ModifierKeys</param>
         /// <param name="key">System.Windows.Forms.Keys</param>
+        /// <param name="theme"></param>
         /// <param name="useStickySearch"></param>
         /// <param name="showMostUsed"></param>
         /// <param name="filePath"></param>
-        public void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed, bool logInfo, bool logWarnings, bool logErrors)
+        public void Save(string modifier1, string modifier2, string key, string theme, bool useStickySearch, bool showMostUsed, bool logInfo, bool logWarnings, bool logErrors)
         {
             var filePath = $"{pathRepository.AppSettingsDirectory}{Constants.FileNames.Settings}{Constants.FileExtensions.SettingFileExtension}";
 
@@ -106,6 +119,7 @@ namespace Heibroch.Launch
             stringBuilder.AppendLine($"{Constants.SettingNames.Modifier1};{modifier1}");
             stringBuilder.AppendLine($"{Constants.SettingNames.Modifier2};{modifier2}");
             stringBuilder.AppendLine($"{Constants.SettingNames.Key};{key}");
+            stringBuilder.AppendLine($"{Constants.SettingNames.Theme};{theme}");
             stringBuilder.AppendLine($"{Constants.SettingNames.UseStickySearch};{useStickySearch}");
             stringBuilder.AppendLine($"{Constants.SettingNames.ShowMostUsed};{showMostUsed}");
             stringBuilder.AppendLine($"{Constants.SettingNames.LogInfo};{logInfo}");

@@ -10,7 +10,7 @@
         /// <summary>
         /// Saves the settings to file
         /// </summary>
-        void Save(string modifier1, string modifier2, string key, bool useStickySearch, bool showMostUsed, bool logInfo, bool logWarnings, bool logErrors);
+        void Save(string modifier1, string modifier2, string key, string theme, bool useStickySearch, bool showMostUsed, bool logInfo, bool logWarnings, bool logErrors);
 
         /// <summary>
         /// 

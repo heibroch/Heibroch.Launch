@@ -6,6 +6,8 @@ namespace Heibroch.Launch
     {
         public static string RootPath = Environment.GetEnvironmentVariable("APPDATA"/*"LocalAppData"*/) + "\\Heibroch\\";
 
+        public static string ThemesPath = System.IO.Path.Combine(RootPath, "Themes");
+
         public const string ApplicationName = "Heibroch.Launch";
 
         public const string SearchLocation = "[SearchPath]";
@@ -36,6 +38,7 @@ namespace Heibroch.Launch
             public const string Modifier1 = "Modifier1";
             public const string Modifier2 = "Modifier2";
             public const string Key = "Key";
+            public const string Theme = "Theme";
             public const string UseStickySearch = "UseStickySearch";
             public const string ShowMostUsed = "ShowMostUsed";
             public const string LogInfo = "LogInfo";
